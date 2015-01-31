@@ -53,7 +53,7 @@ public class CommonProxy {
             
             //Replace it in the "registryObjects"
             fieldName = Utils.deobfuscatedEnv ? "registryObjects" : "field_82596_a";
-            BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, "registryObjects", Block.blockRegistry);
+            BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, fieldName, Block.blockRegistry);
             regMap.forcePut("minecraft:tnt", ModBlocks.replaced_tnt);
             
             //Replace it in the associated ItemBlock
@@ -62,7 +62,7 @@ public class CommonProxy {
             
             //Replace it in the Blocks class
             fieldName = Utils.deobfuscatedEnv ? "tnt" : "field_150335_W";
-            ReflectionHelper.setFinalField(Blocks.class, "tnt", null, ModBlocks.replaced_tnt);
+            ReflectionHelper.setFinalField(Blocks.class, fieldName, null, ModBlocks.replaced_tnt);
             LogHelper.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
             LogHelper.log(Level.ERROR, ex, "Failed to replace Vanilla TNT!");
