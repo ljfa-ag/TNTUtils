@@ -20,8 +20,6 @@ public class TNTUtils {
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
     
-    public static final boolean deobfuscatedEnv = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
-    
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         Config.loadConfig(event.getSuggestedConfigurationFile());
