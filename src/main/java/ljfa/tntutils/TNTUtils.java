@@ -3,6 +3,7 @@ package ljfa.tntutils;
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
 import net.minecraft.command.ServerCommandManager;
+import net.minecraft.launchwrapper.Launch;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
@@ -18,6 +19,8 @@ public class TNTUtils {
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
+    
+    public static final boolean deobfuscatedEnv = (Boolean)Launch.blackboard.get("fml.deobfuscatedEnvironment");
     
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
