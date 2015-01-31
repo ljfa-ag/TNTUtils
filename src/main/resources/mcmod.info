@@ -1,14 +1,14 @@
 [
 {
-  "modid": "examplemod",
-  "name": "Example Mod",
-  "description": "Example placeholder mod.",
+  "modid": "tnt_utilities",
+  "name": "TNTUtils",
+  "description": "More control over explosions",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["ljfa"],
+  "credits": "",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
