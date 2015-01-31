@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Level;
 
 import com.google.common.collect.BiMap;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -47,11 +46,11 @@ public class CommonProxy {
             int tntID = Block.blockRegistry.getIDForObject(oldTNT);
             
             //Replace it in the "underlyingIntegerMap"
-            ObjectIntIdentityMap intMap = ObfuscationReflectionHelper.getPrivateValue(RegistryNamespaced.class, Block.blockRegistry, "underlyingIntegerMap", "field_148759_a");
+            ObjectIntIdentityMap intMap = (ObjectIntIdentityMap)ReflectionHelper.getField(RegistryNamespaced.class, "underlyingIntegerMap", Block.blockRegistry);
             intMap.func_148746_a(ModBlocks.replaced_tnt, tntID);
             
             //Replace it in the "registryObjects"
-            BiMap regMap = ObfuscationReflectionHelper.getPrivateValue(RegistrySimple.class, Block.blockRegistry, "registryObjects", "field_82596_a");
+            BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, "registryObjects", Block.blockRegistry);
             regMap.forcePut("minecraft:tnt", ModBlocks.replaced_tnt);
             
             //Replace it in the associated ItemBlock
