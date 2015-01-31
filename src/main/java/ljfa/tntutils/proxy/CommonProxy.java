@@ -1,6 +1,7 @@
 package ljfa.tntutils.proxy;
 
 import ljfa.tntutils.Config;
+import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.blocks.ModBlocks;
 import ljfa.tntutils.util.LogHelper;
 import ljfa.tntutils.util.ReflectionHelper;
@@ -44,12 +45,14 @@ public class CommonProxy {
             //Get TNT object to replace
             Block oldTNT = (Block)Block.blockRegistry.getObject("tnt");
             int tntID = Block.blockRegistry.getIDForObject(oldTNT);
-            
+
             //Replace it in the "underlyingIntegerMap"
-            ObjectIntIdentityMap intMap = (ObjectIntIdentityMap)ReflectionHelper.getField(RegistryNamespaced.class, "underlyingIntegerMap", Block.blockRegistry);
+            String fieldName = TNTUtils.deobfuscatedEnv ? "underlyingIntegerMap" : "field_148759_a";
+            ObjectIntIdentityMap intMap = (ObjectIntIdentityMap)ReflectionHelper.getField(RegistryNamespaced.class, fieldName, Block.blockRegistry);
             intMap.func_148746_a(ModBlocks.replaced_tnt, tntID);
             
             //Replace it in the "registryObjects"
+            fieldName = TNTUtils.deobfuscatedEnv ? "registryObjects" : "field_82596_a";
             BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, "registryObjects", Block.blockRegistry);
             regMap.forcePut("minecraft:tnt", ModBlocks.replaced_tnt);
             
@@ -58,6 +61,7 @@ public class CommonProxy {
             ReflectionHelper.setFinalField(ItemBlock.class, "field_150939_a", tntItem, ModBlocks.replaced_tnt);
             
             //Replace it in the Blocks class
+            fieldName = TNTUtils.deobfuscatedEnv ? "tnt" : "field_150335_W";
             ReflectionHelper.setFinalField(Blocks.class, "tnt", null, ModBlocks.replaced_tnt);
             LogHelper.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
