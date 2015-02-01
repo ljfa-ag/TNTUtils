@@ -24,14 +24,14 @@ public class ExplosionHandler {
         for(ChunkPosition pos: oldList) {
             Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
             int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-            if(shouldBeDestroyed(block, meta))
+            if(!shouldBePreserved(block, meta))
                 newList.add(pos);
         }
         event.explosion.affectedBlockPositions = newList;
     }
     
-    public static boolean shouldBeDestroyed(Block block, int meta) {
+    public static boolean shouldBePreserved(Block block, int meta) {
         return Config.spareTileEntities && block.hasTileEntity(meta)
-            || Config.blacklistActive && !Config.blacklist.contains(block);
+            || Config.blacklistActive && Config.blacklist.contains(block);
     }
 }
