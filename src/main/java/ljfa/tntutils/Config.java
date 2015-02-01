@@ -10,7 +10,6 @@ import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class Config {
     public static Configuration conf;
@@ -49,21 +48,12 @@ public class Config {
     public static void createBlacklistSet() {
         blacklist = new HashSet<Block>();
         for(String name: blacklistArray) {
-            String[] parts = name.split(":");
-            Block block;
-            if(parts.length == 1) {
-                block = GameRegistry.findBlock("minecraft", parts[0]);
-            } else if(parts.length == 2) {
-                block = GameRegistry.findBlock(parts[0], parts[1]);
-            } else {
-                LogHelper.error("Invalid block name: %s", name);
-                continue;
-            }
+            Block block = (Block)Block.blockRegistry.getObject(name);
             if(block == null) {
                 LogHelper.error("Block not found: %s", name);
             } else {
                 blacklist.add(block);
-                LogHelper.info("Added block to blacklist: %s", name);
+                LogHelper.debug("Added block to blacklist: %s", name);
             }
         }
         blacklistActive = blacklist.size() != 0;
