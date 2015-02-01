@@ -3,6 +3,7 @@ package ljfa.tntutils.command;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 public class CommandExplosion extends CommandBase {
@@ -18,7 +19,8 @@ public class CommandExplosion extends CommandBase {
 
     @Override
     public String getCommandUsage(ICommandSender sender) {
-        return "explosion <x> <y> <z> [strength] [damage blocks] [set fires]";
+        return "explosion <x> <y> <z> [strength] [damage blocks] [set fires]\n"
+                + "Default strength: 4.0 (same as TNT)";
     }
 
     @Override
@@ -38,8 +40,10 @@ public class CommandExplosion extends CommandBase {
         float strength = args.length >= 4 ? (float)parseDouble(sender, args[3]) : 4.0f;
         boolean blockDmg = args.length >= 5 ? parseBoolean(sender, args[4]) : true;
         boolean fire = args.length >= 6 ? parseBoolean(sender, args[5]) : false;
+
+        Entity source = (sender instanceof Entity) ? (Entity)sender : null;
         
-        world.newExplosion(null, x, y, z, strength, fire, blockDmg);
+        world.newExplosion(source, x, y, z, strength, fire, blockDmg);
     }
 
 }
