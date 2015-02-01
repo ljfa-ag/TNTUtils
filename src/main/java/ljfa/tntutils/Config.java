@@ -35,13 +35,18 @@ public class Config {
         replaceTNT = conf.getBoolean("preventChainExplosions", CATEGORY_GENERAL, true, "Prevent explosions from triggering TNT");
         explosionCommand = conf.getBoolean("addExplosionCommand", CATEGORY_GENERAL, true, "Adds the \"/explosion\" command");
         spareTileEntities = conf.getBoolean("spareTileEntites", CATEGORY_GENERAL, false, "Makes explosions not destroy tile entities");
-        blacklist = new HashSet<String>(Arrays.asList(
-            conf.getStringList("destructionBlacklist", CATEGORY_GENERAL, new String[0], "A list of blocks that will never be destroyed by explosions")
-            ));
+        blacklist = processBlacklist(conf.getStringList("destructionBlacklist", CATEGORY_GENERAL, new String[0], "A list of blocks that will never be destroyed by explosions"));
         blacklistActive = blacklist.size() != 0;
         //----------------
         if(conf.hasChanged())
             conf.save();
+    }
+    
+    private static Set<String> processBlacklist(String[] array) {
+        Set<String> set = new HashSet<String>(2 * array.length);
+        for(String name: array)
+            set.add("tile." + name);
+        return set;
     }
     
     /** Reloads the config values upon change */

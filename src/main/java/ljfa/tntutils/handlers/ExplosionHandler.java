@@ -32,6 +32,6 @@ public class ExplosionHandler {
     
     public static boolean shouldBePreserved(Block block, int meta) {
         return Config.spareTileEntities && block.hasTileEntity(meta)
-            || Config.blacklistActive && Config.blacklist.contains(block);
+            || Config.blacklistActive && Config.blacklist.contains(block.getUnlocalizedName());
     }
 }
