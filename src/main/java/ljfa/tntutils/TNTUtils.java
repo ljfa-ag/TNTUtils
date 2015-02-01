@@ -28,6 +28,7 @@ public class TNTUtils {
     
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
+        Config.createBlacklistSet();
         proxy.init(event);
     }
     

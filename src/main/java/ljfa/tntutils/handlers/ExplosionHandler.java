@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ljfa.tntutils.Config;
+import ljfa.tntutils.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
@@ -27,6 +28,7 @@ public class ExplosionHandler {
             for(ChunkPosition pos: oldList) {
                 Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                 int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+                LogHelper.debug("Explosion target: %s", Block.blockRegistry.getNameForObject(block));
                 if(!shouldBePreserved(block, meta))
                     newList.add(pos);
             }
@@ -36,6 +38,6 @@ public class ExplosionHandler {
     
     public static boolean shouldBePreserved(Block block, int meta) {
         return Config.spareTileEntities && block.hasTileEntity(meta)
-            || Config.blacklistActive && Config.blacklist.contains(block.getUnlocalizedName());
+            || Config.blacklistActive && Config.blacklist.contains(block);
     }
 }
