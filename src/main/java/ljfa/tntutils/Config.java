@@ -43,7 +43,7 @@ public class Config {
     }
     
     private static Set<String> processBlacklist(String[] array) {
-        Set<String> set = new HashSet<String>(2 * array.length);
+        Set<String> set = new HashSet<String>();
         for(String name: array)
             set.add("tile." + name);
         return set;
