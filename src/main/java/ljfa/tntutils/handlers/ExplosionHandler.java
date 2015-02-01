@@ -1,7 +1,7 @@
 package ljfa.tntutils.handlers;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.ChunkPosition;
@@ -18,14 +18,22 @@ public class ExplosionHandler {
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
         if(event.world.isRemote)
             return;
-        List<ChunkPosition> blocks = event.getAffectedBlocks();
-        blocks.removeIf(new Predicate<ChunkPosition>() {
+        List<ChunkPosition> oldList = event.getAffectedBlocks();
+        List<ChunkPosition> newList = new ArrayList<ChunkPosition>(oldList.size());
+        for(ChunkPosition pos: oldList) {
+            Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+            int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+            if(!block.hasTileEntity(meta))
+                newList.add(pos);
+        }
+        event.explosion.affectedBlockPositions = newList;
+        /*blocks.removeIf(new Predicate<ChunkPosition>() {
             @Override
             public boolean test(ChunkPosition pos) {
                 Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                 int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                 return block.hasTileEntity(meta);
             }
-        });
+        });*/
     }
 }
