@@ -2,6 +2,7 @@ package ljfa.tntutils.proxy;
 
 import ljfa.tntutils.Config;
 import ljfa.tntutils.blocks.ModBlocks;
+import ljfa.tntutils.handlers.ExplosionHandler;
 import ljfa.tntutils.util.LogHelper;
 import ljfa.tntutils.util.ReflectionHelper;
 import ljfa.tntutils.util.Utils;
@@ -12,6 +13,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ObjectIntIdentityMap;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.RegistrySimple;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Level;
 
@@ -31,7 +33,7 @@ public class CommonProxy {
     }
     
     public void init(FMLInitializationEvent event) {
-        
+        MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
     }
     
     public void postInit(FMLPostInitializationEvent event) {
