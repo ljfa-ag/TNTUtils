@@ -27,13 +27,5 @@ public class ExplosionHandler {
                 newList.add(pos);
         }
         event.explosion.affectedBlockPositions = newList;
-        /*blocks.removeIf(new Predicate<ChunkPosition>() {
-            @Override
-            public boolean test(ChunkPosition pos) {
-                Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-                int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-                return block.hasTileEntity(meta);
-            }
-        });*/
     }
 }
