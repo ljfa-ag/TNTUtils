@@ -32,10 +32,10 @@ public class Config {
     }
     
     public static void loadValues() {
-        replaceTNT = conf.getBoolean("preventChainExplosions", CATEGORY_GENERAL, true, "Prevent explosions from triggering TNT");
-        explosionCommand = conf.getBoolean("addExplosionCommand", CATEGORY_GENERAL, true, "Adds the \"/explosion\" command");
-        spareTileEntities = conf.getBoolean("spareTileEntites", CATEGORY_GENERAL, false, "Makes explosions not destroy tile entities");
-        blacklist = processBlacklist(conf.getStringList("destructionBlacklist", CATEGORY_GENERAL, new String[0], "A list of blocks that will never be destroyed by explosions"));
+        replaceTNT = conf.get(CATEGORY_GENERAL, "preventChainExplosions", true, "Prevent explosions from triggering TNT").setRequiresMcRestart(true).getBoolean();
+        explosionCommand = conf.get(CATEGORY_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
+        spareTileEntities = conf.get(CATEGORY_GENERAL, "spareTileEntites", false, "Makes explosions not destroy tile entities").getBoolean();
+        blacklist = processBlacklist(conf.get(CATEGORY_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList());
         blacklistActive = blacklist.size() != 0;
         //----------------
         if(conf.hasChanged())
