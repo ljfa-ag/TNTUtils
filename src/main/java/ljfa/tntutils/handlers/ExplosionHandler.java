@@ -3,6 +3,7 @@ package ljfa.tntutils.handlers;
 import java.util.ArrayList;
 import java.util.List;
 
+import ljfa.tntutils.Config;
 import net.minecraft.block.Block;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
@@ -23,9 +24,14 @@ public class ExplosionHandler {
         for(ChunkPosition pos: oldList) {
             Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
             int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-            if(!block.hasTileEntity(meta))
+            if(shouldBeDestroyed(block, meta))
                 newList.add(pos);
         }
         event.explosion.affectedBlockPositions = newList;
+    }
+    
+    public static boolean shouldBeDestroyed(Block block, int meta) {
+        return Config.spareTileEntities && block.hasTileEntity(meta)
+            || Config.blacklistActive && !Config.blacklist.contains(block);
     }
 }

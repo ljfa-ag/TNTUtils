@@ -19,6 +19,7 @@ public class Config {
     public static boolean explosionCommand;
     public static boolean spareTileEntities;
     public static Set<String> blacklist;
+    public static boolean blacklistActive;
     
     public static void loadConfig(File file) {
         if(conf == null)
@@ -37,6 +38,7 @@ public class Config {
         blacklist = new HashSet<String>(Arrays.asList(
             conf.getStringList("destructionBlacklist", CATEGORY_GENERAL, new String[0], "A list of blocks that will never be destroyed by explosions")
             ));
+        blacklistActive = blacklist.size() != 0;
         //----------------
         if(conf.hasChanged())
             conf.save();
