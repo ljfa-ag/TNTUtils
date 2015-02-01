@@ -6,6 +6,7 @@ import java.util.Set;
 
 import ljfa.tntutils.util.LogHelper;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -49,7 +50,7 @@ public class Config {
         blacklist = new HashSet<Block>();
         for(String name: blacklistArray) {
             Block block = (Block)Block.blockRegistry.getObject(name);
-            if(block == null) {
+            if(block == Blocks.air || block == null) {
                 LogHelper.error("Block not found: %s", name);
             } else {
                 blacklist.add(block);
