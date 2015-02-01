@@ -19,15 +19,19 @@ public class ExplosionHandler {
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
         if(event.world.isRemote)
             return;
-        List<ChunkPosition> oldList = event.getAffectedBlocks();
-        List<ChunkPosition> newList = new ArrayList<ChunkPosition>(oldList.size());
-        for(ChunkPosition pos: oldList) {
-            Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-            int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-            if(!shouldBePreserved(block, meta))
-                newList.add(pos);
+        if(Config.disableBlockDamage)
+            event.explosion.affectedBlockPositions = new ArrayList();
+        else {
+            List<ChunkPosition> oldList = event.getAffectedBlocks();
+            List<ChunkPosition> newList = new ArrayList<ChunkPosition>(oldList.size());
+            for(ChunkPosition pos: oldList) {
+                Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+                int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+                if(!shouldBePreserved(block, meta))
+                    newList.add(pos);
+            }
+            event.explosion.affectedBlockPositions = newList;
         }
-        event.explosion.affectedBlockPositions = newList;
     }
     
     public static boolean shouldBePreserved(Block block, int meta) {
