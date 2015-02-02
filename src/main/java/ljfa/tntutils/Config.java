@@ -51,8 +51,7 @@ public class Config {
         for(String name: blacklistArray) {
             Block block = (Block)Block.blockRegistry.getObject(name);
             if(block == Blocks.air || block == null) {
-                throw new RuntimeException("Error initializing blacklist: Block not found: " + name);
-                //LogHelper.error("Block not found: %s", name);
+                LogHelper.error("Block not found, ignoring invalid blacklist entry: %s", name);
             } else {
                 blacklist.add(block);
                 LogHelper.debug("Added block to blacklist: %s", name);
