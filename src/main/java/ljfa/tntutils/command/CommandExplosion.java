@@ -37,9 +37,9 @@ public class CommandExplosion extends CommandBase {
         y = func_110666_a(sender, y, args[1]);
         z = func_110666_a(sender, z, args[2]);
         
-        float strength = args.length >= 4 ? (float)parseDouble(sender, args[3]) : 4.0f;
-        boolean blockDmg = args.length >= 5 ? parseBoolean(sender, args[4]) : true;
-        boolean fire = args.length >= 6 ? parseBoolean(sender, args[5]) : false;
+        float strength   = args.length >= 4 ? (float)parseDouble(sender, args[3]) : 4.0f;
+        boolean blockDmg = args.length >= 5 ? parseBoolean(sender, args[4])       : true;
+        boolean fire     = args.length >= 6 ? parseBoolean(sender, args[5])       : false;
 
         Entity source = (sender instanceof Entity) ? (Entity)sender : null;
         
