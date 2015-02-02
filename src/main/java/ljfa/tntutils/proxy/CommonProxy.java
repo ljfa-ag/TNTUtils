@@ -67,7 +67,7 @@ public class CommonProxy {
             ReflectionHelper.setFinalField(Blocks.class, fieldName, null, ModBlocks.replaced_tnt);
             LogHelper.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
-            LogHelper.log(Level.ERROR, ex, "Failed to replace Vanilla TNT!");
+            throw new RuntimeException("Failed to replace Vanilla TNT!", ex);
         }
     }
 }
