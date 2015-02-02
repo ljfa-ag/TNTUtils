@@ -24,6 +24,7 @@ public class Config {
     public static Set<Block> blacklist = null;
     public static boolean blacklistActive = false;
     public static boolean disableBlockDamage;
+    public static boolean disableCreeperBlockDamage;
     public static boolean disableEntityDamage;
     public static boolean disableNPCDamage;
     
@@ -42,6 +43,7 @@ public class Config {
         explosionCommand = conf.get(CATEGORY_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
         spareTileEntities = conf.get(CATEGORY_GENERAL, "disableTileEntityDamage", false, "Makes explosions not destroy tile entities").getBoolean();
         blacklistArray = conf.get(CATEGORY_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
+        disableCreeperBlockDamage = conf.get(CATEGORY_GENERAL, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         disableBlockDamage = conf.get(CATEGORY_GENERAL, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
         disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No entities besides players get damage from explosions").getBoolean();
