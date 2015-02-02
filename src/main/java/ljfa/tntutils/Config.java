@@ -41,7 +41,7 @@ public class Config {
     }
     
     public static void loadValues() {
-        replaceTNT = conf.get(CATEGORY_GENERAL, "preventChainExplosions", true, "Prevents explosions from triggering TNT and thus disables chain explosions").setRequiresMcRestart(true).getBoolean();
+        replaceTNT = conf.get(CATEGORY_GENERAL, "preventChainExplosions", false, "Prevents explosions from triggering TNT and thus disables chain explosions").setRequiresMcRestart(true).getBoolean();
         explosionCommand = conf.get(CATEGORY_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
         spareTileEntities = conf.get(CATEGORY_GENERAL, "disableTileEntityDamage", false, "Makes explosions not destroy tile entities").getBoolean();
         blacklistArray = conf.get(CATEGORY_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
