@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import ljfa.tntutils.Config;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
@@ -20,7 +21,8 @@ public class ExplosionHandler {
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
         if(event.world.isRemote)
             return;
-        if(Config.disableBlockDamage)
+        if(Config.disableBlockDamage
+                || (Config.disableCreeperBlockDamage && event.explosion.exploder instanceof EntityCreeper))
             event.explosion.affectedBlockPositions.clear();
         else {
             event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
