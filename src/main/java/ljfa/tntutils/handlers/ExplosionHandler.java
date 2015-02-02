@@ -1,10 +1,11 @@
 package ljfa.tntutils.handlers;
 
-import java.util.ArrayList;
 import java.util.function.Predicate;
 
 import ljfa.tntutils.Config;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -20,7 +21,7 @@ public class ExplosionHandler {
         if(event.world.isRemote)
             return;
         if(Config.disableBlockDamage)
-            event.explosion.affectedBlockPositions = new ArrayList();
+            event.explosion.affectedBlockPositions.clear();
         else {
             event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
                 @Override
@@ -28,6 +29,17 @@ public class ExplosionHandler {
                     Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                     int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                     return shouldBePreserved(block, meta);
+                }
+            });
+        }
+        
+        if(Config.disableEntityDamage)
+            event.getAffectedEntities().clear();
+        else if(Config.disableNPCDamage) {
+            event.getAffectedEntities().removeIf(new Predicate<Entity>() {
+                @Override
+                public boolean test(Entity ent) {
+                    return !(ent instanceof EntityPlayer);
                 }
             });
         }
