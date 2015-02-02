@@ -27,7 +27,7 @@ public class ExplosionHandler {
                 public boolean test(ChunkPosition pos) {
                     Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
                     int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-                    return !shouldBePreserved(block, meta);
+                    return shouldBePreserved(block, meta);
                 }
             });
         }
