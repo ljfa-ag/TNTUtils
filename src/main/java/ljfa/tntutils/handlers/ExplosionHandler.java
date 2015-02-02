@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import ljfa.tntutils.Config;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.ChunkPosition;
@@ -45,7 +46,7 @@ public class ExplosionHandler {
             event.getAffectedEntities().removeIf(new Predicate<Entity>() {
                 @Override
                 public boolean test(Entity ent) {
-                    return !(ent instanceof EntityPlayer);
+                    return ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer);
                 }
             });
         }
