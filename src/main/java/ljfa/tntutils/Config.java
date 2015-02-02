@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import ljfa.tntutils.exception.InvalidConfigValueException;
 import ljfa.tntutils.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
@@ -59,7 +60,7 @@ public class Config {
         for(String name: blacklistArray) {
             Block block = (Block)Block.blockRegistry.getObject(name);
             if(block == Blocks.air || block == null) {
-                LogHelper.error("Block not found, ignoring invalid blacklist entry: %s", name);
+                throw new InvalidConfigValueException("Invalid blacklist entry: " + name);
             } else {
                 blacklist.add(block);
                 LogHelper.debug("Added block to blacklist: %s", name);
