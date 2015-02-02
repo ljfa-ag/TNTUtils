@@ -47,7 +47,7 @@ public class Config {
         disableCreeperBlockDamage = conf.get(CATEGORY_GENERAL, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         disableBlockDamage = conf.get(CATEGORY_GENERAL, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
-        disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No entities besides players get damage from explosions").getBoolean();
+        disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No livings besides players get damage from explosions").getBoolean();
         disableExplosions = conf.get(CATEGORY_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
         //----------------
         if(conf.hasChanged())
