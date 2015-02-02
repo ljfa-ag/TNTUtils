@@ -1,10 +1,9 @@
 package ljfa.tntutils.handlers;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Predicate;
 
 import ljfa.tntutils.Config;
-import ljfa.tntutils.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
@@ -13,9 +12,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class ExplosionHandler {
     @SubscribeEvent
     public void onExplosionStart(ExplosionEvent.Start event) {
-        
+
     }
-    
+
     @SubscribeEvent
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
         if(event.world.isRemote)
@@ -23,21 +22,19 @@ public class ExplosionHandler {
         if(Config.disableBlockDamage)
             event.explosion.affectedBlockPositions = new ArrayList();
         else {
-            List<ChunkPosition> oldList = event.getAffectedBlocks();
-            List<ChunkPosition> newList = new ArrayList<ChunkPosition>(oldList.size());
-            for(ChunkPosition pos: oldList) {
-                Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-                int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
-                LogHelper.debug("Explosion target: %s", Block.blockRegistry.getNameForObject(block));
-                if(!shouldBePreserved(block, meta))
-                    newList.add(pos);
-            }
-            event.explosion.affectedBlockPositions = newList;
+            event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
+                @Override
+                public boolean test(ChunkPosition pos) {
+                    Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+                    int meta = event.world.getBlockMetadata(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
+                    return !shouldBePreserved(block, meta);
+                }
+            });
         }
     }
-    
+
     public static boolean shouldBePreserved(Block block, int meta) {
         return Config.spareTileEntities && block.hasTileEntity(meta)
-            || Config.blacklistActive && Config.blacklist.contains(block);
+                || Config.blacklistActive && Config.blacklist.contains(block);
     }
 }
