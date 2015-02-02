@@ -21,10 +21,11 @@ public class ExplosionHandler {
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
         if(event.world.isRemote)
             return;
-        if(Config.disableBlockDamage
-                || (Config.disableCreeperBlockDamage && event.explosion.exploder instanceof EntityCreeper))
+        //Block damage
+        if(Config.disableBlockDamage || (Config.disableCreeperBlockDamage && event.explosion.exploder instanceof EntityCreeper))
             event.explosion.affectedBlockPositions.clear();
         else {
+            //Remove blacklisted blocks and tile entities (if configured) from the list
             event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
                 @Override
                 public boolean test(ChunkPosition pos) {
@@ -35,9 +36,11 @@ public class ExplosionHandler {
             });
         }
         
+        //Entity damage
         if(Config.disableEntityDamage)
             event.getAffectedEntities().clear();
         else if(Config.disableNPCDamage) {
+            //Remove non-players (if configured) from the list
             event.getAffectedEntities().removeIf(new Predicate<Entity>() {
                 @Override
                 public boolean test(Entity ent) {
