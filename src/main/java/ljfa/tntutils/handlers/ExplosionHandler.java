@@ -25,7 +25,7 @@ public class ExplosionHandler {
         //Block damage
         if(Config.disableBlockDamage || (Config.disableCreeperBlockDamage && event.explosion.exploder instanceof EntityCreeper))
             event.explosion.affectedBlockPositions.clear();
-        else {
+        else if(Config.spareTileEntities || Config.blacklistActive) {
             //Remove blacklisted blocks and tile entities (if configured) from the list
             event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
                 @Override
