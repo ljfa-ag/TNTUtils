@@ -24,6 +24,8 @@ public class Config {
     public static Set<Block> blacklist = null;
     public static boolean blacklistActive = false;
     public static boolean disableBlockDamage;
+    public static boolean disableEntityDamage;
+    public static boolean disableNPCDamage;
     
     public static void loadConfig(File file) {
         if(conf == null)
@@ -41,6 +43,8 @@ public class Config {
         spareTileEntities = conf.get(CATEGORY_GENERAL, "spareTileEntites", false, "Makes explosions not destroy tile entities").getBoolean();
         blacklistArray = conf.get(CATEGORY_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
         disableBlockDamage = conf.get(CATEGORY_GENERAL, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
+        disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
+        disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No entities besides players get damage from explosions").getBoolean();
         //----------------
         if(conf.hasChanged())
             conf.save();
