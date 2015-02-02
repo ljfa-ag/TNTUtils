@@ -14,7 +14,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class ExplosionHandler {
     @SubscribeEvent
     public void onExplosionStart(ExplosionEvent.Start event) {
-
+        if(Config.disableExplosions)
+            event.setCanceled(true);
     }
 
     @SubscribeEvent
