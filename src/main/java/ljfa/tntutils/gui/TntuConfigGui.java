@@ -17,12 +17,15 @@ public class TntuConfigGui extends GuiConfig {
         super(parent, getConfigElements(), Reference.MODID, false, false, "TNTUtils configuration");
     }
     
-    /** Compiles a list of config elements */
+    /** Compiles a list of config elements
+     * Borrowed from EnderIO's implementation
+     */
     private static List<IConfigElement> getConfigElements() {
         List<IConfigElement> list = new ArrayList<IConfigElement>();
         
-        //Add categories to config GUI
-        list.add(new ConfigElement<ConfigCategory>(Config.conf.getCategory(Config.CATEGORY_GENERAL)));
+        for(String name: Config.conf.getCategoryNames())
+            list.add(new ConfigElement<ConfigCategory>(Config.conf.getCategory(name)));
+        
         return list;
     }
 }
