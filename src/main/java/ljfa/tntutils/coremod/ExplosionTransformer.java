@@ -10,6 +10,7 @@ import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 
@@ -47,7 +48,12 @@ public class ExplosionTransformer implements IClassTransformer {
             AbstractInsnNode currentNode = it.next();
             
             if(currentNode.getOpcode() == Opcodes.NEW) {
-                FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "%s", ((TypeInsnNode)currentNode).desc);
+                FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "new %s", ((TypeInsnNode)currentNode).desc);
+            }
+            else if(currentNode.getOpcode() == Opcodes.INVOKESPECIAL) {
+                MethodInsnNode invokespecialNode = (MethodInsnNode)currentNode;
+                FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "Special method %s%s from %s",
+                        invokespecialNode.name, invokespecialNode.desc, invokespecialNode.owner);
             }
         }
     }
