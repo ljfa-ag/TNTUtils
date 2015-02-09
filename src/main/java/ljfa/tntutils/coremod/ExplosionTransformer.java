@@ -18,8 +18,10 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 public class ExplosionTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "Name: %s, Transformed: %s", name, transformedName);
-        return basicClass;
+        if(transformedName.startsWith("net.minecraft.") || transformedName.startsWith("net.minecraftforge."))
+            return patchClassASM(name, basicClass);
+        else
+            return basicClass;
     }
     
     private byte[] patchClassASM(String name, byte[] basicClass) {
