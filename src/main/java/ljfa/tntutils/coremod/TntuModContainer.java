@@ -19,7 +19,7 @@ public class TntuModContainer extends DummyModContainer {
         meta.version = Reference.VERSION;
         meta.authorList.add("ljfa");
         meta.url = "http://minecraft.curseforge.com/mc-mods/227449-tntutils";
-        meta.description = "The core mod belonging to TNTUtlis";
+        meta.description = "The core mod belonging to TNTUtils";
     }
 
     @Override
