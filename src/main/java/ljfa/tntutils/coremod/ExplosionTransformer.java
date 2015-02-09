@@ -18,7 +18,12 @@ import cpw.mods.fml.relauncher.FMLRelaunchLog;
 public class ExplosionTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        //ASM manipulation stuff
+        FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "Name: %s, Transformed: %s", name, transformedName);
+        return basicClass;
+    }
+    
+    private byte[] patchClassASM(String name, byte[] basicClass) {
+      //ASM manipulation stuff
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
