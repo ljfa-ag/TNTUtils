@@ -15,10 +15,11 @@ public class TntuModContainer extends DummyModContainer {
         super(new ModMetadata());
         ModMetadata meta = getMetadata();
         meta.modId = "tnt_utilities_core";
-        meta.name = "TntUtilities Core";
+        meta.name = "TNTUtils Core";
         meta.version = Reference.VERSION;
         meta.authorList.add("ljfa");
         meta.url = "http://minecraft.curseforge.com/mc-mods/227449-tntutils";
+        meta.description = "The core mod belonging to TNTUtlis";
     }
 
     @Override
