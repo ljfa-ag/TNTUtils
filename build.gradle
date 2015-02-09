@@ -21,6 +21,13 @@ version = "0.2-alpha"
 group= "ljfa.tntutils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tnt_utilities"
 
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'ljfa.tntutils.coremod.TntuPlugin'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
 minecraft {
     version = "1.7.10-10.13.2.1291"
     runDir = "eclipse"
