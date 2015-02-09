@@ -31,17 +31,22 @@ public class ExplosionTransformer implements IClassTransformer {
         ClassReader classReader = new ClassReader(basicClass);
         classReader.accept(classNode, 0);
         
+        boolean didPatch = false;
         for(MethodNode mn: classNode.methods) {
-            patchMethod(mn);
+            didPatch = patchMethod(mn) || didPatch;
         }
         
-        //Write class
-        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
-        classNode.accept(writer);
-        return writer.toByteArray();
+        if(didPatch) {
+            //Write class
+            ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+            classNode.accept(writer);
+            return writer.toByteArray();
+        } else
+            return basicClass;
     }
 
-    private void patchMethod(MethodNode mn) {
+    private boolean patchMethod(MethodNode mn) {
+        boolean didPatch = false;
         //Loop through the instructions of the method
         Iterator<AbstractInsnNode> it = mn.instructions.iterator();
         while(it.hasNext()) {
@@ -49,12 +54,15 @@ public class ExplosionTransformer implements IClassTransformer {
             
             if(currentNode.getOpcode() == Opcodes.NEW) {
                 FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "new %s", ((TypeInsnNode)currentNode).desc);
+                didPatch = true;
             }
             else if(currentNode.getOpcode() == Opcodes.INVOKESPECIAL) {
                 MethodInsnNode invokespecialNode = (MethodInsnNode)currentNode;
                 FMLRelaunchLog.log("TNTUtils Core", Level.INFO, "Special method %s%s from %s",
                         invokespecialNode.name, invokespecialNode.desc, invokespecialNode.owner);
+                didPatch = true;
             }
         }
+        return didPatch;
     }
 }
