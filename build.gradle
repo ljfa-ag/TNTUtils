@@ -23,7 +23,7 @@ archivesBaseName = "tnt_utilities"
 
 jar {
     manifest {
-        attributes 'FMLCorePlugin': 'ljfa.tntutils.coremod.TntuPlugin'
+        attributes 'FMLCorePlugin': 'ljfa.tntutils.asm.TntuPlugin'
         attributes 'FMLCorePluginContainsFMLMod': 'true'
     }
 }
