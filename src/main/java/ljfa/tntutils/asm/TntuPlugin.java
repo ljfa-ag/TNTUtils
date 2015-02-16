@@ -15,12 +15,12 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 public class TntuPlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {"ljfa.tntutils.coremod.ExplosionTransformer"};
+        return new String[] { ExplosionTransformer.class.getName() };
     }
 
     @Override
     public String getModContainerClass() {
-        return "ljfa.tntutils.coremod.TntuModContainer";
+        return TntuModContainer.class.getName();
     }
 
     @Override
