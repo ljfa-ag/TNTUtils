@@ -16,7 +16,8 @@ import org.objectweb.asm.tree.TypeInsnNode;
 
 import cpw.mods.fml.relauncher.FMLRelaunchLog;
 
-public class ExplosionTransformer implements IClassTransformer {
+/** Currently not working */
+public class ExplConstrTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if(transformedName.startsWith("net.minecraft.") || transformedName.startsWith("net.minecraftforge."))
