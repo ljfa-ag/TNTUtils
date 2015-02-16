@@ -20,7 +20,10 @@ import cpw.mods.fml.common.FMLLog;
 
 public class ExplosionTransformer implements IClassTransformer {
     @Override
-    public byte[] transform(String name, String transformedName, byte[] basicClass) {      
+    public byte[] transform(String name, String transformedName, byte[] basicClass) {
+        if(!Config.alwaysDrop)
+            return basicClass;
+        
         if(name.equals("net.minecraft.world.Explosion")) {
             FMLLog.log("TNTUtils Core", Level.INFO, "About to patch class %s", name);
             return patchClassASM(name, basicClass, false);

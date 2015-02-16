@@ -16,10 +16,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 public class TntuPlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        if(Config.alwaysDrop)
-            return new String[] { ExplosionTransformer.class.getName() };
-        else
-            return null;
+        return new String[] { ExplosionTransformer.class.getName() };
     }
 
     @Override
