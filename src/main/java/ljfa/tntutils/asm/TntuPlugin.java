@@ -1,4 +1,4 @@
-package ljfa.tntutils.coremod;
+package ljfa.tntutils.asm;
 
 import java.util.Map;
 
