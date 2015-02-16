@@ -2,6 +2,7 @@ package ljfa.tntutils.asm;
 
 import java.util.Map;
 
+import ljfa.tntutils.Config;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.MCVersion;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin.Name;
@@ -15,7 +16,10 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 public class TntuPlugin implements IFMLLoadingPlugin {
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] { /*ExplConstrTransformer.class.getName()*/ ExplosionTransformer.class.getName() };
+        if(Config.alwaysDrop)
+            return new String[] { ExplosionTransformer.class.getName() };
+        else
+            return null;
     }
 
     @Override
