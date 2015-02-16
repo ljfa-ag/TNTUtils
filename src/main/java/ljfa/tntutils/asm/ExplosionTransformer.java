@@ -62,7 +62,7 @@ public class ExplosionTransformer implements IClassTransformer {
              * Currently, the division 1.0F / this.explosionSize for the drop chance is being performed.
              * We want to get rid of this and instead have 1.0F as drop chance.
              * 
-             * 
+             * So we search for the sequence "aload_0", "getfield", "fdiv" and skip it entirely.
              */
             //Search for "fdiv"
             if(currentNode.getOpcode() == Opcodes.FDIV) {
