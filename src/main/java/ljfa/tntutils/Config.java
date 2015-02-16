@@ -36,8 +36,6 @@ public class Config {
         
         conf.load();
         loadValues();
-        
-        FMLCommonHandler.instance().bus().register(new ChangeHandler());
     }
     
     public static void loadValues() {
@@ -71,6 +69,11 @@ public class Config {
     
     /** Reloads the config values upon change */
     public static class ChangeHandler {
+        
+        public static void register() {
+            FMLCommonHandler.instance().bus().register(new ChangeHandler());
+        }
+        
         @SubscribeEvent
         public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if(event.modID.equals(Reference.MODID)) {

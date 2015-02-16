@@ -25,7 +25,7 @@ public class TntuPlugin implements IFMLLoadingPlugin {
 
     @Override
     public String getSetupClass() {
-        return null;
+        return TntuSetup.class.getName();
     }
 
     @Override

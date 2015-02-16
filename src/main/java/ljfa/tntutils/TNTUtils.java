@@ -23,7 +23,9 @@ public class TNTUtils {
     
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
-        Config.loadConfig(event.getSuggestedConfigurationFile());
+        //Config.loadConfig(event.getSuggestedConfigurationFile());
+        //The configuration was already loaded by TntuSetup
+        Config.ChangeHandler.register();
         proxy.preInit(event);
     }
     
