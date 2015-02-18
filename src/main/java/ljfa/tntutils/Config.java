@@ -29,7 +29,6 @@ public class Config {
     public static boolean disableEntityDamage;
     public static boolean disableNPCDamage;
     public static boolean disableExplosions;
-    public static boolean alwaysDrop;
     
     public static void loadConfig(File file) {
         if(conf == null)
@@ -37,6 +36,8 @@ public class Config {
         
         conf.load();
         loadValues();
+        
+        FMLCommonHandler.instance().bus().register(new ChangeHandler());
     }
     
     public static void loadValues() {
@@ -49,7 +50,6 @@ public class Config {
         disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
         disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No livings besides players get damage from explosions").getBoolean();
         disableExplosions = conf.get(CATEGORY_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
-        alwaysDrop = conf.get(CATEGORY_GENERAL, "alwaysDrop", false, "Destroyed blocks will always drop as an item").setRequiresMcRestart(true).getBoolean();
         //----------------
         if(conf.hasChanged())
             conf.save();
@@ -71,11 +71,6 @@ public class Config {
     
     /** Reloads the config values upon change */
     public static class ChangeHandler {
-        
-        public static void register() {
-            FMLCommonHandler.instance().bus().register(new ChangeHandler());
-        }
-        
         @SubscribeEvent
         public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if(event.modID.equals(Reference.MODID)) {

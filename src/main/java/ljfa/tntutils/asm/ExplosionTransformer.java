@@ -2,7 +2,6 @@ package ljfa.tntutils.asm;
 
 import java.util.Iterator;
 
-import ljfa.tntutils.Config;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 import org.apache.logging.log4j.Level;
@@ -21,9 +20,6 @@ import cpw.mods.fml.common.FMLLog;
 public class ExplosionTransformer implements IClassTransformer {
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        if(!Config.alwaysDrop)
-            return basicClass;
-        
         if(name.equals("net.minecraft.world.Explosion")) {
             FMLLog.log("TNTUtils Core", Level.INFO, "About to patch class %s", name);
             return patchClassASM(name, basicClass, false);
