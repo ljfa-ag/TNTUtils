@@ -29,9 +29,9 @@ public class CommandExplosion extends CommandBase {
             throw new WrongUsageException("Too few arguments", new Object[0]);
         
         World world = sender.getEntityWorld();
-        double x = (double)sender.getPlayerCoordinates().posX + 0.5;
-        double y = (double)sender.getPlayerCoordinates().posY;
-        double z = (double)sender.getPlayerCoordinates().posZ + 0.5;
+        double x = sender.getPlayerCoordinates().posX + 0.5;
+        double y = sender.getPlayerCoordinates().posY;
+        double z = sender.getPlayerCoordinates().posZ + 0.5;
         
         x = func_110666_a(sender, x, args[0]);
         y = func_110666_a(sender, y, args[1]);
