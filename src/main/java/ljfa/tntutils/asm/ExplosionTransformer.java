@@ -8,12 +8,16 @@ import org.apache.logging.log4j.Level;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
 import org.objectweb.asm.tree.LabelNode;
+import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.VarInsnNode;
 
 import cpw.mods.fml.common.FMLLog;
 
@@ -71,18 +75,23 @@ public class ExplosionTransformer implements IClassTransformer {
                 currentNode = currentNode.getPrevious();
                 //Check if preceding instruction is "getfield"
                 if(currentNode.getOpcode() == Opcodes.GETFIELD) {            
-                    //Go another step back
-                    currentNode = currentNode.getPrevious();
-                    //Here should be a "aload_0"
-                    if(currentNode.getOpcode() == Opcodes.ALOAD) {
-                        FMLLog.log("TNTUtils Core", Level.INFO, "Found target instructions aload_0, getfield, fdiv");
+                    //Go twp steps back
+                    currentNode = currentNode.getPrevious().getPrevious();
+                    //Here should be a "fconst_1"
+                    if(currentNode.getOpcode() == Opcodes.FCONST_1) {
+                        FMLLog.log("TNTUtils Core", Level.INFO, "Found target instructions fconst_1 through fdiv");
                         
                         //Insert a label after "fdiv"
                         LabelNode label = new LabelNode();
                         mn.instructions.insert(fdivNode, label);
                         
-                        //Insert a "goto" instruction before aload_0
-                        mn.instructions.insertBefore(currentNode, new JumpInsnNode(Opcodes.GOTO, label));
+                        //Insert a hook call and a "goto" instruction before fconst_1
+                        InsnList toInject = new InsnList();
+                        toInject.add(new VarInsnNode(Opcodes.ALOAD, 0));
+                        toInject.add(new MethodInsnNode(Opcodes.INVOKESTATIC, Type.getInternalName(HooksExplosion.class), "getDropChance", "(Lnet/minecraft/world/Explosion;)F", false));
+                        toInject.add(new JumpInsnNode(Opcodes.GOTO, label));
+                        
+                        mn.instructions.insertBefore(currentNode, toInject);
                         
                         didInject = true;
                         break;
