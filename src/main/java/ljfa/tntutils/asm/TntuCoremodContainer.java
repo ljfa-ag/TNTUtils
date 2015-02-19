@@ -10,8 +10,8 @@ import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
 
-public class TntuModContainer extends DummyModContainer {
-    public TntuModContainer() {
+public class TntuCoremodContainer extends DummyModContainer {
+    public TntuCoremodContainer() {
         super(new ModMetadata());
         ModMetadata meta = getMetadata();
         meta.modId = "tnt_utilities_core";

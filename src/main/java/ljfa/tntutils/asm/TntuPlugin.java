@@ -20,7 +20,7 @@ public class TntuPlugin implements IFMLLoadingPlugin {
 
     @Override
     public String getModContainerClass() {
-        return TntuModContainer.class.getName();
+        return TntuCoremodContainer.class.getName();
     }
 
     @Override
