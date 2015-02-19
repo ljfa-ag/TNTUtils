@@ -64,9 +64,11 @@ public class ExplosionTransformer implements IClassTransformer {
             /* In the Explosion class, line 221:
              * 
              * Currently, the division 1.0F / this.explosionSize for the drop chance is being performed.
-             * We want to get rid of this and instead have 1.0F as drop chance.
+             * We want to get rid of this and instead call a hook method that calculates the chance for us.
+             * This hook method would be HooksExplosion.getDropChance().
              * 
-             * So we search for the sequence "aload_0", "getfield", "fdiv" and skip over it.
+             * So we search for the sequence fconst_1, aload_0, getfield, fdiv.
+             * We insert a "goto" instruction to skil over it and instead insert an "invokestatic" to call our hook.
              */
             //Search for "fdiv"
             if(currentNode.getOpcode() == Opcodes.FDIV) {
@@ -79,7 +81,7 @@ public class ExplosionTransformer implements IClassTransformer {
                     currentNode = currentNode.getPrevious().getPrevious();
                     //Here should be a "fconst_1"
                     if(currentNode.getOpcode() == Opcodes.FCONST_1) {
-                        FMLLog.log("TNTUtils Core", Level.INFO, "Found target instructions fconst_1 through fdiv");
+                        FMLLog.log("TNTUtils Core", Level.INFO, "Found target instructions \"fconst_1\" through \"fdiv\"");
                         
                         //Insert a label after "fdiv"
                         LabelNode label = new LabelNode();
