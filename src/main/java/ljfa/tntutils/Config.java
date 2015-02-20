@@ -33,6 +33,7 @@ public class Config {
     public static float dropChanceModifier;
     public static boolean disableTNT;
     public static boolean disableTNTMinecart;
+    public static float sizeMultiplier;
     
     public static void loadConfig(File file) {
         if(conf == null)
@@ -60,6 +61,7 @@ public class Config {
                 + "This option will only affect explosions of size <= 7 since a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
         disableTNT = conf.get(CAT_GENERAL, "disableTNT", false, "Disables TNT explosions").setRequiresMcRestart(true).getBoolean();
         disableTNTMinecart = conf.get(CAT_GENERAL, "disableTNTMinecart", false, "Disables the placement of TNT minecarts").setRequiresMcRestart(true).getBoolean();
+        sizeMultiplier = (float)conf.get(CAT_GENERAL, "sizeMultiplier", 1.0, "Multiplies the size of all explosions by this", 0.0, 50.0).getDouble();
         //----------------
         if(conf.hasChanged())
             conf.save();

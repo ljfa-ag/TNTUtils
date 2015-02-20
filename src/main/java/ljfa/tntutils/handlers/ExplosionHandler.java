@@ -18,6 +18,8 @@ public class ExplosionHandler {
     public void onExplosionStart(ExplosionEvent.Start event) {
         if(Config.disableExplosions)
             event.setCanceled(true);
+        else
+            event.explosion.explosionSize *= Config.sizeMultiplier;
     }
 
     @SubscribeEvent
