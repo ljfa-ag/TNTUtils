@@ -27,6 +27,7 @@ public class Config {
     public static boolean disableBlockDamage;
     public static boolean disableCreeperBlockDamage;
     public static boolean disableEntityDamage;
+    public static boolean disablePlayerDamage;
     public static boolean disableNPCDamage;
     public static boolean disableExplosions;
     public static float dropChanceModifier;
@@ -48,8 +49,9 @@ public class Config {
         blacklistArray = conf.get(CAT_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
         disableCreeperBlockDamage = conf.get(CAT_GENERAL, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         disableBlockDamage = conf.get(CAT_GENERAL, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
-        disableEntityDamage = conf.get(CAT_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
-        disableNPCDamage = conf.get(CAT_GENERAL, "disableNPCDamage", false, "No livings besides players get damage from explosions").getBoolean();
+        disableEntityDamage = conf.get(CAT_GENERAL, "disableEntityDamage", false, "Disables explosion damage to all entities").getBoolean();
+        disablePlayerDamage = conf.get(CAT_GENERAL, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
+        disableNPCDamage = conf.get(CAT_GENERAL, "disableNPCDamage", false, "Disables explosion damage to animals and mobs").getBoolean();
         disableExplosions = conf.get(CAT_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
         dropChanceModifier = (float)conf.get(CAT_GENERAL, "dropChanceIncrease", 0.0, "Increases the chance that explosions will drop destroyed blocks as items\n"
                 + "0 = Vanilla behavior, 1 = always drop items.\n"
