@@ -104,6 +104,6 @@ public class ExplosionTransformer implements IClassTransformer {
         if(didInject)
             FMLLog.log("TNTUtils Core", Level.INFO, "Successfully injected into %s%s", mn.name, mn.desc);
         else
-            FMLLog.log("TNTUtils Core", Level.ERROR, "Failed injection into %s%s", mn.name, mn.desc);
+            FMLLog.log("TNTUtils Core", Level.ERROR, "Failed injection into %s%s. There is probably an incompatibility to some other coremod.", mn.name, mn.desc);
     }
 }
