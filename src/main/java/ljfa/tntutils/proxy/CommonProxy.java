@@ -28,7 +28,7 @@ public class CommonProxy {
         Config.loadConfig(event.getSuggestedConfigurationFile());
         ModBlocks.preInit();
         
-        if(Config.replaceTNT)
+        if(Config.preventChainExpl)
             replaceVanillaTNT();
     }
     

@@ -18,7 +18,7 @@ public class Config {
 
     public static final String CAT_GENERAL = "general";
     
-    public static boolean replaceTNT;
+    public static boolean preventChainExpl;
     public static boolean explosionCommand;
     public static boolean spareTileEntities;
     public static String[] blacklistArray;
@@ -42,7 +42,7 @@ public class Config {
     }
     
     public static void loadValues() {
-        replaceTNT = conf.get(CAT_GENERAL, "preventChainExplosions", false, "Prevents explosions from triggering TNT and thus disables chain explosions").setRequiresMcRestart(true).getBoolean();
+        preventChainExpl = conf.get(CAT_GENERAL, "preventChainExplosions", false, "Prevents explosions from triggering TNT and thus disables chain explosions").setRequiresMcRestart(true).getBoolean();
         explosionCommand = conf.get(CAT_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
         spareTileEntities = conf.get(CAT_GENERAL, "disableTileEntityDamage", false, "Makes explosions not destroy tile entities").getBoolean();
         blacklistArray = conf.get(CAT_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
