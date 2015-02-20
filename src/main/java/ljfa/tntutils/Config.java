@@ -51,7 +51,7 @@ public class Config {
         blacklistArray = conf.get(CAT_GENERAL, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
         disableCreeperBlockDamage = conf.get(CAT_GENERAL, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         disableBlockDamage = conf.get(CAT_GENERAL, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
-        disableEntityDamage = conf.get(CAT_GENERAL, "disableEntityDamage", false, "Disables explosion damage to all entities").getBoolean();
+        disableEntityDamage = conf.get(CAT_GENERAL, "disableEntityDamage", false, "Disables explosion damage to all entities (also includes items, minecarts etc.)").getBoolean();
         disablePlayerDamage = conf.get(CAT_GENERAL, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
         disableNPCDamage = conf.get(CAT_GENERAL, "disableNPCDamage", false, "Disables explosion damage to animals and mobs").getBoolean();
         disableExplosions = conf.get(CAT_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
