@@ -29,7 +29,6 @@ public class Config {
     public static boolean disableEntityDamage;
     public static boolean disableNPCDamage;
     public static boolean disableExplosions;
-    public static boolean alwaysDropItems;
     
     public static void loadConfig(File file) {
         if(conf == null)
@@ -51,8 +50,6 @@ public class Config {
         disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
         disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No livings besides players get damage from explosions").getBoolean();
         disableExplosions = conf.get(CATEGORY_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
-        alwaysDropItems = conf.get(CATEGORY_GENERAL, "alwaysDropItems", false, "Makes explosions always drop destroyed blocks as items.\n"
-                + "This will only affect explosions of size <= 7, since a large number of dropped items causes lag.").getBoolean();
         //----------------
         if(conf.hasChanged())
             conf.save();
