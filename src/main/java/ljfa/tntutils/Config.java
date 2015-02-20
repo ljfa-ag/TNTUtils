@@ -53,7 +53,7 @@ public class Config {
         disableExplosions = conf.get(CAT_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
         dropChanceModifier = (float)conf.get(CAT_GENERAL, "dropChanceIncrease", 0.0, "Increases the chance that explosions will drop destroyed blocks as items\n"
                 + "0 = Vanilla behavior, 1 = always drop items.\n"
-                + "This option will only affect explosions of size <= 7 because a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
+                + "This option will only affect explosions of size <= 7 since a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
         //----------------
         if(conf.hasChanged())
             conf.save();
