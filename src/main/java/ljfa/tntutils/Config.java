@@ -51,7 +51,7 @@ public class Config {
         disableEntityDamage = conf.get(CATEGORY_GENERAL, "disableEntityDamage", false, "Disables all entity damage from explosions").getBoolean();
         disableNPCDamage = conf.get(CATEGORY_GENERAL, "disableNPCDamage", false, "No livings besides players get damage from explosions").getBoolean();
         disableExplosions = conf.get(CATEGORY_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
-        dropChanceModifier = (float)conf.get(CATEGORY_GENERAL, "dropChanceModifier", 0.0, "Increases the chance that explosions will drop destroyed blocks as items\n"
+        dropChanceModifier = (float)conf.get(CATEGORY_GENERAL, "dropChanceIncrease", 0.0, "Increases the chance that explosions will drop destroyed blocks as items\n"
                 + "0 = Vanilla behavior, 1 = always drop items.\n"
                 + "This option will only affect explosions of size <= 7 because a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
         //----------------
