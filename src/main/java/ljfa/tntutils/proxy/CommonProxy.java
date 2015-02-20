@@ -2,6 +2,7 @@ package ljfa.tntutils.proxy;
 
 import ljfa.tntutils.Config;
 import ljfa.tntutils.blocks.ModBlocks;
+import ljfa.tntutils.handlers.EntityJoinHandler;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import ljfa.tntutils.util.LogHelper;
 import ljfa.tntutils.util.ReflectionHelper;
@@ -34,6 +35,8 @@ public class CommonProxy {
     
     public void init(FMLInitializationEvent event) {
         MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        if(Config.disableTNT || Config.disableTNTMinecart)
+            MinecraftForge.EVENT_BUS.register(new EntityJoinHandler());
     }
     
     public void postInit(FMLPostInitializationEvent event) {
