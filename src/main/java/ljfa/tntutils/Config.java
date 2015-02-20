@@ -58,7 +58,7 @@ public class Config {
         disableExplosions = conf.get(CAT_GENERAL, "disableExplosions", false, "Entirely disables all effects from explosions").getBoolean();
         dropChanceModifier = (float)conf.get(CAT_GENERAL, "dropChanceIncrease", 0.0, "Increases the chance that explosions will drop destroyed blocks as items\n"
                 + "0 = Vanilla behavior, 1 = always drop items.\n"
-                + "This option will only affect explosions of size <= 7 since a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
+                + "Only affects explosions of size <= 7 since a large number of dropped items can cause lag.", 0.0, 1.0).getDouble();
         disableTNT = conf.get(CAT_GENERAL, "disableTNT", false, "Disables TNT explosions").setRequiresMcRestart(true).getBoolean();
         disableTNTMinecart = conf.get(CAT_GENERAL, "disableTNTMinecart", false, "Disables the placement of TNT minecarts").setRequiresMcRestart(true).getBoolean();
         sizeMultiplier = (float)conf.get(CAT_GENERAL, "sizeMultiplier", 1.0, "Multiplies the size of all explosions by this", 0.0, 50.0).getDouble();
