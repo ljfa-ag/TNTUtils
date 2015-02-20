@@ -26,7 +26,7 @@ public class CommandExplosion extends CommandBase {
     @Override
     public void processCommand(ICommandSender sender, String[] args) {
         if(args.length < 3)
-            throw new WrongUsageException("Too few arguments", new Object[0]);
+            throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
         
         World world = sender.getEntityWorld();
         double x = sender.getPlayerCoordinates().posX + 0.5;
