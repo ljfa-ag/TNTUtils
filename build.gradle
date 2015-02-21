@@ -25,6 +25,7 @@ jar {
     manifest {
         attributes 'FMLCorePlugin': 'ljfa.tntutils.asm.TntuPlugin'
         attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLAT': 'accessTransformer.cfg'
     }
 }
 

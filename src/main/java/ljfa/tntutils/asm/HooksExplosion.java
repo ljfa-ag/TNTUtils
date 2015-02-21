@@ -8,10 +8,8 @@ public class HooksExplosion {
     public static final float alwaysDropThreshold = 10.0f;
     
     public static float getDropChance(Explosion expl) throws ReflectiveOperationException {
-        //TODO: Use Access Transformer
-        float explSize = (Float)ReflectionHelper.getField(Explosion.class, "explosionSize", expl);
-        float baseChance = 1.0f / explSize;
-        if(explSize <= alwaysDropThreshold)
+        float baseChance = 1.0f / expl.explosionSize;
+        if(expl.explosionSize <= alwaysDropThreshold)
             return baseChance + Config.dropChanceModifier * (1.0f - baseChance);
         else
             return baseChance;
