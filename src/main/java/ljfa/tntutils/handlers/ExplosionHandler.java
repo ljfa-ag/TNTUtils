@@ -9,17 +9,16 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityMinecartTNT;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class ExplosionHandler {
     @SubscribeEvent
     public void onExplosionStart(ExplosionEvent.Start event) {
         if(Config.disableExplosions)
             event.setCanceled(true);
-        else
-            event.explosion.explosionSize *= Config.sizeMultiplier;
+        /*else
+            event.explosion.explosionSize *= Config.sizeMultiplier;*/
     }
 
     @SubscribeEvent

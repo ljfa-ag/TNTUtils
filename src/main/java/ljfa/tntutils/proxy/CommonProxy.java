@@ -15,14 +15,11 @@ import net.minecraft.util.ObjectIntIdentityMap;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.RegistrySimple;
 import net.minecraftforge.common.MinecraftForge;
-
-import org.apache.logging.log4j.Level;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 import com.google.common.collect.BiMap;
-
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
@@ -54,7 +51,7 @@ public class CommonProxy {
             //Replace it in the "underlyingIntegerMap"
             String fieldName = Utils.deobfuscatedEnv ? "underlyingIntegerMap" : "field_148759_a";
             ObjectIntIdentityMap intMap = (ObjectIntIdentityMap)ReflectionHelper.getField(RegistryNamespaced.class, fieldName, Block.blockRegistry);
-            intMap.func_148746_a(ModBlocks.replaced_tnt, tntID);
+            intMap.put(ModBlocks.replaced_tnt, tntID);
             
             //Replace it in the "registryObjects"
             fieldName = Utils.deobfuscatedEnv ? "registryObjects" : "field_82596_a";
@@ -63,7 +60,8 @@ public class CommonProxy {
             
             //Replace it in the associated ItemBlock
             ItemBlock tntItem = (ItemBlock)Item.itemRegistry.getObjectById(tntID);
-            ReflectionHelper.setFinalField(ItemBlock.class, "field_150939_a", tntItem, ModBlocks.replaced_tnt);
+            fieldName = Utils.deobfuscatedEnv ? "block" : "field_150939_a";
+            ReflectionHelper.setFinalField(ItemBlock.class, fieldName, tntItem, ModBlocks.replaced_tnt);
             
             //Replace it in the Blocks class
             fieldName = Utils.deobfuscatedEnv ? "tnt" : "field_150335_W";

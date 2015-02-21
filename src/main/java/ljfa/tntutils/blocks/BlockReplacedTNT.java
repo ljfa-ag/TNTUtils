@@ -1,10 +1,7 @@
 package ljfa.tntutils.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockTNT;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -21,7 +18,7 @@ public class BlockReplacedTNT extends BlockTNT {
     }*/
     
     @Override
-    public void onBlockDestroyedByExplosion(World world, int x, int y, int z, Explosion expl) {
+    public void onBlockDestroyedByExplosion(World world, BlockPos pos, Explosion expl) {
         //do nothing
     }
     

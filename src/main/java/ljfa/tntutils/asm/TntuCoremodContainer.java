@@ -1,14 +1,11 @@
 package ljfa.tntutils.asm;
 
-import java.util.Arrays;
-
 import ljfa.tntutils.Reference;
+import net.minecraftforge.fml.common.DummyModContainer;
+import net.minecraftforge.fml.common.LoadController;
+import net.minecraftforge.fml.common.ModMetadata;
 
 import com.google.common.eventbus.EventBus;
-
-import cpw.mods.fml.common.DummyModContainer;
-import cpw.mods.fml.common.LoadController;
-import cpw.mods.fml.common.ModMetadata;
 
 public class TntuCoremodContainer extends DummyModContainer {
     public TntuCoremodContainer() {

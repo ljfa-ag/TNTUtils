@@ -3,6 +3,7 @@ package ljfa.tntutils.asm;
 import java.util.Iterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraftforge.fml.common.FMLLog;
 
 import org.apache.logging.log4j.Level;
 import org.objectweb.asm.ClassReader;
@@ -18,8 +19,6 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
-
-import cpw.mods.fml.common.FMLLog;
 
 public class ExplosionTransformer implements IClassTransformer {
     @Override
