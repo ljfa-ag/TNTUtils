@@ -29,6 +29,18 @@ jar {
     }
 }
 
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'dev'
+    manifest {
+        attributes 'FMLAT': 'accessTransformer.cfg'
+    }
+}
+
+artifacts {
+    archives deobfJar
+}
+
 minecraft {
     version = "1.8-11.14.0.1295-1.8"
     runDir = "eclipse"
