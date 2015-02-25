@@ -16,6 +16,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'curseforge'
 
 version = "0.3-alpha"
 group= "ljfa.tntutils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -34,6 +35,12 @@ minecraft {
     
     replaceIn "Reference.java"
     replace "@VERSION@", project.version
+}
+
+curse {
+    projectId = '227449'
+    apiKey = project.curseForgeApiKey
+    releaseType = 'alpha'
 }
 
 dependencies {
