@@ -16,6 +16,7 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'curseforge'
 
 version = "0.3-alpha"
 group= "ljfa.tntutils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
@@ -27,6 +28,12 @@ jar {
         attributes 'FMLCorePluginContainsFMLMod': 'true'
         attributes 'FMLAT': 'accessTransformer.cfg'
     }
+}
+
+curse {
+    projectId = '227449'
+    apiKey = project.curseForgeApiKey
+    releaseType = 'alpha'
 }
 
 task deobfJar(type: Jar) {
