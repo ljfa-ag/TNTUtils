@@ -26,7 +26,7 @@ jar {
     manifest {
         attributes 'FMLCorePlugin': 'ljfa.tntutils.asm.TntuPlugin'
         attributes 'FMLCorePluginContainsFMLMod': 'true'
-        attributes 'FMLAT': 'accessTransformer.cfg'
+        attributes 'FMLAT': 'tntutils_at.cfg'
     }
 }
 
@@ -34,18 +34,6 @@ curse {
     projectId = '227449'
     apiKey = project.curseForgeApiKey
     releaseType = 'alpha'
-}
-
-task deobfJar(type: Jar) {
-    from sourceSets.main.output
-    classifier = 'dev'
-    manifest {
-        attributes 'FMLAT': 'accessTransformer.cfg'
-    }
-}
-
-artifacts {
-    archives deobfJar
 }
 
 minecraft {
