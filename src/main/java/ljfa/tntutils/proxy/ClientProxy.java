@@ -2,6 +2,8 @@ package ljfa.tntutils.proxy;
 
 import ljfa.tntutils.blocks.ModBlocks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
@@ -12,7 +14,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        //ModBlocks.replaced_tnt.registerBlockIcons(mc.getTextureMapBlocks());
+        mc.getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(ModBlocks.replaced_tnt), 0,
+                new ModelResourceLocation("minecraft:tnt", "inventory"));
     }
     
     private Minecraft mc;
