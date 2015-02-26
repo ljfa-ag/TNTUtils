@@ -1,6 +1,7 @@
 package ljfa.tntutils.command;
 
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
@@ -8,7 +9,7 @@ import net.minecraft.world.World;
 
 public class CommandExplosion extends CommandBase {
     @Override
-    public String getCommandName() {
+    public String getName() {
         return "explosion";
     }
     
@@ -24,26 +25,26 @@ public class CommandExplosion extends CommandBase {
     }
 
     @Override
-    public void processCommand(ICommandSender sender, String[] args) {
+    public void execute(ICommandSender sender, String[] args) throws CommandException {
         if(args.length < 3)
             throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
         
         World world = sender.getEntityWorld();
-        double x = sender.getPlayerCoordinates().posX + 0.5;
-        double y = sender.getPlayerCoordinates().posY;
-        double z = sender.getPlayerCoordinates().posZ + 0.5;
+        double x = sender.getPositionVector().xCoord;
+        double y = sender.getPositionVector().yCoord;
+        double z = sender.getPositionVector().zCoord;
         
-        x = func_110666_a(sender, x, args[0]);
-        y = func_110666_a(sender, y, args[1]);
-        z = func_110666_a(sender, z, args[2]);
+        CoordinateArg xArg = func_175770_a(x, args[0], true);
+        CoordinateArg yArg = func_175767_a(y, args[1], 0, 0, false);
+        CoordinateArg zArg = func_175770_a(z, args[2], true);
         
-        float strength   = args.length >= 4 ? (float)parseDouble(sender, args[3]) : 4.0f;
-        boolean blockDmg = args.length >= 5 ? parseBoolean(sender, args[4])       : true;
-        boolean fire     = args.length >= 6 ? parseBoolean(sender, args[5])       : false;
+        float strength   = args.length >= 4 ? (float)parseDouble(args[3]) : 4.0f;
+        boolean blockDmg = args.length >= 5 ? parseBoolean(args[4])       : true;
+        boolean fire     = args.length >= 6 ? parseBoolean(args[5])       : false;
 
         Entity source = (sender instanceof Entity) ? (Entity)sender : null;
         
-        world.newExplosion(source, x, y, z, strength, fire, blockDmg);
+        world.newExplosion(source, xArg.func_179628_a(), yArg.func_179628_a(), zArg.func_179628_a(), strength, fire, blockDmg);
     }
 
 }
