@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
-    guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core")
+    guiFactory = Reference.GUI_FACTORY_CLASS/*, dependencies = "required-after:tnt_utilities_core"*/)
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;
