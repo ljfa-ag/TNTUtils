@@ -14,6 +14,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ObjectIntIdentityMap;
 import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.RegistrySimple;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -56,7 +57,7 @@ public class CommonProxy {
             //Replace it in the "registryObjects"
             fieldName = Utils.deobfuscatedEnv ? "registryObjects" : "field_82596_a";
             BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, fieldName, Block.blockRegistry);
-            regMap.forcePut("minecraft:tnt", ModBlocks.replaced_tnt);
+            regMap.forcePut(new ResourceLocation("minecraft:tnt"), ModBlocks.replaced_tnt);
             
             //Replace it in the associated ItemBlock
             ItemBlock tntItem = (ItemBlock)Item.itemRegistry.getObjectById(tntID);
