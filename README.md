@@ -1,4 +1,6 @@
 # TNTUtils
+**Curse: http://www.curse.com/mc-mods/minecraft/227449-tntutils**
+
 This is a small mod that provides some utilities for explosions.
 
 TNTUtils can be installed on a server without clients needing it.
