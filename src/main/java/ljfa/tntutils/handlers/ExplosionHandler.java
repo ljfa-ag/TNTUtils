@@ -1,8 +1,8 @@
 package ljfa.tntutils.handlers;
 
-import java.util.function.Predicate;
-
 import ljfa.tntutils.Config;
+import ljfa.tntutils.util.ListHelper;
+import ljfa.tntutils.util.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -32,7 +32,7 @@ public class ExplosionHandler {
             event.getAffectedBlocks().clear();
         else if(Config.spareTileEntities || Config.blacklistActive) {
             //Remove blacklisted blocks and tile entities (if configured) from the list
-            event.getAffectedBlocks().removeIf(new Predicate<BlockPos>() {
+            ListHelper.removeIf(event.getAffectedBlocks(), new Predicate<BlockPos>() {
                 @Override
                 public boolean test(BlockPos pos) {
                     return shouldBePreserved(event.world.getBlockState(pos));
@@ -45,7 +45,7 @@ public class ExplosionHandler {
             event.getAffectedEntities().clear();
         else if(Config.disablePlayerDamage || Config.disableNPCDamage || Config.preventChainExpl) {
             //Remove certain from the list
-            event.getAffectedEntities().removeIf(new Predicate<Entity>() {
+            ListHelper.removeIf(event.getAffectedEntities(), new Predicate<Entity>() {
                 @Override
                 public boolean test(Entity ent) {
                     return (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
