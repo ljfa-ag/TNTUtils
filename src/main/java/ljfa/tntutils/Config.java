@@ -100,9 +100,13 @@ public class Config {
             if(block == Blocks.air || block == null)
                 throw new InvalidConfigValueException("blockResistances: Invalid block name: " + blockName);
             
-            float resist = Float.parseFloat(valueStr);
-            block.setResistance(resist);
-            LogHelper.debug("Changed resistance of %s to %g", blockName, resist);
+            try {
+                float resist = Float.parseFloat(valueStr);
+                block.setResistance(resist);
+                LogHelper.debug("Changed resistance of %s to %g", blockName, resist);
+            } catch(NumberFormatException ex) {
+                throw new InvalidConfigValueException("blockResistances: Invalid number format", ex);
+            }
         }
     }
     
