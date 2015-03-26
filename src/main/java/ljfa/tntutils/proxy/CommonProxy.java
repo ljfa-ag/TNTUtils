@@ -16,8 +16,6 @@ import net.minecraft.util.RegistryNamespaced;
 import net.minecraft.util.RegistrySimple;
 import net.minecraftforge.common.MinecraftForge;
 
-import org.apache.logging.log4j.Level;
-
 import com.google.common.collect.BiMap;
 
 import cpw.mods.fml.common.event.FMLInitializationEvent;

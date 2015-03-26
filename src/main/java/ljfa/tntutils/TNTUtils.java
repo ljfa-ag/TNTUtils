@@ -3,7 +3,6 @@ package ljfa.tntutils;
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.launchwrapper.Launch;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;

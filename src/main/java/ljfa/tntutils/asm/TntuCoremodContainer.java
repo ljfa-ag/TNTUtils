@@ -1,7 +1,5 @@
 package ljfa.tntutils.asm;
 
-import java.util.Arrays;
-
 import ljfa.tntutils.Reference;
 
 import com.google.common.eventbus.EventBus;

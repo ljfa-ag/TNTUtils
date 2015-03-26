@@ -1,7 +1,7 @@
 package ljfa.tntutils.proxy;
 
-import net.minecraft.client.Minecraft;
 import ljfa.tntutils.blocks.ModBlocks;
+import net.minecraft.client.Minecraft;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 
 public class ClientProxy extends CommonProxy {
