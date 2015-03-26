@@ -30,9 +30,8 @@ public class Config {
     
     public static boolean disableBlockDamage;
     public static boolean disableCreeperBlockDamage;
-    public static String[] blacklistArray;
-    public static Set<Block> blacklist = null;
-    public static boolean blacklistActive = false;
+    public static Set<Block> blacklist;
+    public static boolean blacklistActive;
     public static boolean spareTileEntities;
     
     public static boolean disableEntityDamage;
@@ -60,20 +59,22 @@ public class Config {
         disableTNT = conf.get(CAT_GENERAL, "disableTNT", false, "Disables TNT explosions").setRequiresMcRestart(true).getBoolean();
         disableTNTMinecart = conf.get(CAT_GENERAL, "disableTNTMinecart", false, "Disables the placement of TNT minecarts").setRequiresMcRestart(true).getBoolean();
         //----------------
+        //destructionBlacklist is being read in createBlacklistSet()
         disableBlockDamage = conf.get(CAT_BLOCKDMG, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableCreeperBlockDamage = conf.get(CAT_BLOCKDMG, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
-        blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
         spareTileEntities = conf.get(CAT_BLOCKDMG, "disableTileEntityDamage", false, "Makes explosions not destroy tile entities").getBoolean();
         //----------------
         disableEntityDamage = conf.get(CAT_ENTDMG, "disableEntityDamage", false, "Disables explosion damage to all entities (also includes items, minecarts etc.)").getBoolean();
         disablePlayerDamage = conf.get(CAT_ENTDMG, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
         disableNPCDamage = conf.get(CAT_ENTDMG, "disableNPCDamage", false, "Disables explosion damage to animals and mobs").getBoolean();
         //----------------
-        if(conf.hasChanged())
-            conf.save();
     }
     
     public static void createBlacklistSet() {
+        String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
+        if(conf.hasChanged())
+            conf.save();
+        
         blacklist = new HashSet<Block>();
         for(String name: blacklistArray) {
             Block block = (Block)Block.blockRegistry.getObject(name);
