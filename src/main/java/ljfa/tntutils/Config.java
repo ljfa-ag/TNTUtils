@@ -72,20 +72,43 @@ public class Config {
     
     public static void createBlacklistSet() {
         String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
-        if(conf.hasChanged())
-            conf.save();
         
         blacklist = new HashSet<Block>();
         for(String name: blacklistArray) {
             Block block = (Block)Block.blockRegistry.getObject(name);
-            if(block == Blocks.air || block == null) {
-                throw new InvalidConfigValueException("Invalid blacklist entry: " + name);
-            } else {
-                blacklist.add(block);
-                LogHelper.debug("Added block to blacklist: %s", name);
-            }
+            if(block == Blocks.air || block == null)
+                throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + name);
+            
+            blacklist.add(block);
+            LogHelper.debug("Added block to blacklist: %s", name);
         }
         blacklistActive = blacklist.size() != 0;
+    }
+    
+    public static void modifyResistances() {
+        String[] entries = conf.get(CAT_BLOCKDMG, "blockResistances", new String[0], "Change the explosion resistance of individual blocks.\n"
+                + "Syntax: modid:block=value").setRequiresMcRestart(true).getStringList();
+        
+        for(String str: entries) {
+            int ind = str.indexOf('=');
+            if(ind == -1)
+                throw new InvalidConfigValueException("blockResistances: Syntax error: " + str);
+            String blockName = str.substring(0, ind);
+            String valueStr = str.substring(ind+1);
+            
+            Block block = (Block)Block.blockRegistry.getObject(blockName);
+            if(block == Blocks.air || block == null)
+                throw new InvalidConfigValueException("blockResistances: Invalid block name: " + blockName);
+            
+            float resist = Float.parseFloat(valueStr);
+            block.setResistance(resist);
+            LogHelper.debug("Changed resistance of %s to %g", blockName, resist);
+        }
+    }
+    
+    public static void save() {
+        if(conf.hasChanged())
+            conf.save();
     }
     
     /** Reloads the config values upon change */
@@ -95,6 +118,8 @@ public class Config {
             if(event.modID.equals(Reference.MODID)) {
                 loadValues();
                 createBlacklistSet();
+                modifyResistances();
+                save();
             }
         }
     }
