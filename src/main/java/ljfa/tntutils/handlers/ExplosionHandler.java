@@ -1,8 +1,8 @@
 package ljfa.tntutils.handlers;
 
-import java.util.function.Predicate;
-
 import ljfa.tntutils.Config;
+import ljfa.tntutils.util.ListHelper;
+import ljfa.tntutils.util.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,7 +31,7 @@ public class ExplosionHandler {
             event.explosion.affectedBlockPositions.clear();
         else if(Config.spareTileEntities || Config.blacklistActive) {
             //Remove blacklisted blocks and tile entities (if configured) from the list
-            event.getAffectedBlocks().removeIf(new Predicate<ChunkPosition>() {
+            ListHelper.removeIf(event.getAffectedBlocks(), new Predicate<ChunkPosition>() {
                 @Override
                 public boolean test(ChunkPosition pos) {
                     Block block = event.world.getBlock(pos.chunkPosX, pos.chunkPosY, pos.chunkPosZ);
@@ -46,7 +46,7 @@ public class ExplosionHandler {
             event.getAffectedEntities().clear();
         else if(Config.disablePlayerDamage || Config.disableNPCDamage || Config.preventChainExpl) {
             //Remove certain from the list
-            event.getAffectedEntities().removeIf(new Predicate<Entity>() {
+            ListHelper.removeIf(event.getAffectedEntities(), new Predicate<Entity>() {
                 @Override
                 public boolean test(Entity ent) {
                     return (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
