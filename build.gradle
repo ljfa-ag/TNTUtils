@@ -18,7 +18,7 @@ buildscript {
 apply plugin: 'forge'
 apply plugin: 'curseforge'
 
-version = "0.3-alpha"
+version = "1.0-beta"
 group= "ljfa.tntutils" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "tnt_utilities"
 
@@ -43,7 +43,7 @@ minecraft {
 curse {
     projectId = '227449'
     apiKey = project.curseForgeApiKey
-    releaseType = 'alpha'
+    releaseType = 'beta'
 }
 
 dependencies {
