@@ -40,7 +40,7 @@ curse {
 }
 
 minecraft {
-    version = "1.8-11.14.0.1295-1.8"
+    version = "1.8-11.14.1.1411"
     runDir = "eclipse"
     
     // the mappings can be changed at any time, and must be in the following format.
