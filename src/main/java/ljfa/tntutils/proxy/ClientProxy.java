@@ -11,12 +11,10 @@ public class ClientProxy extends CommonProxy {
         mc = Minecraft.getMinecraft();
     }
     
-    @Override
+    /*@Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        mc.getRenderItem().getItemModelMesher().register(Item.getItemFromBlock(TNTUtils.replaced_tnt), 0,
-                new ModelResourceLocation("minecraft:tnt", "inventory"));
-    }
+    }*/
     
     private Minecraft mc;
 }
