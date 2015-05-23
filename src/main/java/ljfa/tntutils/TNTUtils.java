@@ -2,6 +2,7 @@ package ljfa.tntutils;
 
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
+import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import cpw.mods.fml.common.Mod;
@@ -19,6 +20,8 @@ public class TNTUtils {
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
+
+    public static Block replaced_tnt = null;
     
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
