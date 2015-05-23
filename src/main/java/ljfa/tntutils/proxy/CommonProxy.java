@@ -1,20 +1,18 @@
 package ljfa.tntutils.proxy;
 
+import java.util.List;
+
 import ljfa.tntutils.Config;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.blocks.BlockReplacedTNT;
 import ljfa.tntutils.handlers.EntityJoinHandler;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import ljfa.tntutils.util.LogHelper;
-import ljfa.tntutils.util.ReflectionHelper;
-import ljfa.tntutils.util.Utils;
 import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
-import net.minecraft.util.ObjectIntIdentityMap;
-import net.minecraft.util.RegistryNamespaced;
-import net.minecraft.util.RegistrySimple;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -66,6 +64,12 @@ public class CommonProxy {
             
             //Add it to the Block -> Item map
             GameData.getBlockItemMap().put(TNTUtils.replaced_tnt, tntItem);
+            
+            //Add the block states to the Block State -> ID map, imitating how it is done in GameRegistry
+            for(IBlockState state: (List<IBlockState>)TNTUtils.replaced_tnt.getBlockState().getValidStates()) {
+                int id = tntID << 4 | TNTUtils.replaced_tnt.getMetaFromState(state);
+                GameData.getBlockStateIDMap().put(state, id);
+            }
             
             //Replace it in the Blocks class
             Blocks.tnt = TNTUtils.replaced_tnt;
