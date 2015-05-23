@@ -1,7 +1,8 @@
 package ljfa.tntutils.proxy;
 
 import ljfa.tntutils.Config;
-import ljfa.tntutils.blocks.ModBlocks;
+import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.blocks.BlockReplacedTNT;
 import ljfa.tntutils.handlers.EntityJoinHandler;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import ljfa.tntutils.util.LogHelper;
@@ -25,10 +26,11 @@ import com.google.common.collect.BiMap;
 public class CommonProxy {
     public void preInit(FMLPreInitializationEvent event) {
         Config.loadConfig(event.getSuggestedConfigurationFile());
-        ModBlocks.preInit();
         
-        if(Config.preventChainExpl)
+        if(Config.preventChainExpl) {
+            TNTUtils.replaced_tnt = new BlockReplacedTNT().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setUnlocalizedName("tnt");
             replaceVanillaTNT();
+        }
     }
     
     public void init(FMLInitializationEvent event) {
@@ -52,21 +54,21 @@ public class CommonProxy {
             //Replace it in the "underlyingIntegerMap"
             String fieldName = Utils.deobfuscatedEnv ? "underlyingIntegerMap" : "field_148759_a";
             ObjectIntIdentityMap intMap = (ObjectIntIdentityMap)ReflectionHelper.getField(RegistryNamespaced.class, fieldName, Block.blockRegistry);
-            intMap.put(ModBlocks.replaced_tnt, tntID);
+            intMap.put(TNTUtils.replaced_tnt, tntID);
             
             //Replace it in the "registryObjects"
             fieldName = Utils.deobfuscatedEnv ? "registryObjects" : "field_82596_a";
             BiMap regMap = (BiMap)ReflectionHelper.getField(RegistrySimple.class, fieldName, Block.blockRegistry);
-            regMap.forcePut(new ResourceLocation("minecraft:tnt"), ModBlocks.replaced_tnt);
+            regMap.forcePut(new ResourceLocation("minecraft:tnt"), TNTUtils.replaced_tnt);
             
             //Replace it in the associated ItemBlock
             ItemBlock tntItem = (ItemBlock)Item.itemRegistry.getObjectById(tntID);
             fieldName = Utils.deobfuscatedEnv ? "block" : "field_150939_a";
-            ReflectionHelper.setFinalField(ItemBlock.class, fieldName, tntItem, ModBlocks.replaced_tnt);
+            ReflectionHelper.setFinalField(ItemBlock.class, fieldName, tntItem, TNTUtils.replaced_tnt);
             
             //Replace it in the Blocks class
             fieldName = Utils.deobfuscatedEnv ? "tnt" : "field_150335_W";
-            ReflectionHelper.setFinalField(Blocks.class, fieldName, null, ModBlocks.replaced_tnt);
+            ReflectionHelper.setFinalField(Blocks.class, fieldName, null, TNTUtils.replaced_tnt);
             LogHelper.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
             throw new RuntimeException("Failed to replace Vanilla TNT!", ex);
