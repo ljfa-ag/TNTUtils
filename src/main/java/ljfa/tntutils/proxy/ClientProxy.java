@@ -12,7 +12,8 @@ public class ClientProxy extends CommonProxy {
     @Override
     public void init(FMLInitializationEvent event) {
         super.init(event);
-        TNTUtils.replaced_tnt.registerBlockIcons(mc.getTextureMapBlocks());
+        if(TNTUtils.replaced_tnt != null)
+            TNTUtils.replaced_tnt.registerBlockIcons(mc.getTextureMapBlocks());
     }
     
     private Minecraft mc;
