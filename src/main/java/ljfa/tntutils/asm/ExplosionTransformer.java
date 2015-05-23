@@ -26,7 +26,7 @@ public class ExplosionTransformer implements IClassTransformer {
         if(name.equals("net.minecraft.world.Explosion")) {
             FMLLog.log("TNTUtils Core", Level.INFO, "About to patch class %s", name);
             return patchClassASM(name, basicClass, false);
-        } else if(name.equals("agw")) {
+        } else if(name.equals("aqo")) {
             FMLLog.log("TNTUtils Core", Level.INFO, "About to patch obfuscated class %s", name);
             return patchClassASM(name, basicClass, true);
         } else
