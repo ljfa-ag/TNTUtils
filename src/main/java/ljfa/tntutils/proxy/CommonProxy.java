@@ -20,6 +20,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameData;
 
 import com.google.common.collect.BiMap;
 
@@ -62,6 +63,9 @@ public class CommonProxy {
             //Replace it in the associated ItemBlock
             ItemBlock tntItem = (ItemBlock)Item.itemRegistry.getObjectById(tntID);
             tntItem.block = TNTUtils.replaced_tnt;
+            
+            //Add it to the Block -> Item map
+            GameData.getBlockItemMap().put(TNTUtils.replaced_tnt, tntItem);
             
             //Replace it in the Blocks class
             Blocks.tnt = TNTUtils.replaced_tnt;
