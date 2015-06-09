@@ -31,14 +31,14 @@ public class TNTUtils {
     
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        Config.createBlacklistSet();
-        Config.modifyResistances();
-        Config.save();
         proxy.init(event);
     }
     
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        Config.createBlacklistSet();
+        Config.modifyResistances();
+        Config.save();
         proxy.postInit(event);
     }
     
