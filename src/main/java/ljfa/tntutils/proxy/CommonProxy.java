@@ -1,5 +1,7 @@
 package ljfa.tntutils.proxy;
 
+import static ljfa.tntutils.TNTUtils.logger;
+
 import java.util.List;
 
 import ljfa.tntutils.Config;
@@ -45,7 +47,7 @@ public class CommonProxy {
     @SuppressWarnings("unchecked")
     private void replaceVanillaTNT() {
         try {
-            LogHelper.info("About to replace Vanilla TNT");
+            logger.info("About to replace Vanilla TNT");
             
             //Get TNT object to replace
             Block oldTNT = (Block)Block.blockRegistry.getObject("tnt");
@@ -74,7 +76,7 @@ public class CommonProxy {
             //Replace it in the Blocks class
             Blocks.tnt = TNTUtils.replaced_tnt;
             
-            LogHelper.info("Replaced Vanilla TNT");
+            logger.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
             throw new RuntimeException("Failed to replace Vanilla TNT!", ex);
         }

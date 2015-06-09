@@ -1,11 +1,12 @@
 package ljfa.tntutils;
 
+import static ljfa.tntutils.TNTUtils.logger;
+
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
 import ljfa.tntutils.exception.InvalidConfigValueException;
-import ljfa.tntutils.util.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraftforge.common.config.Configuration;
@@ -62,7 +63,7 @@ public class Config {
         //destructionBlacklist is being read in createBlacklistSet()
         disableBlockDamage = conf.get(CAT_BLOCKDMG, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableCreeperBlockDamage = conf.get(CAT_BLOCKDMG, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
-        spareTileEntities = conf.get(CAT_BLOCKDMG, "disableTileEntityDamage", false, "Makes explosions not destroy tile entities").getBoolean();
+        spareTileEntities = conf.get(CAT_BLOCKDMG, "disableTileEntityDamage", false, "Makes explosions not destroy blocks with tile entities").getBoolean();
         //----------------
         disableEntityDamage = conf.get(CAT_ENTDMG, "disableEntityDamage", false, "Disables explosion damage to all entities (also includes items, minecarts etc.)").getBoolean();
         disablePlayerDamage = conf.get(CAT_ENTDMG, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
@@ -80,7 +81,7 @@ public class Config {
                 throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + name);
             
             blacklist.add(block);
-            LogHelper.debug("Added block to blacklist: %s", name);
+            logger.debug("Added block to blacklist: %s", name);
         }
         blacklistActive = blacklist.size() != 0;
     }
@@ -103,7 +104,7 @@ public class Config {
             try {
                 float resist = Float.parseFloat(valueStr);
                 block.setResistance(resist);
-                LogHelper.debug("Changed resistance of %s to %g", blockName, resist);
+                logger.debug("Changed resistance of %s to %g", blockName, resist);
             } catch(NumberFormatException ex) {
                 throw new InvalidConfigValueException("blockResistances: Invalid number format", ex);
             }
