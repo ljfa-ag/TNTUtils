@@ -4,7 +4,9 @@ import java.util.Iterator;
 
 import net.minecraft.launchwrapper.IClassTransformer;
 
-import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
@@ -19,16 +21,16 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
-import cpw.mods.fml.common.FMLLog;
-
 public class ExplosionTransformer implements IClassTransformer {
+    private final Logger coreLogger = LogManager.getLogger("TNTUtils Core", StringFormatterMessageFactory.INSTANCE);
+    
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
         if(name.equals("net.minecraft.world.Explosion")) {
-            FMLLog.log("TNTUtils Core", Level.INFO, "About to patch class %s", name);
+            coreLogger.info("About to patch class %s", name);
             return patchClassASM(name, basicClass, false);
         } else if(name.equals("agw")) {
-            FMLLog.log("TNTUtils Core", Level.INFO, "About to patch obfuscated class %s", name);
+            coreLogger.info("About to patch obfuscated class %s", name);
             return patchClassASM(name, basicClass, true);
         } else
             return basicClass;
@@ -43,7 +45,7 @@ public class ExplosionTransformer implements IClassTransformer {
         //Loop through the methods until we find our target
         for(MethodNode mn: classNode.methods) {
             if(mn.name.equals(obfuscated ? "func_77279_a" : "doExplosionB") && mn.desc.equals("(Z)V")) {
-                FMLLog.log("TNTUtils Core", Level.INFO, "Found target method %s%s", mn.name, mn.desc);
+                coreLogger.info("Found target method %s%s", mn.name, mn.desc);
                 patchDoExplosionB(mn);
                 break;
             }
@@ -81,7 +83,7 @@ public class ExplosionTransformer implements IClassTransformer {
                     currentNode = currentNode.getPrevious().getPrevious();
                     //Here should be a "fconst_1"
                     if(currentNode.getOpcode() == Opcodes.FCONST_1) {
-                        FMLLog.log("TNTUtils Core", Level.INFO, "Found target instructions \"fconst_1\" through \"fdiv\"");
+                        coreLogger.info("Found target instructions \"fconst_1\" through \"fdiv\"");
                         
                         //Insert a label after "fdiv"
                         LabelNode label = new LabelNode();
@@ -102,8 +104,8 @@ public class ExplosionTransformer implements IClassTransformer {
             }
         }
         if(didInject)
-            FMLLog.log("TNTUtils Core", Level.INFO, "Successfully injected into %s%s", mn.name, mn.desc);
+            coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
         else
-            FMLLog.log("TNTUtils Core", Level.ERROR, "Failed injection into %s%s. There is probably an incompatibility to some other coremod.", mn.name, mn.desc);
+            coreLogger.error("Failed injection into %s%s. There is probably an incompatibility to some other coremod.", mn.name, mn.desc);
     }
 }

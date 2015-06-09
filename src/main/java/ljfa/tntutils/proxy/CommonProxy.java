@@ -1,11 +1,11 @@
 package ljfa.tntutils.proxy;
 
+import static ljfa.tntutils.TNTUtils.logger;
 import ljfa.tntutils.Config;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.blocks.BlockReplacedTNT;
 import ljfa.tntutils.handlers.EntityJoinHandler;
 import ljfa.tntutils.handlers.ExplosionHandler;
-import ljfa.tntutils.util.LogHelper;
 import ljfa.tntutils.util.ReflectionHelper;
 import ljfa.tntutils.util.Utils;
 import net.minecraft.block.Block;
@@ -46,7 +46,7 @@ public class CommonProxy {
     @SuppressWarnings("unchecked")
     private void replaceVanillaTNT() {
         try {
-            LogHelper.info("About to replace Vanilla TNT");
+            logger.info("About to replace Vanilla TNT");
             
             //Get TNT object to replace
             Block oldTNT = (Block)Block.blockRegistry.getObject("tnt");
@@ -69,7 +69,7 @@ public class CommonProxy {
             //Replace it in the Blocks class
             fieldName = Utils.deobfuscatedEnv ? "tnt" : "field_150335_W";
             ReflectionHelper.setFinalField(Blocks.class, fieldName, null, TNTUtils.replaced_tnt);
-            LogHelper.info("Replaced Vanilla TNT");
+            logger.info("Replaced Vanilla TNT");
         } catch(Exception ex) {
             throw new RuntimeException("Failed to replace Vanilla TNT!", ex);
         }

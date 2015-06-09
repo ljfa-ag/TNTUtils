@@ -5,6 +5,11 @@ import ljfa.tntutils.proxy.CommonProxy;
 import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.message.StringFormatterMessageFactory;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -22,6 +27,8 @@ public class TNTUtils {
     public static CommonProxy proxy;
 
     public static Block replaced_tnt = null;
+    
+    public static final Logger logger = LogManager.getLogger("TNTUtils", StringFormatterMessageFactory.INSTANCE);
     
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
