@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class CommandExplosion extends CommandBase {
     @Override
-    public String getName() {
+    public String getCommandName() {
         return "explosion";
     }
     
@@ -25,7 +25,7 @@ public class CommandExplosion extends CommandBase {
     }
 
     @Override
-    public void execute(ICommandSender sender, String[] args) throws CommandException {
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
         if(args.length < 3)
             throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
         
