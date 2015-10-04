@@ -20,7 +20,7 @@ apply plugin: 'curseforge'
 
 version = "1.1-beta"
 group= "ljfa.tntutils"
-archivesBaseName = "tnt_utilities"
+archivesBaseName = "tnt_utilities-mc1.7.10"
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
