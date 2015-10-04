@@ -1,5 +1,6 @@
 package ljfa.tntutils.handlers;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ljfa.tntutils.Config;
 import ljfa.tntutils.util.ListHelper;
 import ljfa.tntutils.util.Predicate;
@@ -11,7 +12,6 @@ import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.ChunkPosition;
 import net.minecraftforge.event.world.ExplosionEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class ExplosionHandler {
     @SubscribeEvent
@@ -58,7 +58,9 @@ public class ExplosionHandler {
     }
 
     public static boolean shouldBePreserved(Block block, int meta) {
-        return Config.spareTileEntities && block.hasTileEntity(meta)
-            || Config.blacklist.contains(block);
+        if(Config.spareTileEntities && block.hasTileEntity(meta))
+            return true;
+        Integer mask = Config.blacklist.get(block);
+        return mask != null && (mask & (1 << meta)) != 0;
     }
 }
