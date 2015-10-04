@@ -3,7 +3,6 @@ package ljfa.tntutils.handlers;
 import ljfa.tntutils.Config;
 import ljfa.tntutils.util.ListHelper;
 import ljfa.tntutils.util.Predicate;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -57,7 +56,9 @@ public class ExplosionHandler {
     }
 
     public static boolean shouldBePreserved(IBlockState state) {
-        return Config.spareTileEntities && state.getBlock().hasTileEntity(state)
-            || Config.blacklist.contains(state.getBlock());
+        if(Config.spareTileEntities && state.getBlock().hasTileEntity(state))
+            return true;
+        Integer mask = Config.blacklist.get(state.getBlock());
+        return mask != null && (mask & (1 << state.getBlock().getMetaFromState(state))) != 0;
     }
 }

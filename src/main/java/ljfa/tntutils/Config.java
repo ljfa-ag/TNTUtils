@@ -3,8 +3,8 @@ package ljfa.tntutils;
 import static ljfa.tntutils.TNTUtils.logger;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.IdentityHashMap;
+import java.util.Map;
 
 import ljfa.tntutils.exception.InvalidConfigValueException;
 import net.minecraft.block.Block;
@@ -31,7 +31,7 @@ public class Config {
     
     public static boolean disableBlockDamage;
     public static boolean disableCreeperBlockDamage;
-    public static Set<Block> blacklist;
+    public static Map<Block, Integer> blacklist; //A map from block to a bitmask, where the set bits indicate the metadatas
     public static boolean blacklistActive;
     public static boolean spareTileEntities;
     
@@ -72,16 +72,45 @@ public class Config {
     }
     
     public static void createBlacklistSet() {
-        String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks that will never be destroyed by explosions").getStringList();
+        String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks (optionally with metadata) that will never be destroyed by explosions\n"
+                + "Syntax: modid:block or modid:block/meta").getStringList();
         
-        blacklist = new HashSet<Block>();
-        for(String name: blacklistArray) {
-            Block block = (Block)Block.blockRegistry.getObject(name);
-            if(block == Blocks.air || block == null)
-                throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + name);
+        blacklist = new IdentityHashMap<Block, Integer>();
+        for(String str: blacklistArray) {
+            String blockname;
+            int metamask;
+            int ind = str.indexOf('/');
+            if(ind != -1) {
+                // blockname/meta
+                String metaStr = str.substring(ind+1);
+                int meta;
+                try {
+                    meta = Integer.parseInt(metaStr);
+                } catch(NumberFormatException ex) {
+                    throw new InvalidConfigValueException("destructionBlacklist: Invalid number format: " + metaStr, ex);
+                }
+                if(meta < 0 || meta >= 16)
+                    throw new InvalidConfigValueException("destructionBlacklist: Metadata out of range: " + metaStr);
+                
+                blockname = str.substring(0, ind);
+                metamask = 1 << meta;
+            }
+            else {
+                // blockname without meta
+                blockname = str;
+                metamask = 0xFFFF;
+            }
             
-            blacklist.add(block);
-            logger.debug("Added block to blacklist: %s", name);
+            Block block = (Block)Block.blockRegistry.getObject(blockname);
+            if(block == Blocks.air || block == null)
+                throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + blockname);
+            
+            if(!blacklist.containsKey(block))
+                blacklist.put(block, metamask);
+            else
+                blacklist.put(block, metamask | blacklist.get(block));
+
+            logger.debug("Added block to blacklist: %s, mask 0x%X", blockname, metamask);
         }
         blacklistActive = blacklist.size() != 0;
     }
@@ -106,7 +135,7 @@ public class Config {
                 block.setResistance(resist);
                 logger.debug("Changed resistance of %s to %g", blockName, resist);
             } catch(NumberFormatException ex) {
-                throw new InvalidConfigValueException("blockResistances: Invalid number format", ex);
+                throw new InvalidConfigValueException("blockResistances: Invalid number format: " + valueStr, ex);
             }
         }
     }
