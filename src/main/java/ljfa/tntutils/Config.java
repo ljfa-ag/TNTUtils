@@ -116,6 +116,8 @@ public class Config {
             logger.debug("Added block to blacklist: %s, mask 0x%X", blockname, metamask);
         }
         blacklistActive = blackWhiteList.size() != 0;
+        if(listIsWhitelist && !blacklistActive) //Empty whitelist effectively means no block damage
+            disableBlockDamage = true;
     }
     
     public static void modifyResistances() {
