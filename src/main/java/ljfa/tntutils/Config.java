@@ -61,7 +61,7 @@ public class Config {
         disableTNT = conf.get(CAT_GENERAL, "disableTNT", false, "Disables TNT explosions").setRequiresMcRestart(true).getBoolean();
         disableTNTMinecart = conf.get(CAT_GENERAL, "disableTNTMinecart", false, "Disables the placement of TNT minecarts").setRequiresMcRestart(true).getBoolean();
         //----------------
-        //destructionBlacklist is being read in createBlacklistSet()
+        //destructionBlackOrWhitelist is being read in createBlacklistSet()
         listIsWhitelist = conf.get(CAT_BLOCKDMG, "destructionListIsWhitelist", false, "If false, the list above is a blacklist. If true, it is a whitelist").getBoolean();
         disableBlockDamage = conf.get(CAT_BLOCKDMG, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableCreeperBlockDamage = conf.get(CAT_BLOCKDMG, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
@@ -90,10 +90,10 @@ public class Config {
                 try {
                     meta = Integer.parseInt(metaStr);
                 } catch(NumberFormatException ex) {
-                    throw new InvalidConfigValueException("destructionBlacklist: Invalid number format: " + metaStr, ex);
+                    throw new InvalidConfigValueException("destructionBlackOrWhitelist: Invalid number format: " + metaStr, ex);
                 }
                 if(meta < 0 || meta >= 16)
-                    throw new InvalidConfigValueException("destructionBlacklist: Metadata out of range: " + metaStr);
+                    throw new InvalidConfigValueException("destructionBlackOrWhitelist: Metadata out of range: " + metaStr);
                 
                 blockname = str.substring(0, ind);
                 metamask = 1 << meta;
@@ -106,7 +106,7 @@ public class Config {
             
             Block block = (Block)Block.blockRegistry.getObject(blockname);
             if(block == Blocks.air || block == null)
-                throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + blockname);
+                throw new InvalidConfigValueException("destructionBlackOrWhitelist: Invalid block name: " + blockname);
             
             if(!blackWhiteList.containsKey(block))
                 blackWhiteList.put(block, metamask);
