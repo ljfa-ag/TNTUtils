@@ -58,7 +58,8 @@ public class ExplosionHandler {
     public static boolean shouldBePreserved(IBlockState state) {
         if(Config.spareTileEntities && state.getBlock().hasTileEntity(state))
             return true;
-        Integer mask = Config.blacklist.get(state.getBlock());
-        return mask != null && (mask & (1 << state.getBlock().getMetaFromState(state))) != 0;
+        Integer mask = Config.blackWhiteList.get(state.getBlock());
+        boolean matches =  mask != null && (mask & (1 << state.getBlock().getMetaFromState(state))) != 0;
+        return Config.listIsWhitelist ? !matches : matches;
     }
 }
