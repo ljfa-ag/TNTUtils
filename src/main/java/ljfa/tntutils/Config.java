@@ -153,10 +153,14 @@ public class Config {
         @SubscribeEvent
         public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
             if(event.modID.equals(Reference.MODID)) {
-                loadValues();
-                createBlacklistSet();
-                modifyResistances();
-                save();
+                try {
+                    loadValues();
+                    createBlacklistSet();
+                    modifyResistances();
+                }
+                finally {
+                    save();
+                }
             }
         }
     }
