@@ -60,7 +60,8 @@ public class ExplosionHandler {
     public static boolean shouldBePreserved(Block block, int meta) {
         if(Config.spareTileEntities && block.hasTileEntity(meta))
             return true;
-        Integer mask = Config.blacklist.get(block);
-        return mask != null && (mask & (1 << meta)) != 0;
+        Integer mask = Config.blackWhiteList.get(block);
+        boolean matches = mask != null && (mask & (1 << meta)) != 0;
+        return Config.listIsWhitelist ? !matches : matches;
     }
 }

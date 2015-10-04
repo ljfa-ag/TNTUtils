@@ -31,7 +31,8 @@ public class Config {
     
     public static boolean disableBlockDamage;
     public static boolean disableCreeperBlockDamage;
-    public static Map<Block, Integer> blacklist; //A map from block to a bitmask, where the set bits indicate the metadatas
+    public static Map<Block, Integer> blackWhiteList; //A map from block to a bitmask, where the set bits indicate the metadatas
+    public static boolean listIsWhitelist;
     public static boolean blacklistActive;
     public static boolean spareTileEntities;
     
@@ -61,6 +62,7 @@ public class Config {
         disableTNTMinecart = conf.get(CAT_GENERAL, "disableTNTMinecart", false, "Disables the placement of TNT minecarts").setRequiresMcRestart(true).getBoolean();
         //----------------
         //destructionBlacklist is being read in createBlacklistSet()
+        listIsWhitelist = conf.get(CAT_BLOCKDMG, "destructionListIsWhitelist", false, "If false, the list above is a blacklist. If true, it is a whitelist").getBoolean();
         disableBlockDamage = conf.get(CAT_BLOCKDMG, "disableBlockDamage", false, "Disables all block damage from explosions").getBoolean();
         disableCreeperBlockDamage = conf.get(CAT_BLOCKDMG, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         spareTileEntities = conf.get(CAT_BLOCKDMG, "disableTileEntityDamage", false, "Makes explosions not destroy blocks with tile entities").getBoolean();
@@ -72,10 +74,11 @@ public class Config {
     }
     
     public static void createBlacklistSet() {
-        String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlacklist", new String[0], "A list of blocks (optionally with metadata) that will never be destroyed by explosions\n"
+        String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlackOrWhitelist", new String[0], "A list of blocks (optionally with metadata) that will either never or only be destroyed by explosions\n"
+                + "Whether this list is a blacklist or whitelist gets determined by the \"destructionListIsWhitelist\" option below\n"
                 + "Syntax: modid:block or modid:block/meta").getStringList();
         
-        blacklist = new IdentityHashMap<Block, Integer>();
+        blackWhiteList = new IdentityHashMap<Block, Integer>();
         for(String str: blacklistArray) {
             String blockname;
             int metamask;
@@ -105,14 +108,14 @@ public class Config {
             if(block == Blocks.air || block == null)
                 throw new InvalidConfigValueException("destructionBlacklist: Invalid block name: " + blockname);
             
-            if(!blacklist.containsKey(block))
-                blacklist.put(block, metamask);
+            if(!blackWhiteList.containsKey(block))
+                blackWhiteList.put(block, metamask);
             else
-                blacklist.put(block, metamask | blacklist.get(block));
+                blackWhiteList.put(block, metamask | blackWhiteList.get(block));
 
             logger.debug("Added block to blacklist: %s, mask 0x%X", blockname, metamask);
         }
-        blacklistActive = blacklist.size() != 0;
+        blacklistActive = blackWhiteList.size() != 0;
     }
     
     public static void modifyResistances() {
