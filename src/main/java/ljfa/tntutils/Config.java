@@ -9,9 +9,10 @@ import java.util.Map;
 import ljfa.tntutils.exception.InvalidConfigValueException;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class Config {
@@ -47,7 +48,7 @@ public class Config {
         conf.load();
         loadValues();
         
-        FMLCommonHandler.instance().bus().register(new ChangeHandler());
+        MinecraftForge.EVENT_BUS.register(new ChangeHandler());
     }
     
     public static void loadValues() {
@@ -104,7 +105,7 @@ public class Config {
                 metamask = 0xFFFF;
             }
             
-            Block block = (Block)Block.blockRegistry.getObject(blockname);
+            Block block = Block.blockRegistry.getObject(new ResourceLocation(blockname));
             if(block == Blocks.air || block == null)
                 throw new InvalidConfigValueException("destructionBlackOrWhitelist: Invalid block name: " + blockname);
             
@@ -131,7 +132,7 @@ public class Config {
             String blockName = str.substring(0, ind);
             String valueStr = str.substring(ind+1);
             
-            Block block = (Block)Block.blockRegistry.getObject(blockName);
+            Block block = Block.blockRegistry.getObject(new ResourceLocation(blockName));
             if(block == Blocks.air || block == null)
                 throw new InvalidConfigValueException("blockResistances: Invalid block name: " + blockName);
             

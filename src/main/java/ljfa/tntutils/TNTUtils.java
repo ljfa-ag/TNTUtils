@@ -17,7 +17,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
-    guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core")
+    guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core",
+    acceptedMinecraftVersions = "1.8.8")
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;

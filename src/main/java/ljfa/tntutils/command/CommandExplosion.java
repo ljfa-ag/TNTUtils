@@ -34,9 +34,9 @@ public class CommandExplosion extends CommandBase {
         double y = sender.getPositionVector().yCoord;
         double z = sender.getPositionVector().zCoord;
         
-        CoordinateArg xArg = func_175770_a(x, args[0], true);
-        CoordinateArg yArg = func_175767_a(y, args[1], 0, 0, false);
-        CoordinateArg zArg = func_175770_a(z, args[2], true);
+        CoordinateArg xArg = parseCoordinate(x, args[0], true);
+        CoordinateArg yArg = parseCoordinate(y, args[1], 0, 0, false);
+        CoordinateArg zArg = parseCoordinate(z, args[2], true);
         
         float strength   = args.length >= 4 ? (float)parseDouble(args[3]) : 4.0f;
         boolean blockDmg = args.length >= 5 ? parseBoolean(args[4])       : true;

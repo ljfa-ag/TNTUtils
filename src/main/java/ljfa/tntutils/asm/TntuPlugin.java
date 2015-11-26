@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.SortingIndex;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin.TransformerExclusions;
 
 @Name("TNTUtilities Core")
-@MCVersion("1.8")
+@MCVersion("1.8.8")
 @SortingIndex(1100)
 @TransformerExclusions("ljfa.tntutils")
 public class TntuPlugin implements IFMLLoadingPlugin {
