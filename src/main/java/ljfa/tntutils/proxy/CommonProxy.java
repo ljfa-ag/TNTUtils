@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ObjectIntIdentityMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -61,12 +62,12 @@ public class CommonProxy {
             tntItem.block = TNTUtils.replaced_tnt;
             
             //Add it to the Block -> Item map
-            GameData.getBlockItemMap().put(TNTUtils.replaced_tnt, tntItem);
+            ((BiMap<Block, Item>)GameData.getBlockItemMap()).forcePut(TNTUtils.replaced_tnt, tntItem);
             
             //Add the block states to the Block State -> ID map, imitating how it is done in GameRegistry
             for(IBlockState state: TNTUtils.replaced_tnt.getBlockState().getValidStates()) {
                 int id = tntID << 4 | TNTUtils.replaced_tnt.getMetaFromState(state);
-                GameData.getBlockStateIDMap().put(state, id);
+                ((ObjectIntIdentityMap<IBlockState>)GameData.getBlockStateIDMap()).put(state, id);
             }
             
             //Replace it in the Blocks class
