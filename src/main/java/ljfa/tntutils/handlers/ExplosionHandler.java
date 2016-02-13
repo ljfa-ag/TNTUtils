@@ -6,6 +6,7 @@ import ljfa.tntutils.util.Predicate;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecartTNT;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,13 +43,14 @@ public class ExplosionHandler {
         //Entity damage
         if(Config.disableEntityDamage)
             event.getAffectedEntities().clear();
-        else if(Config.disablePlayerDamage || Config.disableNPCDamage || Config.preventChainExpl) {
-            //Remove certain from the list
+        else if(Config.disablePlayerDamage || Config.disableItemDamage || Config.disableNPCDamage || Config.preventChainExpl) {
+            //Remove configured entities from the list
             ListHelper.removeIf(event.getAffectedEntities(), new Predicate<Entity>() {
                 @Override
                 public boolean test(Entity ent) {
                     return (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
                         || (Config.disablePlayerDamage && ent instanceof EntityPlayer)
+                        || (Config.disableItemDamage && ent instanceof EntityItem)
                         || (Config.preventChainExpl && ent instanceof EntityMinecartTNT);
                 }
             });

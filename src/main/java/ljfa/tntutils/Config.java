@@ -39,6 +39,7 @@ public class Config {
     
     public static boolean disableEntityDamage;
     public static boolean disablePlayerDamage;
+    public static boolean disableItemDamage;
     public static boolean disableNPCDamage;
     
     public static void loadConfig(File file) {
@@ -68,8 +69,9 @@ public class Config {
         disableCreeperBlockDamage = conf.get(CAT_BLOCKDMG, "disableCreeperBlockDamage", false, "\"Environmentally Friendly Creepers\": Makes creepers not destroy blocks").getBoolean();
         spareTileEntities = conf.get(CAT_BLOCKDMG, "disableTileEntityDamage", false, "Makes explosions not destroy blocks with tile entities").getBoolean();
         //----------------
-        disableEntityDamage = conf.get(CAT_ENTDMG, "disableEntityDamage", false, "Disables explosion damage to all entities (also includes items, minecarts etc.)").getBoolean();
+        disableEntityDamage = conf.get(CAT_ENTDMG, "disableEntityDamage", false, "Disables explosion damage to all entities (also includes minecarts, paintings etc.)").getBoolean();
         disablePlayerDamage = conf.get(CAT_ENTDMG, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
+        disableItemDamage = conf.get(CAT_ENTDMG, "disableItemDamage", false, "Disables explosion damage to items laying on the ground").getBoolean();
         disableNPCDamage = conf.get(CAT_ENTDMG, "disableNPCDamage", false, "Disables explosion damage to animals and mobs").getBoolean();
         //----------------
     }
