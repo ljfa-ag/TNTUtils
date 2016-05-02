@@ -14,15 +14,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class EntityJoinHandler {
     @SubscribeEvent
     public void onEntityJoin(EntityJoinWorldEvent event) {
-        Entity ent = event.entity;
+        Entity ent = event.getEntity();
         if(Config.disableTNT && ent instanceof EntityTNTPrimed) {
             event.setCanceled(true);
-            event.world.spawnEntityInWorld(new EntityItem(event.world, ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.tnt)));
+            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.tnt)));
         }
         else if(Config.disableTNTMinecart && ent instanceof EntityMinecartTNT) {
             event.setCanceled(true);
-            event.world.spawnEntityInWorld(new EntityItem(event.world, ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.tnt)));
-            event.world.spawnEntityInWorld(new EntityItem(event.world, ent.posX, ent.posY, ent.posZ, new ItemStack(Items.minecart)));
+            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.tnt)));
+            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Items.minecart)));
         }
     }
 }

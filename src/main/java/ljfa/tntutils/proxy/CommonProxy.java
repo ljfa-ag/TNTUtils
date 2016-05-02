@@ -27,7 +27,7 @@ public class CommonProxy {
         Config.loadConfig(event.getSuggestedConfigurationFile());
         
         if(Config.preventChainExpl) {
-            TNTUtils.replaced_tnt = new BlockReplacedTNT().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setUnlocalizedName("tnt");
+            TNTUtils.replaced_tnt = new BlockReplacedTNT();
             replaceVanillaTNT();
         }
     }

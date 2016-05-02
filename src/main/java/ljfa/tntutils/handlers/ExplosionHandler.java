@@ -10,7 +10,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecartTNT;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.BlockPos;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -20,22 +20,22 @@ public class ExplosionHandler {
         if(Config.disableExplosions)
             event.setCanceled(true);
         else
-            event.explosion.explosionSize *= Config.sizeMultiplier;
+            event.getExplosion().explosionSize *= Config.sizeMultiplier;
     }
 
     @SubscribeEvent
     public void onExplosionDetonate(final ExplosionEvent.Detonate event) {
-        if(event.world.isRemote)
+        if(event.getWorld().isRemote)
             return;
         //Block damage
-        if(Config.disableBlockDamage || (Config.disableCreeperBlockDamage && event.explosion.exploder instanceof EntityCreeper))
+        if(Config.disableBlockDamage || (Config.disableCreeperBlockDamage && event.getExplosion().exploder instanceof EntityCreeper))
             event.getAffectedBlocks().clear();
         else if(Config.spareTileEntities || Config.blacklistActive) {
             //Remove blacklisted blocks and tile entities (if configured) from the list
             ListHelper.removeIf(event.getAffectedBlocks(), new Predicate<BlockPos>() {
                 @Override
                 public boolean test(BlockPos pos) {
-                    return shouldBePreserved(event.world.getBlockState(pos));
+                    return shouldBePreserved(event.getWorld().getBlockState(pos));
                 }
             });
         }

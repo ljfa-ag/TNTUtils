@@ -7,18 +7,16 @@ import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
 import net.minecraft.block.Block;
-import net.minecraft.command.ServerCommandManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
     guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core",
-    acceptedMinecraftVersions = "[1.8.9,)", updateJSON = Reference.UPDATE_JSON)
+    acceptedMinecraftVersions = "[1.9,)", updateJSON = Reference.UPDATE_JSON)
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;
@@ -50,11 +48,9 @@ public class TNTUtils {
     }
     
     @Mod.EventHandler
-    public void serverStarted(FMLServerStartedEvent event) {
+    public void serverStarting(FMLServerStartingEvent event) {
         if(Config.explosionCommand) {
-            MinecraftServer server = MinecraftServer.getServer();
-            ServerCommandManager commandManager = (ServerCommandManager)server.getCommandManager();
-            commandManager.registerCommand(new CommandExplosion());
+        	event.registerServerCommand(new CommandExplosion());
         }
     }
 }

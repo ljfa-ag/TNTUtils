@@ -1,7 +1,6 @@
 package ljfa.tntutils.asm;
 
 import ljfa.tntutils.Config;
-import ljfa.tntutils.util.ReflectionHelper;
 import net.minecraft.world.Explosion;
 
 public class HooksExplosion {

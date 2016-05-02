@@ -1,9 +1,9 @@
 package ljfa.tntutils.util;
 
+import org.apache.logging.log4j.Level;
+
 import ljfa.tntutils.Reference;
 import net.minecraftforge.fml.common.FMLLog;
-
-import org.apache.logging.log4j.Level;
 
 public class LogHelper {
     public static void log(Level logLevel, String format, Object... data) {

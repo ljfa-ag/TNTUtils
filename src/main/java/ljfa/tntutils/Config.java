@@ -157,7 +157,7 @@ public class Config {
     public static class ChangeHandler {
         @SubscribeEvent
         public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-            if(event.modID.equals(Reference.MODID)) {
+            if(event.getModID().equals(Reference.MODID)) {
                 try {
                     loadValues();
                     createBlacklistSet();
