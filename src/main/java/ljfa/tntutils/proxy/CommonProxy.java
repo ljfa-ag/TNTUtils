@@ -55,7 +55,7 @@ public class CommonProxy {
             
             //Replace it in the "registryObjects"
             BiMap<ResourceLocation, Block> regMap = (BiMap<ResourceLocation, Block>)Block.blockRegistry.registryObjects;
-            regMap.forcePut(new ResourceLocation("minecraft:tnt"), TNTUtils.replaced_tnt);
+            regMap.forcePut(oldTNT.getRegistryName(), TNTUtils.replaced_tnt);
             
             //Replace it in the associated ItemBlock
             ItemBlock tntItem = (ItemBlock)Item.itemRegistry.getObjectById(tntID);

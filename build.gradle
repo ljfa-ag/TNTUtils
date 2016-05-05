@@ -37,13 +37,13 @@ curseforge {
     project {
         id = '227449'
         changelog  = ''
-        releaseType = 'release'
+        releaseType = 'alpha'
         addGameVersion '1.9'
     }
 }
 
 minecraft {
-    version = "1.9-12.16.0.1867-1.9"
+    version = "1.9-12.16.1.1887"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
