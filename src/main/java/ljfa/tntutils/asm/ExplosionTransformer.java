@@ -79,7 +79,7 @@ public class ExplosionTransformer implements IClassTransformer {
              * This hook method would be HooksExplosion.getDropChance().
              * 
              * So we search for the sequence fconst_1, aload_0, getfield, fdiv.
-             * We insert a "goto" instruction to skil over it and instead insert an "invokestatic" to call our hook.
+             * We insert a "goto" instruction to skip over it and instead insert an "invokestatic" to call our hook.
              */
             //Search for "fdiv"
             if(currentNode.getOpcode() == Opcodes.FDIV) {
@@ -88,7 +88,7 @@ public class ExplosionTransformer implements IClassTransformer {
                 currentNode = currentNode.getPrevious();
                 //Check if preceding instruction is "getfield"
                 if(currentNode.getOpcode() == Opcodes.GETFIELD) {            
-                    //Go twp steps back
+                    //Go two steps back
                     currentNode = currentNode.getPrevious().getPrevious();
                     //Here should be a "fconst_1"
                     if(currentNode.getOpcode() == Opcodes.FCONST_1) {
@@ -126,10 +126,13 @@ public class ExplosionTransformer implements IClassTransformer {
         classReader.accept(classNode, 0);
 
         for(MethodNode mn: classNode.methods) {
-            if(mn.name.equals(obfuscated ? "func_180652_a" : "onBlockDestroyedByExplosion")
-            		&& mn.desc.equals("(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/Explosion;)V")) {
+            if(mn.name.equals(obfuscated ? "func_180652_a" : "onBlockDestroyedByExplosion") && mn.desc.equals("(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/Explosion;)V")) {
             	coreLogger.info("Found target method %s%s", mn.name, mn.desc);
             	patchOnBlockDestroyedByExplosion(mn);
+            }
+            else if(mn.name.equals(obfuscated ? "func_149659_a" : "canDropFromExplosion") && mn.desc.equals("(Lnet/minecraft/world/Explosion;)Z")) {
+            	coreLogger.info("Found target method %s%s", mn.name, mn.desc);
+            	patchCanDropFromExplosion(mn);
             }
         }
 
@@ -150,6 +153,18 @@ public class ExplosionTransformer implements IClassTransformer {
     	toInject.add(new JumpInsnNode(Opcodes.IFEQ, label));
     	toInject.add(new InsnNode(Opcodes.RETURN));
     	toInject.add(label);
+    	
+    	mn.instructions.insert(toInject);
+    	coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
+    }
+    
+    private void patchCanDropFromExplosion(MethodNode mn) {
+    	/* Replace with:
+    	 * return Config.preventChainExpl;
+    	 */
+    	InsnList toInject = new InsnList();
+    	toInject.add(new FieldInsnNode(Opcodes.GETSTATIC, Type.getInternalName(Config.class), "preventChainExpl", "Z"));
+    	toInject.add(new InsnNode(Opcodes.IRETURN));
     	
     	mn.instructions.insert(toInject);
     	coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
