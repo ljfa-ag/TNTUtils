@@ -29,7 +29,7 @@ public class ExplosionTransformer implements IClassTransformer {
         if(name.equals("net.minecraft.world.Explosion")) {
             coreLogger.info("About to patch class %s", name);
             return patchClassASM(name, basicClass, false);
-        } else if(name.equals("adi")) {
+        } else if(name.equals("ahp")) {
             coreLogger.info("About to patch obfuscated class %s", name);
             return patchClassASM(name, basicClass, true);
         } else
@@ -63,7 +63,7 @@ public class ExplosionTransformer implements IClassTransformer {
         boolean didInject = false;
         while(it.hasNext()) {
             AbstractInsnNode currentNode = it.next();
-            /* In the Explosion class, line 221:
+            /* In the Explosion class, line 238:
              * 
              * Currently, the division 1.0F / this.explosionSize for the drop chance is being performed.
              * We want to get rid of this and instead call a hook method that calculates the chance for us.
@@ -106,6 +106,6 @@ public class ExplosionTransformer implements IClassTransformer {
         if(didInject)
             coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
         else
-            coreLogger.error("Failed injection into %s%s. There is probably an incompatibility to some other coremod.", mn.name, mn.desc);
+            coreLogger.error("Failed injection into %s%s. There is probably an incompatibility with some other core mod.", mn.name, mn.desc);
     }
 }
