@@ -11,6 +11,7 @@ import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.tree.FieldInsnNode;
 import org.objectweb.asm.tree.InsnList;
 import org.objectweb.asm.tree.InsnNode;
 import org.objectweb.asm.tree.JumpInsnNode;
@@ -19,6 +20,7 @@ import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
 
+import ljfa.tntutils.Config;
 import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ExplosionTransformer implements IClassTransformer {
@@ -26,17 +28,24 @@ public class ExplosionTransformer implements IClassTransformer {
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        if(name.equals("net.minecraft.world.Explosion")) {
-            coreLogger.info("About to patch class %s", name);
-            return patchClassASM(name, basicClass, false);
-        } else if(name.equals("ahp")) {
-            coreLogger.info("About to patch obfuscated class %s", name);
-            return patchClassASM(name, basicClass, true);
-        } else
-            return basicClass;
+    	switch(name) {
+    	case "net.minecraft.world.Explosion":
+            return patchClassExplosion(name, basicClass, false);
+    	case "ahp":
+        	return patchClassExplosion(name, basicClass, true);
+        	
+    	case "net.minecraft.block.BlockTNT":
+    		return patchClassBlockTNT(name, basicClass, false);
+    	case "ajt":
+    		return patchClassBlockTNT(name, basicClass, true);
+    		
+    	default:
+    		return basicClass;
+    	}
     }
     
-    private byte[] patchClassASM(String name, byte[] basicClass, boolean obfuscated) {
+    private byte[] patchClassExplosion(String name, byte[] basicClass, boolean obfuscated) {
+    	coreLogger.info("About to patch class Explosion (%s)", name);
         //ASM manipulation stuff
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
@@ -107,5 +116,42 @@ public class ExplosionTransformer implements IClassTransformer {
             coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
         else
             coreLogger.error("Failed injection into %s%s. There is probably an incompatibility with some other core mod.", mn.name, mn.desc);
+    }
+    
+    private byte[] patchClassBlockTNT(String name, byte[] basicClass, boolean obfuscated) {
+    	coreLogger.info("About to patch class BlockTNT (%s)", name);
+        //ASM manipulation stuff
+        ClassNode classNode = new ClassNode();
+        ClassReader classReader = new ClassReader(basicClass);
+        classReader.accept(classNode, 0);
+
+        for(MethodNode mn: classNode.methods) {
+            if(mn.name.equals(obfuscated ? "func_180652_a" : "onBlockDestroyedByExplosion")
+            		&& mn.desc.equals("(Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/Explosion;)V")) {
+            	coreLogger.info("Found target method %s%s", mn.name, mn.desc);
+            	patchOnBlockDestroyedByExplosion(mn);
+            }
+        }
+
+        //Write class
+        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+        classNode.accept(writer);
+        return writer.toByteArray();
+    }
+    
+    private void patchOnBlockDestroyedByExplosion(MethodNode mn) {
+    	/* Code to insert at the beginning:
+    	 * if(Config.preventChainExpl)
+    	 * 	   return;
+    	 */
+    	InsnList toInject = new InsnList();
+    	toInject.add(new FieldInsnNode(Opcodes.GETSTATIC, Type.getInternalName(Config.class), "preventChainExpl", "Z"));
+    	LabelNode label = new LabelNode();
+    	toInject.add(new JumpInsnNode(Opcodes.IFEQ, label));
+    	toInject.add(new InsnNode(Opcodes.RETURN));
+    	toInject.add(label);
+    	
+    	mn.instructions.insert(toInject);
+    	coreLogger.info("Successfully injected into %s%s", mn.name, mn.desc);
     }
 }
