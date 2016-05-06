@@ -1,11 +1,5 @@
 package ljfa.tntutils;
 
-import ljfa.tntutils.command.CommandExplosion;
-import ljfa.tntutils.proxy.CommonProxy;
-import net.minecraft.block.Block;
-import net.minecraft.command.ServerCommandManager;
-import net.minecraft.server.MinecraftServer;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
@@ -16,6 +10,10 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
+import ljfa.tntutils.command.CommandExplosion;
+import ljfa.tntutils.proxy.CommonProxy;
+import net.minecraft.command.ServerCommandManager;
+import net.minecraft.server.MinecraftServer;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
     guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core")
@@ -25,8 +23,6 @@ public class TNTUtils {
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
-
-    public static Block replaced_tnt = null;
     
     public static final Logger logger = LogManager.getLogger("TNTUtils", StringFormatterMessageFactory.INSTANCE);
     
