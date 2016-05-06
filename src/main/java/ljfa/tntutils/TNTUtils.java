@@ -6,7 +6,6 @@ import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
-import net.minecraft.block.Block;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -23,8 +22,6 @@ public class TNTUtils {
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
-
-    public static Block replaced_tnt = null;
     
     public static final Logger logger = LogManager.getLogger("TNTUtils", StringFormatterMessageFactory.INSTANCE);
     
