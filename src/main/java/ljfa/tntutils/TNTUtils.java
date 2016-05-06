@@ -6,7 +6,6 @@ import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 
 import ljfa.tntutils.command.CommandExplosion;
 import ljfa.tntutils.proxy.CommonProxy;
-import net.minecraft.block.Block;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.fml.common.Mod;
@@ -18,15 +17,13 @@ import net.minecraftforge.fml.common.event.FMLServerStartedEvent;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
     guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core",
-    acceptedMinecraftVersions = "[1.8.9,)", updateJSON = Reference.UPDATE_JSON)
+    acceptedMinecraftVersions = "[1.8.9,1.9)", updateJSON = Reference.UPDATE_JSON)
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;
     
     @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
     public static CommonProxy proxy;
-
-    public static Block replaced_tnt = null;
     
     public static final Logger logger = LogManager.getLogger("TNTUtils", StringFormatterMessageFactory.INSTANCE);
     
