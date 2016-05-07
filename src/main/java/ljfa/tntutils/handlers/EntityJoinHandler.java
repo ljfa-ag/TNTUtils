@@ -1,5 +1,6 @@
 package ljfa.tntutils.handlers;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import ljfa.tntutils.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityItem;
@@ -9,7 +10,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class EntityJoinHandler {
     @SubscribeEvent

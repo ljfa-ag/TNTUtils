@@ -3,13 +3,13 @@ package ljfa.tntutils.gui;
 import java.util.ArrayList;
 import java.util.List;
 
+import cpw.mods.fml.client.config.GuiConfig;
+import cpw.mods.fml.client.config.IConfigElement;
 import ljfa.tntutils.Config;
 import ljfa.tntutils.Reference;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.ConfigElement;
-import cpw.mods.fml.client.config.GuiConfig;
-import cpw.mods.fml.client.config.IConfigElement;
 
 public class TntuConfigGui extends GuiConfig {
     public TntuConfigGui(GuiScreen parent) {

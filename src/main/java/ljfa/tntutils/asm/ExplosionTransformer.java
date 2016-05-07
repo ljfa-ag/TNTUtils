@@ -2,8 +2,6 @@ package ljfa.tntutils.asm;
 
 import java.util.Iterator;
 
-import net.minecraft.launchwrapper.IClassTransformer;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
@@ -20,6 +18,8 @@ import org.objectweb.asm.tree.LabelNode;
 import org.objectweb.asm.tree.MethodInsnNode;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.VarInsnNode;
+
+import net.minecraft.launchwrapper.IClassTransformer;
 
 public class ExplosionTransformer implements IClassTransformer {
     private final Logger coreLogger = LogManager.getLogger("TNTUtils Core", StringFormatterMessageFactory.INSTANCE);

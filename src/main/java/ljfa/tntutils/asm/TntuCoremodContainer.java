@@ -1,12 +1,11 @@
 package ljfa.tntutils.asm;
 
-import ljfa.tntutils.Reference;
-
 import com.google.common.eventbus.EventBus;
 
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
+import ljfa.tntutils.Reference;
 
 public class TntuCoremodContainer extends DummyModContainer {
     public TntuCoremodContainer() {
