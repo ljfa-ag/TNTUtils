@@ -6,7 +6,7 @@ import net.minecraft.world.Explosion;
 public class HooksExplosion {
     public static final float alwaysDropThreshold = 10.0f;
     
-    public static float getDropChance(Explosion expl) throws ReflectiveOperationException {
+    public static float getDropChance(Explosion expl) {
         float baseChance = 1.0f / expl.explosionSize;
         if(Config.dropChanceModifier == 0.0f)
             return baseChance;
