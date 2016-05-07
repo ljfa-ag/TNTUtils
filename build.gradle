@@ -37,7 +37,7 @@ curseforge {
     project {
         id = '227449'
         changelog  = ''
-        releaseType = 'release'
+        releaseType = 'beta'
         addGameVersion '1.8.9'
     }
 }
