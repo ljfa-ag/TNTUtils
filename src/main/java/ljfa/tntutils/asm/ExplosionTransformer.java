@@ -45,7 +45,7 @@ public class ExplosionTransformer implements IClassTransformer {
         //Loop through the methods until we find our target
         for(MethodNode mn: classNode.methods) {
             if(mn.name.equals(obfuscated ? "func_77279_a" : "doExplosionB") && mn.desc.equals("(Z)V")) {
-                coreLogger.info("Found target method %s%s", mn.name, mn.desc);
+                coreLogger.trace("Found target method %s%s", mn.name, mn.desc);
                 patchDoExplosionB(mn);
                 break;
             }
@@ -83,7 +83,7 @@ public class ExplosionTransformer implements IClassTransformer {
                     currentNode = currentNode.getPrevious().getPrevious();
                     //Here should be a "fconst_1"
                     if(currentNode.getOpcode() == Opcodes.FCONST_1) {
-                        coreLogger.info("Found target instructions \"fconst_1\" through \"fdiv\"");
+                        coreLogger.trace("Found target instructions \"fconst_1\" through \"fdiv\"");
                         
                         //Insert a label after "fdiv"
                         LabelNode label = new LabelNode();
