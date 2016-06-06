@@ -107,8 +107,8 @@ public class Config {
                 metamask = 0xFFFF;
             }
             
-            Block block = Block.blockRegistry.getObject(new ResourceLocation(blockname));
-            if(block == Blocks.air || block == null)
+            Block block = Block.REGISTRY.getObject(new ResourceLocation(blockname));
+            if(block == Blocks.AIR || block == null)
                 throw new InvalidConfigValueException("destructionBlackOrWhitelist: Invalid block name: " + blockname);
             
             if(!blackWhiteList.containsKey(block))
@@ -134,8 +134,8 @@ public class Config {
             String blockName = str.substring(0, ind);
             String valueStr = str.substring(ind+1);
             
-            Block block = Block.blockRegistry.getObject(new ResourceLocation(blockName));
-            if(block == Blocks.air || block == null)
+            Block block = Block.REGISTRY.getObject(new ResourceLocation(blockName));
+            if(block == Blocks.AIR || block == null)
                 throw new InvalidConfigValueException("blockResistances: Invalid block name: " + blockName);
             
             try {

@@ -45,7 +45,7 @@ public class CommandExplosion extends CommandBase {
 
         Entity source = (sender instanceof Entity) ? (Entity)sender : null;
         
-        world.newExplosion(source, xArg.func_179628_a(), yArg.func_179628_a(), zArg.func_179628_a(), strength, fire, blockDmg);
+        world.newExplosion(source, xArg.getResult(), yArg.getResult(), zArg.getResult(), strength, fire, blockDmg);
     }
 
 }
