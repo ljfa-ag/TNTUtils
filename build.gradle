@@ -17,7 +17,7 @@ plugins {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-version = "1.2"
+version = "1.2.1"
 group= "ljfa.tntutils"
 archivesBaseName = "tnt_utilities-mc1.8.9"
 
@@ -33,12 +33,11 @@ jar {
 }
 
 curseforge {
-    apiKey = project.curseForgeApiKey
+    apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
     project {
         id = '227449'
         changelog  = ''
-        releaseType = 'beta'
-        addGameVersion '1.8.9'
+        releaseType = 'release'
     }
 }
 
