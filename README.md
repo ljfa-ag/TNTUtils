@@ -1,4 +1,6 @@
 # TNTUtils
+**Downloads on CurseForge: http://minecraft.curseforge.com/projects/tntutils**
+
 This is a small mod that provides some utilities for explosions.
 
 TNTUtils can be installed on a server without clients needing it.
@@ -10,7 +12,7 @@ Current features:
  - Disable TNT explosions
  - Prevent TNT from chain-reacting
  - A "/explosion" command
- - Increase the chance that a destroyed block will drop as an item
+ - Modify the chance that a destroyed block will drop as an item
  - Prevent explosions from destroying
    - tile entities or
    - any specified block or
