@@ -29,7 +29,7 @@ public class ExplosionTransformer implements IClassTransformer {
         if(name.equals("net.minecraft.world.Explosion")) {
             coreLogger.info("About to patch class %s", name);
             return patchClassExplosion(name, basicClass, false);
-        } else if(name.equals("ahp")) {
+        } else if(name.equals("ahy")) {
             coreLogger.info("About to patch obfuscated class %s", name);
             return patchClassExplosion(name, basicClass, true);
         } else
