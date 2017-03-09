@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = Reference.MODID, name = Reference.MODNAME, version = Reference.VERSION, acceptableRemoteVersions = "*",
     guiFactory = Reference.GUI_FACTORY_CLASS, dependencies = "required-after:tnt_utilities_core",
-    acceptedMinecraftVersions = "[1.11.2,)", updateJSON = Reference.UPDATE_JSON)
+    acceptedMinecraftVersions = "[1.11.2,1.12)", updateJSON = Reference.UPDATE_JSON)
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;

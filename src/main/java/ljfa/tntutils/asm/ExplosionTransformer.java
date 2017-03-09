@@ -29,7 +29,7 @@ public class ExplosionTransformer implements IClassTransformer {
         if(name.equals("net.minecraft.world.Explosion")) {
             coreLogger.info("About to patch class %s", name);
             return patchClassExplosion(name, basicClass, false);
-        } else if(name.equals("ahy")) {
+        } else if(name.equals("ajn")) {
             coreLogger.info("About to patch obfuscated class %s", name);
             return patchClassExplosion(name, basicClass, true);
         } else
@@ -63,7 +63,7 @@ public class ExplosionTransformer implements IClassTransformer {
         boolean didInject = false;
         while(it.hasNext()) {
             AbstractInsnNode currentNode = it.next();
-            /* In the Explosion class, line 238:
+            /* In the Explosion class, line 239:
              * 
              * Currently, the division 1.0F / this.explosionSize for the drop chance is being performed.
              * We want to get rid of this and instead call a hook method that calculates the chance for us.
