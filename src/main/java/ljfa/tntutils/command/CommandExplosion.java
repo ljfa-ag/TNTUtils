@@ -21,8 +21,7 @@ public class CommandExplosion extends CommandBase {
 
     @Override
     public String getUsage(ICommandSender sender) {
-        return "explosion <x> <y> <z> [strength] [damage blocks] [set fires]. "
-                + "Default strength: 4 (TNT)";
+        return "tnt_utilities.commands.explosion.usage";
     }
 
     @Override
