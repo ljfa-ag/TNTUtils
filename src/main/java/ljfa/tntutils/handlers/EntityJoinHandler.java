@@ -17,12 +17,12 @@ public class EntityJoinHandler {
         Entity ent = event.getEntity();
         if(Config.disableTNT && ent instanceof EntityTNTPrimed) {
             event.setCanceled(true);
-            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.TNT)));
+            event.getWorld().spawnEntity(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.TNT)));
         }
         else if(Config.disableTNTMinecart && ent instanceof EntityMinecartTNT) {
             event.setCanceled(true);
-            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.TNT)));
-            event.getWorld().spawnEntityInWorld(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Items.MINECART)));
+            event.getWorld().spawnEntity(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Blocks.TNT)));
+            event.getWorld().spawnEntity(new EntityItem(event.getWorld(), ent.posX, ent.posY, ent.posZ, new ItemStack(Items.MINECART)));
         }
     }
 }

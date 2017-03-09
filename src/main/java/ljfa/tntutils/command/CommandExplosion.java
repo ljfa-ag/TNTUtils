@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 
 public class CommandExplosion extends CommandBase {
     @Override
-    public String getCommandName() {
+    public String getName() {
         return "explosion";
     }
     
@@ -20,7 +20,7 @@ public class CommandExplosion extends CommandBase {
     }
 
     @Override
-    public String getCommandUsage(ICommandSender sender) {
+    public String getUsage(ICommandSender sender) {
         return "explosion <x> <y> <z> [strength] [damage blocks] [set fires]. "
                 + "Default strength: 4 (TNT)";
     }
@@ -28,7 +28,7 @@ public class CommandExplosion extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(args.length < 3)
-            throw new WrongUsageException(getCommandUsage(sender), new Object[0]);
+            throw new WrongUsageException(getUsage(sender));
         
         World world = sender.getEntityWorld();
         double x = sender.getPositionVector().xCoord;
