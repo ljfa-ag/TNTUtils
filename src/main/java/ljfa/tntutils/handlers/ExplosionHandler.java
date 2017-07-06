@@ -23,7 +23,7 @@ public class ExplosionHandler {
         if(Config.disableExplosions)
             event.setCanceled(true);
         else
-            event.getExplosion().explosionSize *= Config.sizeMultiplier;
+            event.getExplosion().size *= Config.sizeMultiplier;
     }
 
     @SubscribeEvent

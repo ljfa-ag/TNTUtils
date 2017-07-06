@@ -30,9 +30,9 @@ public class CommandExplosion extends CommandBase {
             throw new WrongUsageException(getUsage(sender));
         
         World world = sender.getEntityWorld();
-        double x = sender.getPositionVector().xCoord;
-        double y = sender.getPositionVector().yCoord;
-        double z = sender.getPositionVector().zCoord;
+        double x = sender.getPositionVector().x;
+        double y = sender.getPositionVector().y;
+        double z = sender.getPositionVector().z;
         
         CoordinateArg xArg = parseCoordinate(x, args[0], true);
         CoordinateArg yArg = parseCoordinate(y, args[1], 0, 0, false);

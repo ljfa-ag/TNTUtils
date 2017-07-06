@@ -7,11 +7,11 @@ public class HooksExplosion {
     public static final float alwaysDropThreshold = 10.0f;
     
     public static float getDropChance(Explosion expl) {
-        float baseChance = 1.0f / expl.explosionSize;
+        float baseChance = 1.0f / expl.size;
         if(Config.dropChanceModifier == 0.0f)
             return baseChance;
         else if(Config.dropChanceModifier > 0.0f) {
-            if(expl.explosionSize <= alwaysDropThreshold)
+            if(expl.size <= alwaysDropThreshold)
                 return baseChance + Config.dropChanceModifier * (1.0f - baseChance);
             else
                 return baseChance;
