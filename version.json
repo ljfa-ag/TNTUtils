@@ -1,9 +1,10 @@
 {
-    "homepage": "http://www.curse.com/mc-mods/minecraft/227449-tntutils#t1:other-downloads",
+    "homepage": "https://minecraft.curseforge.com/projects/tntutils",
     "promos": {
         "1.8.9-latest": "1.2.1",
         "1.9.4-latest": "1.2",
         "1.10.2-latest": "1.2.1",
-        "1.11.2-latest": "1.2.2"
+        "1.11.2-latest": "1.2.2",
+        "1.12-latest": "1.2.2"
     }
 }
