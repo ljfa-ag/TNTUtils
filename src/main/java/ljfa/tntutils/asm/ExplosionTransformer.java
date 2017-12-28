@@ -26,17 +26,20 @@ public class ExplosionTransformer implements IClassTransformer {
     
     @Override
     public byte[] transform(String name, String transformedName, byte[] basicClass) {
-        if(name.equals("net.minecraft.world.Explosion")) {
-            coreLogger.info("About to patch class %s", name);
-            return patchClassExplosion(name, basicClass, false);
-        } else if(name.equals("amn")) {
-            coreLogger.info("About to patch obfuscated class %s", name);
-            return patchClassExplosion(name, basicClass, true);
+        if(transformedName.equals("net.minecraft.world.Explosion")) {
+            if(name.equals(transformedName)) {
+                coreLogger.info("About to patch class %s", transformedName);
+                return patchClassExplosion(basicClass, false);
+            }
+            else {
+                coreLogger.info("About to patch obfuscated class %s (%s)", name, transformedName);
+                return patchClassExplosion(basicClass, true);
+            }
         } else
             return basicClass;
     }
     
-    private byte[] patchClassExplosion(String name, byte[] basicClass, boolean obfuscated) {
+    private byte[] patchClassExplosion(byte[] basicClass, boolean obfuscated) {
         //ASM manipulation stuff
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(basicClass);
