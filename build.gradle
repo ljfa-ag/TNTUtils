@@ -1,0 +1,6 @@
+plugins {
+    // Latest ModDevGradle versions: https://projects.neoforged.net/neoforged/moddevgradle
+    id 'net.neoforged.moddev' version '1.0.23' apply false
+    // Latest Loom versions: https://fabricmc.net/develop/
+    id 'fabric-loom' version '1.9-SNAPSHOT' apply false
+}

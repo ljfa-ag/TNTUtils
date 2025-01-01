@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="${neo_loader_version_range}"
+license="${mod_license}"
+#issueTrackerURL="https://change.me.to.your.issue.tracker.example.invalid/" #optional
+
+[[mods]]
+    modId="${mod_id}"
+    version="${mod_version}"
+    displayName="${mod_name}"
+    #updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+    #displayURL="https://change.me.to.your.mods.homepage.example.invalid/" #optional
+    #logoFile="examplemod.png" #optional
+    #credits="" #optional
+    authors="${mod_authors}"
+    description='''${mod_description}'''
+
+[[mixins]]
+    config="${mod_id}.mixins.json"
+[[mixins]]
+    config="${mod_id}.neoforge.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,103 @@
+plugins {
+	id 'fabric-loom'
+	id 'maven-publish'
+}
+
+version = project.mod_version
+group = project.mod_group_id
+
+base {
+    archivesName = "${mod_id}-fabric"
+}
+
+repositories {
+	maven {
+		name = 'ParchmentMC'
+		url = 'https://maven.parchmentmc.org'
+	}
+}
+
+fabricApi {
+	configureDataGeneration()
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${parchment_minecraft_version}:${parchment_mappings_version}@zip")
+    }
+	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation project(":common")
+}
+
+loom {
+    def aw = file("src/main/resources/${mod_id}.accesswidener")
+    if (aw.exists()) {
+        accessWidenerPath = aw
+    }
+
+    runs {
+        client {
+            client()
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+    }
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(project(":common").sourceSets.main.allSource)
+    source(project(":common").sourceSets.main.allSource)
+}
+
+processResources {
+    dependsOn(project(":common").sourceSets.main.resources)
+    from(project(":common").sourceSets.main.resources)
+    exclude "META-INF/accesstransformer.cfg"
+    
+    var replaceProperties = [
+            java_version           : java_version,
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            fabric_version         : fabric_version,
+            fabric_loader_version  : fabric_loader_version,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+}
+
+tasks.named('javadoc', Javadoc).configure {
+    dependsOn(project(":common").sourceSets.main.allJava)
+    source(project(":common").sourceSets.main.allJava)
+}
+
+tasks.withType(JavaCompile).configureEach {
+	it.options.release = project.java_version as Integer
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+
+publishing {
+	publications {
+		create("mavenJava", MavenPublication) {
+			from components.java
+		}
+	}
+
+	repositories {
+
+	}
+}

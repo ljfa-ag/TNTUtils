@@ -1,0 +1,39 @@
+{
+	"schemaVersion": 1,
+	"id": "tntutils",
+	"version": "${mod_version}",
+	"name": "${mod_name}",
+	"description": "${mod_description}",
+	"authors": [
+		"${mod_authors}"
+	],
+	"contact": {
+		"homepage": "https://www.curseforge.com/minecraft/mc-mods/tntutils",
+		"sources": "https://github.com/ljfa-ag/TNTUtils"
+	},
+	"license": "${mod_license}",
+	"icon": "assets/tntutils/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"ljfa.tntutils.fabric.TNTUtilsFabricEntry"
+		],
+		"fabric-datagen": [
+			"ljfa.tntutils.fabric.TNTUtilsFabricDatagen"
+		]
+	},
+    "accessWidener": "tntutils.accesswidener",
+	"mixins": [
+		"tntutils.mixins.json",
+		"tntutils.fabric.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
