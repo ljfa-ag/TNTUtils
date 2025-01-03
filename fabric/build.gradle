@@ -30,6 +30,9 @@ dependencies {
 	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 	implementation project(":common")
+	
+	implementation "me.zeroeightsix:fiber:0.23.0-2"
+	include "me.zeroeightsix:fiber:0.23.0-2"
 }
 
 loom {
