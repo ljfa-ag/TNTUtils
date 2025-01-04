@@ -8,6 +8,6 @@ public class ExplosionHandler {
 	 * Called as or just before {@link Explosion#explode()} is called.
 	 */
 	public static void onExplosionStart(Explosion expl) {
-		TNTUtils.logger.debug("onExplosionStart called. sizeMultiplier = {}", TNTUtils.config().sizeMultiplier());
+		expl.radius *= TNTUtils.config().sizeMultiplier();
 	}
 }
