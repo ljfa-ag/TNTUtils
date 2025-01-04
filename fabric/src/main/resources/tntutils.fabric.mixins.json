@@ -1,11 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ljfa.tntutils.mixin",
+  "package": "ljfa.tntutils.fabric.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [],
-  "server": [],
+  "mixins": [
+	"ExplosionFabricMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
