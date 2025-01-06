@@ -1,5 +1,5 @@
 # TNTUtils
-**Downloads on CurseForge: http://minecraft.curseforge.com/projects/tntutils**
+**Downloads on CurseForge: https://www.curseforge.com/minecraft/mc-mods/tntutils**
 
 This is a small mod that provides some utilities for explosions.
 
