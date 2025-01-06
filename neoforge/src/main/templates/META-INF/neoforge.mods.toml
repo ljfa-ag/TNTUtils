@@ -7,6 +7,7 @@ issueTrackerURL="https://github.com/ljfa-ag/TNTUtils/issues"
     modId="${mod_id}"
     version="${mod_version}"
     displayName="${mod_name}"
+    updateJSONURL="https://raw.githubusercontent.com/ljfa-ag/TNTUtils/refs/heads/version/version.json"
     displayURL="https://www.curseforge.com/minecraft/mc-mods/tntutils"
     authors="${mod_authors}"
     description='''${mod_description}'''
