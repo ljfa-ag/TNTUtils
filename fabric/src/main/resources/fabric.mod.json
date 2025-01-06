@@ -12,7 +12,6 @@
 		"sources": "https://github.com/ljfa-ag/TNTUtils"
 	},
 	"license": "${mod_license}",
-	"icon": "assets/tntutils/icon.png",
 	"environment": "*",
 	"entrypoints": {
 		"main": [
