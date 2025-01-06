@@ -9,6 +9,7 @@ public class NeoforgeTNTUtilsConfig {
 		public final DoubleValue sizeMultiplier;
 
 		public Common(ModConfigSpec.Builder builder) {
+			builder.comment("General options").push("general");
 			sizeMultiplier = builder
 					.comment("Multiplies the size of all explosions by this")
 					.translation("tntutils.config.sizeMultiplier")

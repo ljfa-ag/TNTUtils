@@ -23,9 +23,14 @@ public class FiberTNTUtilsConfig {
 
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
+					.fork("general")
+					.withComment("General options")
+
 					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(0.0f).withMaximum(50.0f), 1.0f)
 					.withComment("Multiplies the size of all explosions by this")
 					.finishValue(sizeMultiplier::mirror)
+
+					.finishBranch()
 					.build();
 		}
 
