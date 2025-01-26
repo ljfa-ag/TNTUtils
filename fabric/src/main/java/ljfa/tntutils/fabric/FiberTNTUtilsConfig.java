@@ -20,6 +20,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class FiberTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
+		public final PropertyMirror<Boolean> addExplodeCommand = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
@@ -30,6 +31,10 @@ public class FiberTNTUtilsConfig {
 					.withComment(SIZE_MULTIPLIER_COMMENT)
 					.finishValue(sizeMultiplier::mirror)
 
+					.beginValue("addExplodeCommand", ConfigTypes.BOOLEAN, ADD_EXPLODE_COMMAND_DEFAULT)
+					.withComment(ADD_EXPLODE_COMMAND_COMMENT)
+					.finishValue(addExplodeCommand::mirror)
+
 					.finishBranch()
 					.build();
 		}
@@ -37,6 +42,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public float sizeMultiplier() {
 			return sizeMultiplier.getValue();
+		}
+
+		@Override
+		public boolean addExplodeCommand() {
+			return addExplodeCommand.getValue();
 		}
 	}
 
