@@ -1,18 +1,18 @@
 package ljfa.tntutils.neoforge;
 
-import ljfa.tntutils.TNTUtilsConfig;
+import ljfa.tntutils.TNTUtilsConfigAccess;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 
 public class NeoforgeTNTUtilsConfig {
-	public static class Common implements TNTUtilsConfig {
+	public static class Common implements TNTUtilsConfigAccess {
 		public final DoubleValue sizeMultiplier;
 
 		public Common(ModConfigSpec.Builder builder) {
-			builder.comment("General options").push("general");
+			builder.comment(GENERAL_COMMENT).push("general");
 			sizeMultiplier = builder
-					.comment("Multiplies the size of all explosions by this")
-					.translation("tntutils.config.sizeMultiplier")
+					.comment(SIZE_MULTIPLIER_COMMENT)
+					.translation(SIZE_MULTIPLIER_KEY)
 					.defineInRange("sizeMultiplier", 1.0, 0.0, 50.0);
 		}
 

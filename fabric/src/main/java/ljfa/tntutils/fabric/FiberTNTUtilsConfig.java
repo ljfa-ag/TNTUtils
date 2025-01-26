@@ -14,20 +14,20 @@ import io.github.fablabsmc.fablabs.api.fiber.v1.serialization.JanksonValueSerial
 import io.github.fablabsmc.fablabs.api.fiber.v1.tree.ConfigTree;
 import io.github.fablabsmc.fablabs.api.fiber.v1.tree.PropertyMirror;
 import ljfa.tntutils.TNTUtils;
-import ljfa.tntutils.TNTUtilsConfig;
+import ljfa.tntutils.TNTUtilsConfigAccess;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FiberTNTUtilsConfig {
-	public static class Common implements TNTUtilsConfig {
+	public static class Common implements TNTUtilsConfigAccess {
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
 					.fork("general")
-					.withComment("General options")
+					.withComment(GENERAL_COMMENT)
 
 					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(0.0f).withMaximum(50.0f), 1.0f)
-					.withComment("Multiplies the size of all explosions by this")
+					.withComment(SIZE_MULTIPLIER_COMMENT)
 					.finishValue(sizeMultiplier::mirror)
 
 					.finishBranch()

@@ -11,7 +11,7 @@ public class TNTUtils {
 	public static final Logger logger = LoggerFactory.getLogger(TNTUtils.class);
 	public static final PlatformAbstractions platformAbstr = loadAbstractions();
 
-	public static final TNTUtilsConfig config() {
+	public static final TNTUtilsConfigAccess config() {
 		return platformAbstr.config();
 	}
 
