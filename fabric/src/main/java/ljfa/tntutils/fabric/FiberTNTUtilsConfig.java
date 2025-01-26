@@ -26,7 +26,7 @@ public class FiberTNTUtilsConfig {
 					.fork("general")
 					.withComment(GENERAL_COMMENT)
 
-					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(0.0f).withMaximum(50.0f), 1.0f)
+					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(SIZE_MULTIPLIER_MIN).withMaximum(SIZE_MULTIPLIER_MAX), SIZE_MULTIPLIER_DEFAULT)
 					.withComment(SIZE_MULTIPLIER_COMMENT)
 					.finishValue(sizeMultiplier::mirror)
 

@@ -13,7 +13,7 @@ public class NeoforgeTNTUtilsConfig {
 			sizeMultiplier = builder
 					.comment(SIZE_MULTIPLIER_COMMENT)
 					.translation(SIZE_MULTIPLIER_KEY)
-					.defineInRange("sizeMultiplier", 1.0, 0.0, 50.0);
+					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
 		}
 
 		@Override
