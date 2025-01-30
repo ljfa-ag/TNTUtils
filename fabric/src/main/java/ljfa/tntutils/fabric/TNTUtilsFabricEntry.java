@@ -1,6 +1,6 @@
 package ljfa.tntutils.fabric;
 
-import ljfa.tntutils.ExplodeCommand;
+import ljfa.tntutils.command.ExplodeCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 

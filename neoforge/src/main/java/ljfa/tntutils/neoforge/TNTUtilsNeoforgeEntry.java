@@ -1,7 +1,7 @@
 package ljfa.tntutils.neoforge;
 
-import ljfa.tntutils.ExplodeCommand;
 import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.command.ExplodeCommand;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
