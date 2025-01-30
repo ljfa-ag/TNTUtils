@@ -1,6 +1,8 @@
 package ljfa.tntutils;
 
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.BoolArgumentType;
+import com.mojang.brigadier.arguments.FloatArgumentType;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -18,7 +20,31 @@ public class ExplodeCommand {
 			dispatcher.register(Commands.literal("explode")
 					.requires(css -> css.hasPermission(Commands.LEVEL_GAMEMASTERS))
 					.then(Commands.argument("pos", Vec3Argument.vec3())
-							.executes(ctx -> explode(ctx.getSource(), Vec3Argument.getVec3(ctx, "pos"), DEFAULT_STRENGTH, DEFAULT_FIRE, DEFAULT_INTERACTION))
+							.executes(ctx -> explode(
+									ctx.getSource(),
+									Vec3Argument.getVec3(ctx, "pos"),
+									DEFAULT_STRENGTH,
+									DEFAULT_FIRE,
+									DEFAULT_INTERACTION)
+							)
+							.then(Commands.argument("strength", FloatArgumentType.floatArg(0.0f))
+									.executes(ctx -> explode(
+											ctx.getSource(),
+											Vec3Argument.getVec3(ctx, "pos"),
+											FloatArgumentType.getFloat(ctx, "strength"),
+											DEFAULT_FIRE,
+											DEFAULT_INTERACTION)
+									)
+									.then(Commands.argument("fire", BoolArgumentType.bool())
+											.executes(ctx -> explode(
+													ctx.getSource(),
+													Vec3Argument.getVec3(ctx, "pos"),
+													FloatArgumentType.getFloat(ctx, "strength"),
+													BoolArgumentType.getBool(ctx, "fire"),
+													DEFAULT_INTERACTION)
+											)
+									)
+							)
 					)
 			);
 		}
