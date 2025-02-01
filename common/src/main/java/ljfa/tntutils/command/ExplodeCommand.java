@@ -1,8 +1,10 @@
 package ljfa.tntutils.command;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
+import com.mojang.brigadier.context.CommandContext;
 
 import ljfa.tntutils.TNTUtils;
 import net.minecraft.commands.CommandSourceStack;
@@ -25,25 +27,27 @@ public class ExplodeCommand {
 									ctx.getSource(),
 									Vec3Argument.getVec3(ctx, "pos"),
 									DEFAULT_STRENGTH,
-									DEFAULT_FIRE,
-									DEFAULT_INTERACTION)
+									DEFAULT_FIRE)
 							)
 							.then(Commands.argument("strength", FloatArgumentType.floatArg(0.0f))
 									.executes(ctx -> explode(
 											ctx.getSource(),
 											Vec3Argument.getVec3(ctx, "pos"),
 											FloatArgumentType.getFloat(ctx, "strength"),
-											DEFAULT_FIRE,
-											DEFAULT_INTERACTION)
+											DEFAULT_FIRE)
 									)
 									.then(Commands.argument("fire", BoolArgumentType.bool())
 											.executes(ctx -> explode(
 													ctx.getSource(),
 													Vec3Argument.getVec3(ctx, "pos"),
 													FloatArgumentType.getFloat(ctx, "strength"),
-													BoolArgumentType.getBool(ctx, "fire"),
-													DEFAULT_INTERACTION)
+													BoolArgumentType.getBool(ctx, "fire"))
 											)
+											.then(Commands.literal("block"  ).executes(ctx -> explode(ctx, ExplosionInteraction.BLOCK)))
+											.then(Commands.literal("mob"    ).executes(ctx -> explode(ctx, ExplosionInteraction.MOB)))
+											.then(Commands.literal("tnt"    ).executes(ctx -> explode(ctx, ExplosionInteraction.TNT)))
+											.then(Commands.literal("trigger").executes(ctx -> explode(ctx, ExplosionInteraction.TRIGGER)))
+											.then(Commands.literal("none"   ).executes(ctx -> explode(ctx, ExplosionInteraction.NONE)))
 									)
 							)
 					)
@@ -51,8 +55,17 @@ public class ExplodeCommand {
 		}
 	}
 
-	private static int explode(CommandSourceStack css, Vec3 pos, float strength, boolean fire, ExplosionInteraction interaction) {
+	private static int explode(CommandSourceStack css, Vec3 pos, float strength, boolean fire) {
+		css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, DEFAULT_INTERACTION);
+		return Command.SINGLE_SUCCESS;
+	}
+
+	private static int explode(CommandContext<CommandSourceStack> ctx, ExplosionInteraction interaction) {
+		var css = ctx.getSource();
+		var pos = Vec3Argument.getVec3(ctx, "pos");
+		var strength = FloatArgumentType.getFloat(ctx, "strength");
+		var fire = BoolArgumentType.getBool(ctx, "fire");
 		css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
-		return 1;
+		return Command.SINGLE_SUCCESS;
 	}
 }
