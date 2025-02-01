@@ -29,7 +29,8 @@ public class TNTUtilsNeoforgeEntry {
 	private void commonSetup(FMLCommonSetupEvent event) {
 		var eventBus = NeoForge.EVENT_BUS;
 
-		eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
+		if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
+			eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
 
 		eventBus.addListener((ExplosionEvent.Start e) -> ExplosionHandler.onExplosionStart(e.getExplosion()));
 	}

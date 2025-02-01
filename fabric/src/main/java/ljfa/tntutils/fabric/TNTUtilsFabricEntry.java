@@ -9,6 +9,7 @@ public class TNTUtilsFabricEntry implements ModInitializer {
 	public void onInitialize() {
 		FiberTNTUtilsConfig.init();
 
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> ExplodeCommand.register(dispatcher));
+		if(FiberTNTUtilsConfig.COMMON.addExplodeCommand())
+			CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> ExplodeCommand.register(dispatcher));
 	}
 }

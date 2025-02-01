@@ -19,7 +19,7 @@ public class NeoforgeTNTUtilsConfig {
 			addExplodeCommand = builder
 					.comment(ADD_EXPLODE_COMMAND_COMMENT)
 					.translation(ADD_EXPLODE_COMMAND_KEY)
-					.worldRestart()
+					.gameRestart()
 					.define("addExplodeCommand", ADD_EXPLODE_COMMAND_DEFAULT);
 		}
 

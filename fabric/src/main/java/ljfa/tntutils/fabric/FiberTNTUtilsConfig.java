@@ -50,7 +50,7 @@ public class FiberTNTUtilsConfig {
 		}
 	}
 
-	static final Common COMMON = new Common();
+	public static final Common COMMON = new Common();
 
 	public static void init() {
 		var configTree = COMMON.buildConfig();
