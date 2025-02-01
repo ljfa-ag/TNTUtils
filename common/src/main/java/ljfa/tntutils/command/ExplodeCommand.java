@@ -1,6 +1,5 @@
 package ljfa.tntutils.command;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
@@ -45,15 +44,6 @@ public class ExplodeCommand {
 													BoolArgumentType.getBool(ctx, "fire"),
 													DEFAULT_INTERACTION)
 											)
-											.then(Commands.argument("block_interaction", new ExplosionInteractionArgument())
-													.executes(ctx -> explode(
-															ctx.getSource(),
-															Vec3Argument.getVec3(ctx, "pos"),
-															FloatArgumentType.getFloat(ctx, "strength"),
-															BoolArgumentType.getBool(ctx, "fire"),
-															ExplosionInteractionArgument.getInteraction(ctx, "block_interaction"))
-													)
-											)
 									)
 							)
 					)
@@ -63,6 +53,6 @@ public class ExplodeCommand {
 
 	private static int explode(CommandSourceStack css, Vec3 pos, float strength, boolean fire, ExplosionInteraction interaction) {
 		css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
-		return Command.SINGLE_SUCCESS;
+		return 1;
 	}
 }
