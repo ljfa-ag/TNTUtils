@@ -3,9 +3,9 @@
   "minVersion": "0.8",
   "package": "ljfa.tntutils.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [],
-  "server": [],
+  "mixins": [
+	"BlockBehaviourMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
