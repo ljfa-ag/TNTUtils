@@ -7,21 +7,22 @@ import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 
 public class NeoforgeTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
-		public final DoubleValue sizeMultiplier;
 		public final BooleanValue addExplodeCommand;
+		public final DoubleValue sizeMultiplier;
+
 		public final DoubleValue dropChanceMultiplier;
 
 		public Common(ModConfigSpec.Builder builder) {
 			builder.comment(GENERAL_COMMENT).push("general");
-			sizeMultiplier = builder
-					.comment(SIZE_MULTIPLIER_COMMENT)
-					.translation(SIZE_MULTIPLIER_KEY)
-					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
 			addExplodeCommand = builder
 					.comment(ADD_EXPLODE_COMMAND_COMMENT)
 					.translation(ADD_EXPLODE_COMMAND_KEY)
 					.gameRestart()
 					.define("addExplodeCommand", ADD_EXPLODE_COMMAND_DEFAULT);
+			sizeMultiplier = builder
+					.comment(SIZE_MULTIPLIER_COMMENT)
+					.translation(SIZE_MULTIPLIER_KEY)
+					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
 
 			builder.pop().comment(BLOCK_DAMAGE_COMMENT).push("blockDamage");
 			dropChanceMultiplier = builder
@@ -31,13 +32,13 @@ public class NeoforgeTNTUtilsConfig {
 		}
 
 		@Override
-		public float sizeMultiplier() {
-			return sizeMultiplier.get().floatValue();
+		public boolean addExplodeCommand() {
+			return addExplodeCommand.get();
 		}
 
 		@Override
-		public boolean addExplodeCommand() {
-			return addExplodeCommand.get();
+		public float sizeMultiplier() {
+			return sizeMultiplier.get().floatValue();
 		}
 
 		@Override
