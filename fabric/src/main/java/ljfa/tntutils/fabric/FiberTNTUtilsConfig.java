@@ -21,6 +21,7 @@ public class FiberTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 		public final PropertyMirror<Boolean> addExplodeCommand = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
@@ -36,6 +37,14 @@ public class FiberTNTUtilsConfig {
 					.finishValue(addExplodeCommand::mirror)
 
 					.finishBranch()
+					.fork("blockDamage")
+					.withComment(BLOCK_DAMAGE_COMMENT)
+
+					.beginValue("dropChanceMultiplier", ConfigTypes.FLOAT.withMinimum(DROP_CHANCE_MULTIPLIER_MIN), DROP_CHANCE_MULTIPLIER_DEFAULT)
+					.withComment(DROP_CHANCE_MULTIPLIER_COMMENT)
+					.finishValue(dropChanceMultiplier::mirror)
+
+					.finishBranch()
 					.build();
 		}
 
@@ -47,6 +56,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean addExplodeCommand() {
 			return addExplodeCommand.getValue();
+		}
+
+		@Override
+		public float dropChanceMultiplier() {
+			return dropChanceMultiplier.getValue();
 		}
 	}
 
