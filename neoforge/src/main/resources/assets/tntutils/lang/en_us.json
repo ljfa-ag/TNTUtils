@@ -1,0 +1,7 @@
+{
+	"tntutils.configuration.general": "General",
+	"tntutils.config.addExplodeCommand": "Add '/explode' command",
+	"tntutils.config.sizeMultiplier": "Size multiplier",
+	"tntutils.configuration.blockDamage": "Block damage",
+	"tntutils.config.dropChanceMultiplier": "Drop chance multiplier"
+}
