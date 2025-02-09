@@ -16,18 +16,18 @@ public class NeoforgeTNTUtilsConfig {
 			builder.comment(GENERAL_COMMENT).push("general");
 			addExplodeCommand = builder
 					.comment(ADD_EXPLODE_COMMAND_COMMENT)
-					.translation(ADD_EXPLODE_COMMAND_KEY)
+					.translation(ADD_EXPLODE_COMMAND_TRANSLATION)
 					.gameRestart()
 					.define("addExplodeCommand", ADD_EXPLODE_COMMAND_DEFAULT);
 			sizeMultiplier = builder
 					.comment(SIZE_MULTIPLIER_COMMENT)
-					.translation(SIZE_MULTIPLIER_KEY)
+					.translation(SIZE_MULTIPLIER_TRANSLATION)
 					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
 
 			builder.pop().comment(BLOCK_DAMAGE_COMMENT).push("blockDamage");
 			dropChanceMultiplier = builder
 					.comment(DROP_CHANCE_MULTIPLIER_COMMENT)
-					.translation(DROP_CHANCE_MULTIPLIER_KEY)
+					.translation(DROP_CHANCE_MULTIPLIER_TRANSLATION)
 					.defineInRange("dropChanceMultiplier", DROP_CHANCE_MULTIPLIER_DEFAULT, DROP_CHANCE_MULTIPLIER_MIN, Double.POSITIVE_INFINITY);
 		}
 
