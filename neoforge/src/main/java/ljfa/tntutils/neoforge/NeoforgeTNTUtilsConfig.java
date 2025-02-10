@@ -11,6 +11,7 @@ public class NeoforgeTNTUtilsConfig {
 		public final DoubleValue sizeMultiplier;
 
 		public final DoubleValue dropChanceMultiplier;
+		public final BooleanValue disableBlockDamage;
 
 		public Common(ModConfigSpec.Builder builder) {
 			builder.comment(GENERAL_COMMENT).push("general");
@@ -29,6 +30,10 @@ public class NeoforgeTNTUtilsConfig {
 					.comment(DROP_CHANCE_MULTIPLIER_COMMENT)
 					.translation(DROP_CHANCE_MULTIPLIER_TRANSLATION)
 					.defineInRange("dropChanceMultiplier", DROP_CHANCE_MULTIPLIER_DEFAULT, DROP_CHANCE_MULTIPLIER_MIN, Double.POSITIVE_INFINITY);
+			disableBlockDamage = builder
+					.comment(DISABLE_BLOCK_DAMAGE_COMMENT)
+					.translation(DISABLE_BLOCK_DAMAGE_TRANSLATION)
+					.define("disableBlockDamage", DISABLE_BLOCK_DAMAGE_DEFAULT);
 		}
 
 		@Override
@@ -44,6 +49,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public float dropChanceMultiplier() {
 			return dropChanceMultiplier.get().floatValue();
+		}
+
+		@Override
+		public boolean disableBlockDamage() {
+			return disableBlockDamage.get();
 		}
 	}
 

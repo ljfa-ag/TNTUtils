@@ -23,6 +23,7 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 
 		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
+		public final PropertyMirror<Boolean> disableBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
@@ -45,6 +46,10 @@ public class FiberTNTUtilsConfig {
 					.withComment(DROP_CHANCE_MULTIPLIER_COMMENT)
 					.finishValue(dropChanceMultiplier::mirror)
 
+					.beginValue("disableBlockDamage", ConfigTypes.BOOLEAN, DISABLE_BLOCK_DAMAGE_DEFAULT)
+					.withComment(DISABLE_BLOCK_DAMAGE_COMMENT)
+					.finishValue(disableBlockDamage::mirror)
+
 					.finishBranch()
 					.build();
 		}
@@ -62,6 +67,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public float dropChanceMultiplier() {
 			return dropChanceMultiplier.getValue();
+		}
+
+		@Override
+		public boolean disableBlockDamage() {
+			return disableBlockDamage.getValue();
 		}
 	}
 

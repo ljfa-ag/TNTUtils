@@ -7,6 +7,7 @@ public interface TNTUtilsConfigAccess {
 
 	//Block damage options
 	float dropChanceMultiplier();
+	boolean disableBlockDamage();
 
 	static final String GENERAL_COMMENT = "General options";
 	static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
@@ -29,4 +30,7 @@ public interface TNTUtilsConfigAccess {
 	static final String DROP_CHANCE_MULTIPLIER_TRANSLATION = "tntutils.config.dropChanceMultiplier";
 	static final float DROP_CHANCE_MULTIPLIER_MIN = 0.0f;
 	static final float DROP_CHANCE_MULTIPLIER_DEFAULT = 1.0f;
+	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Disables all block damage from explosions";
+	static final String DISABLE_BLOCK_DAMAGE_TRANSLATION = "tntutils.config.disableBlockDamage";
+	static final boolean DISABLE_BLOCK_DAMAGE_DEFAULT = false;
 }
