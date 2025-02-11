@@ -11,10 +11,8 @@ public interface TNTUtilsConfigAccess {
 
 	static final String GENERAL_COMMENT = "General options";
 	static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
-	static final String ADD_EXPLODE_COMMAND_TRANSLATION = "tntutils.config.addExplodeCommand";
 	static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
 	static final String SIZE_MULTIPLIER_COMMENT = "Multiplies the size of all explosions by this value";
-	static final String SIZE_MULTIPLIER_TRANSLATION = "tntutils.config.sizeMultiplier";
 	static final float SIZE_MULTIPLIER_MIN = 0.0f;
 	static final float SIZE_MULTIPLIER_MAX = 50.0f;
 	static final float SIZE_MULTIPLIER_DEFAULT = 1.0f;
@@ -27,10 +25,8 @@ public interface TNTUtilsConfigAccess {
 			Will not affect explosions without block drop decay (i.e. TNT explosions by default).
 			To get a drop chance of 100%, set the game rules "mobExplosionDropDecay", "tntExplosionDropDecay" and
 			"blockExplosionDropDecay" to "false".""";
-	static final String DROP_CHANCE_MULTIPLIER_TRANSLATION = "tntutils.config.dropChanceMultiplier";
 	static final float DROP_CHANCE_MULTIPLIER_MIN = 0.0f;
 	static final float DROP_CHANCE_MULTIPLIER_DEFAULT = 1.0f;
 	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Disables all block damage from explosions";
-	static final String DISABLE_BLOCK_DAMAGE_TRANSLATION = "tntutils.config.disableBlockDamage";
 	static final boolean DISABLE_BLOCK_DAMAGE_DEFAULT = false;
 }

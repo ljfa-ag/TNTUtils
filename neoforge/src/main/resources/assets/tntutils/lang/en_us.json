@@ -1,8 +1,8 @@
 {
 	"tntutils.configuration.general": "General",
-	"tntutils.config.addExplodeCommand": "Add '/explode' command",
-	"tntutils.config.sizeMultiplier": "Size multiplier",
+	"tntutils.configuration.addExplodeCommand": "Add '/explode' command",
+	"tntutils.configuration.sizeMultiplier": "Size multiplier",
 	"tntutils.configuration.blockDamage": "Block damage",
-	"tntutils.config.dropChanceMultiplier": "Drop chance multiplier",
-	"tntutils.config.disableBlockDamage": "Disable block damage"
+	"tntutils.configuration.dropChanceMultiplier": "Drop chance multiplier",
+	"tntutils.configuration.disableBlockDamage": "Disable block damage"
 }
