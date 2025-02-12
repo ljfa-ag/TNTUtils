@@ -12,6 +12,7 @@ public class NeoforgeTNTUtilsConfig {
 
 		public final DoubleValue dropChanceMultiplier;
 		public final BooleanValue disableBlockDamage;
+		public final BooleanValue spareBlockEntities;
 
 		public Common(ModConfigSpec.Builder builder) {
 			builder.comment(GENERAL_COMMENT).push("general");
@@ -30,6 +31,9 @@ public class NeoforgeTNTUtilsConfig {
 			disableBlockDamage = builder
 					.comment(DISABLE_BLOCK_DAMAGE_COMMENT)
 					.define("disableBlockDamage", DISABLE_BLOCK_DAMAGE_DEFAULT);
+			spareBlockEntities = builder
+					.comment(SPARE_BLOCK_ENTITIES_COMMENT)
+					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
 		}
 
 		@Override
@@ -50,6 +54,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean disableBlockDamage() {
 			return disableBlockDamage.get();
+		}
+
+		@Override
+		public boolean spareBlockEntities() {
+			return spareBlockEntities.get();
 		}
 	}
 

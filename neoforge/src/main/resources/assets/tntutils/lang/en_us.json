@@ -4,5 +4,6 @@
 	"tntutils.configuration.sizeMultiplier": "Size multiplier",
 	"tntutils.configuration.blockDamage": "Block damage",
 	"tntutils.configuration.dropChanceMultiplier": "Drop chance multiplier",
-	"tntutils.configuration.disableBlockDamage": "Disable block damage"
+	"tntutils.configuration.disableBlockDamage": "Disable block damage",
+	"tntutils.configuration.spareBlockEntities": "Spare block entities"
 }
