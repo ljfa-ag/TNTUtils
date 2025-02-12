@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Explosion.BlockInteraction;
 import net.minecraft.world.level.ExplosionDamageCalculator;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
@@ -25,7 +26,10 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
-		if(TNTUtils.config().spareBlockEntities() && state.hasBlockEntity())
+		var interaction = explosion.getBlockInteraction();
+		if((interaction == BlockInteraction.DESTROY || interaction == BlockInteraction.DESTROY_WITH_DECAY)
+				&& (TNTUtils.config().disableBlockDamage() || TNTUtils.config().spareBlockEntities() && state.hasBlockEntity())
+		)
 			return false;
 		else
 			return original.shouldBlockExplode(explosion, reader, pos, state, power);
