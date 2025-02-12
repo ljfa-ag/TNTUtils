@@ -1,5 +1,7 @@
 accessWidener v2 named
-accessible field net/minecraft/world/level/Explosion radius F
-mutable field net/minecraft/world/level/Explosion radius F
 accessible field net/minecraft/world/level/Explosion blockInteraction Lnet/minecraft/world/level/Explosion$BlockInteraction;
 mutable field net/minecraft/world/level/Explosion blockInteraction Lnet/minecraft/world/level/Explosion$BlockInteraction;
+accessible field net/minecraft/world/level/Explosion radius F
+mutable field net/minecraft/world/level/Explosion radius F
+accessible field net/minecraft/world/level/Explosion damageCalculator Lnet/minecraft/world/level/ExplosionDamageCalculator;
+mutable field net/minecraft/world/level/Explosion damageCalculator Lnet/minecraft/world/level/ExplosionDamageCalculator;
