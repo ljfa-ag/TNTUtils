@@ -8,6 +8,7 @@ public interface TNTUtilsConfigAccess {
 	//Block damage options
 	float dropChanceMultiplier();
 	boolean disableBlockDamage();
+	boolean disableBlockTriggering();
 	boolean spareBlockEntities();
 
 	static final String GENERAL_COMMENT = "General options";
@@ -28,8 +29,10 @@ public interface TNTUtilsConfigAccess {
 			"blockExplosionDropDecay" to "false".""";
 	static final float DROP_CHANCE_MULTIPLIER_MIN = 0.0f;
 	static final float DROP_CHANCE_MULTIPLIER_DEFAULT = 1.0f;
-	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Disables all block damage from explosions";
+	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Prevents explosions from destroying blocks";
 	static final boolean DISABLE_BLOCK_DAMAGE_DEFAULT = false;
+	static final String DISABLE_BLOCK_TRIGGERING_COMMENT = "Prevents explosions from triggering blocks (e.g. Wind Charge explosions flipping levers, etc.)";
+	static final boolean DISABLE_BLOCK_TRIGGERING_DEFAULT = false;
 	static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities";
 	static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;
 }
