@@ -16,9 +16,6 @@
 	"entrypoints": {
 		"main": [
 			"ljfa.tntutils.fabric.TNTUtilsFabricEntry"
-		],
-		"fabric-datagen": [
-			"ljfa.tntutils.fabric.TNTUtilsFabricDatagen"
 		]
 	},
     "accessWidener": "tntutils.accesswidener",
