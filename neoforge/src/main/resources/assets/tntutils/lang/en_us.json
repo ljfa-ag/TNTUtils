@@ -6,5 +6,10 @@
 	"tntutils.configuration.dropChanceMultiplier": "Drop chance multiplier",
 	"tntutils.configuration.disableBlockDamage": "Disable block damage",
 	"tntutils.configuration.disableBlockTriggering": "Disable block triggering",
-	"tntutils.configuration.spareBlockEntities": "Spare block entities"
+	"tntutils.configuration.spareBlockEntities": "Spare block entities",
+	"tntutils.configuration.entityDamage": "Entity damage",
+	"tntutils.configuration.disableEntityDamage": "Disable entity damage",
+	"tntutils.configuration.disablePlayerDamage": "Disable player damage",
+	"tntutils.configuration.disableItemDamage": "Disable item damage",
+	"tntutils.configuration.disableMobDamage": "Disable mob damage"
 }

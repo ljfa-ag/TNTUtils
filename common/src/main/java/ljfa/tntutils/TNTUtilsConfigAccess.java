@@ -11,6 +11,12 @@ public interface TNTUtilsConfigAccess {
 	boolean disableBlockTriggering();
 	boolean spareBlockEntities();
 
+	//Entity damage options
+	boolean disableEntityDamage();
+	boolean disablePlayerDamage();
+	boolean disableItemDamage();
+	boolean disableMobDamage();
+
 	static final String GENERAL_COMMENT = "General options";
 	static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
 	static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
@@ -35,4 +41,14 @@ public interface TNTUtilsConfigAccess {
 	static final boolean DISABLE_BLOCK_TRIGGERING_DEFAULT = false;
 	static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities";
 	static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;
+
+	static final String ENTITY_DAMAGE_COMMENT = "Entity damage options";
+	static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.)";
+	static final boolean DISABLE_ENTITY_DAMAGE_DEFAULT = false;
+	static final String DISABLE_PLAYER_DAMAGE_COMMENT = "Disables explosion damage to players";
+	static final boolean DISABLE_PLAYER_DAMAGE_DEFAULT = false;
+	static final String DISABLE_ITEM_DAMAGE_COMMENT = "Disables explosion damage to items laying on the ground";
+	static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
+	static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals";
+	static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
 }

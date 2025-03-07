@@ -27,6 +27,11 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> disableBlockTriggering = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> spareBlockEntities = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
+		public final PropertyMirror<Boolean> disableEntityDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disablePlayerDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disableItemDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disableMobDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
 					.fork("general")
@@ -61,6 +66,26 @@ public class FiberTNTUtilsConfig {
 					.finishValue(spareBlockEntities::mirror)
 
 					.finishBranch()
+					.fork("entityDamage")
+					.withComment(ENTITY_DAMAGE_COMMENT)
+
+					.beginValue("disableEntityDamage", ConfigTypes.BOOLEAN, DISABLE_ENTITY_DAMAGE_DEFAULT)
+					.withComment(DISABLE_ENTITY_DAMAGE_COMMENT)
+					.finishValue(disableEntityDamage::mirror)
+
+					.beginValue("disablePlayerDamage", ConfigTypes.BOOLEAN, DISABLE_PLAYER_DAMAGE_DEFAULT)
+					.withComment(DISABLE_PLAYER_DAMAGE_COMMENT)
+					.finishValue(disablePlayerDamage::mirror)
+
+					.beginValue("disableItemDamage", ConfigTypes.BOOLEAN, DISABLE_ITEM_DAMAGE_DEFAULT)
+					.withComment(DISABLE_ITEM_DAMAGE_COMMENT)
+					.finishValue(disableItemDamage::mirror)
+
+					.beginValue("disableMobDamage", ConfigTypes.BOOLEAN, DISABLE_MOB_DAMAGE_DEFAULT)
+					.withComment(DISABLE_MOB_DAMAGE_COMMENT)
+					.finishValue(disableMobDamage::mirror)
+
+					.finishBranch()
 					.build();
 		}
 
@@ -92,6 +117,26 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean spareBlockEntities() {
 			return spareBlockEntities.getValue();
+		}
+
+		@Override
+		public boolean disableEntityDamage() {
+			return disableEntityDamage.getValue();
+		}
+
+		@Override
+		public boolean disablePlayerDamage() {
+			return disablePlayerDamage.getValue();
+		}
+
+		@Override
+		public boolean disableItemDamage() {
+			return disableItemDamage.getValue();
+		}
+
+		@Override
+		public boolean disableMobDamage() {
+			return disableMobDamage.getValue();
 		}
 	}
 

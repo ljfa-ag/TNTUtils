@@ -15,6 +15,11 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableBlockTriggering;
 		public final BooleanValue spareBlockEntities;
 
+		public final BooleanValue disableEntityDamage;
+		public final BooleanValue disablePlayerDamage;
+		public final BooleanValue disableItemDamage;
+		public final BooleanValue disableMobDamage;
+
 		public Common(ModConfigSpec.Builder builder) {
 			builder.comment(GENERAL_COMMENT).push("general");
 			addExplodeCommand = builder
@@ -38,6 +43,20 @@ public class NeoforgeTNTUtilsConfig {
 			spareBlockEntities = builder
 					.comment(SPARE_BLOCK_ENTITIES_COMMENT)
 					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
+
+			builder.pop().comment(ENTITY_DAMAGE_COMMENT).push("entityDamage");
+			disableEntityDamage = builder
+					.comment(DISABLE_ENTITY_DAMAGE_COMMENT)
+					.define("disableEntityDamage", DISABLE_ENTITY_DAMAGE_DEFAULT);
+			disablePlayerDamage = builder
+					.comment(DISABLE_PLAYER_DAMAGE_COMMENT)
+					.define("disablePlayerDamage", DISABLE_PLAYER_DAMAGE_DEFAULT);
+			disableItemDamage = builder
+					.comment(DISABLE_ITEM_DAMAGE_COMMENT)
+					.define("disableItemDamage", DISABLE_ITEM_DAMAGE_DEFAULT);
+			disableMobDamage = builder
+					.comment(DISABLE_MOB_DAMAGE_COMMENT)
+					.define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
 		}
 
 		@Override
@@ -68,6 +87,26 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean spareBlockEntities() {
 			return spareBlockEntities.get();
+		}
+
+		@Override
+		public boolean disableEntityDamage() {
+			return disableEntityDamage.get();
+		}
+
+		@Override
+		public boolean disablePlayerDamage() {
+			return disablePlayerDamage.get();
+		}
+
+		@Override
+		public boolean disableItemDamage() {
+			return disableItemDamage.get();
+		}
+
+		@Override
+		public boolean disableMobDamage() {
+			return disableMobDamage.get();
 		}
 	}
 
