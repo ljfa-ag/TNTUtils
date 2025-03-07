@@ -5,6 +5,9 @@ import java.util.Optional;
 import ljfa.tntutils.TNTUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
@@ -25,14 +28,15 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
+		var config = TNTUtils.config();
 		switch(explosion.getBlockInteraction()) {
 			case DESTROY, DESTROY_WITH_DECAY -> {
-				if(TNTUtils.config().disableBlockDamage()
-						|| TNTUtils.config().spareBlockEntities() && state.hasBlockEntity())
+				if(config.disableBlockDamage()
+						|| config.spareBlockEntities() && state.hasBlockEntity())
 					return false;
 			}
 			case TRIGGER_BLOCK -> {
-				if(TNTUtils.config().disableBlockTriggering())
+				if(config.disableBlockTriggering())
 					return false;
 			}
 			default -> {}
@@ -42,7 +46,14 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
-		return original.shouldDamageEntity(explosion, entity);
+		var config = TNTUtils.config();
+		if(config.disableEntityDamage()
+				|| (config.disablePlayerDamage() && entity instanceof Player)
+				|| (config.disableMobDamage() && entity instanceof Mob)
+				|| (config.disableItemDamage() && entity instanceof ItemEntity))
+			return false;
+		else
+			return original.shouldDamageEntity(explosion, entity);
 	}
 
 	@Override
