@@ -17,6 +17,15 @@ import net.minecraft.world.level.material.FluidState;
 public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator {
 	private final ExplosionDamageCalculator original;
 
+	//Cache config values to avoid reading them thousands of times per explosion
+	private final boolean disableBlockDamage     = TNTUtils.config().disableBlockDamage();
+	private final boolean spareBlockEntities     = TNTUtils.config().spareBlockEntities();
+	private final boolean disableBlockTriggering = TNTUtils.config().disableBlockTriggering();
+	private final boolean disableEntityDamage    = TNTUtils.config().disableEntityDamage();
+	private final boolean disablePlayerDamage    = TNTUtils.config().disablePlayerDamage();
+	private final boolean disableMobDamage       = TNTUtils.config().disableMobDamage();
+	private final boolean disableItemDamage      = TNTUtils.config().disableItemDamage();
+
 	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
 		this.original = original;
 	}
@@ -28,15 +37,13 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
-		var config = TNTUtils.config();
 		switch(explosion.getBlockInteraction()) {
 			case DESTROY, DESTROY_WITH_DECAY -> {
-				if(config.disableBlockDamage()
-						|| config.spareBlockEntities() && state.hasBlockEntity())
+				if(disableBlockDamage || (spareBlockEntities && state.hasBlockEntity()))
 					return false;
 			}
 			case TRIGGER_BLOCK -> {
-				if(config.disableBlockTriggering())
+				if(disableBlockTriggering)
 					return false;
 			}
 			default -> {}
@@ -46,11 +53,10 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
-		var config = TNTUtils.config();
-		if(config.disableEntityDamage()
-				|| (config.disablePlayerDamage() && entity instanceof Player)
-				|| (config.disableMobDamage() && entity instanceof Mob)
-				|| (config.disableItemDamage() && entity instanceof ItemEntity))
+		if(disableEntityDamage
+				|| (disablePlayerDamage && entity instanceof Player)
+				|| (disableMobDamage && entity instanceof Mob)
+				|| (disableItemDamage && entity instanceof ItemEntity))
 			return false;
 		else
 			return original.shouldDamageEntity(explosion, entity);
