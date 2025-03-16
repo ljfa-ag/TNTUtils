@@ -10,8 +10,19 @@ import net.minecraft.world.level.Explosion;
 
 @Mixin(Explosion.class)
 public abstract class ExplosionFabricMixin {
-	@Inject(method = "explode", at = @At("HEAD"))
+	@Inject(method = "explode", at = @At("HEAD"), cancellable = true)
 	private void tntutils$onExplode(CallbackInfo ci) {
-		ExplosionHandler.onExplosionStart((Explosion) (Object) this);
+		if(ExplosionHandler.shouldCancelExplosion())
+			ci.cancel();
+		else
+			ExplosionHandler.onExplosionStart((Explosion) (Object) this);
+	}
+
+	@Inject(method = "finalizeExplosion", at = @At("HEAD"), cancellable = true)
+	private void tntutils$onFinalizeExplosion(CallbackInfo ci) {
+		//FIXME: As opposed to the NeoForge implementation, this also cancels the sound and particle effects.
+		//Might want to make sure that the behaviors align on both platforms.
+		if(ExplosionHandler.shouldCancelExplosion())
+			ci.cancel();
 	}
 }

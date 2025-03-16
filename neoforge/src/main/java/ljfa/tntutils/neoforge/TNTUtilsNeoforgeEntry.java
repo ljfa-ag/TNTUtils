@@ -32,6 +32,13 @@ public class TNTUtilsNeoforgeEntry {
 		if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
 			eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
 
-		eventBus.addListener((ExplosionEvent.Start e) -> ExplosionHandler.onExplosionStart(e.getExplosion()));
+		eventBus.addListener(this::onExplosionStart);
+	}
+
+	private void onExplosionStart(ExplosionEvent.Start e) {
+		if(ExplosionHandler.shouldCancelExplosion())
+			e.setCanceled(true);
+		else
+			ExplosionHandler.onExplosionStart(e.getExplosion());
 	}
 }

@@ -4,6 +4,10 @@ import ljfa.tntutils.TNTUtils;
 import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
+	public static boolean shouldCancelExplosion() {
+		return TNTUtils.config().disableExplosions();
+	}
+
 	/**
 	 * Called as or just before {@link Explosion#explode()} is called.
 	 */
