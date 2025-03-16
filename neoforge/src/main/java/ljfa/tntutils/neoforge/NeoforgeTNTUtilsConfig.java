@@ -20,7 +20,10 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableItemDamage;
 		public final BooleanValue disableMobDamage;
 
+		public final BooleanValue alwaysAffectAE2Singularities;
+
 		public Common(ModConfigSpec.Builder builder) {
+			//General
 			builder.comment(GENERAL_COMMENT).push("general");
 			addExplodeCommand = builder
 					.comment(ADD_EXPLODE_COMMAND_COMMENT)
@@ -30,6 +33,7 @@ public class NeoforgeTNTUtilsConfig {
 					.comment(SIZE_MULTIPLIER_COMMENT)
 					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
 
+			//Block damage
 			builder.pop().comment(BLOCK_DAMAGE_COMMENT).push("blockDamage");
 			dropChanceMultiplier = builder
 					.comment(DROP_CHANCE_MULTIPLIER_COMMENT)
@@ -44,6 +48,7 @@ public class NeoforgeTNTUtilsConfig {
 					.comment(SPARE_BLOCK_ENTITIES_COMMENT)
 					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
 
+			//Entity damage
 			builder.pop().comment(ENTITY_DAMAGE_COMMENT).push("entityDamage");
 			disableEntityDamage = builder
 					.comment(DISABLE_ENTITY_DAMAGE_COMMENT)
@@ -57,6 +62,12 @@ public class NeoforgeTNTUtilsConfig {
 			disableMobDamage = builder
 					.comment(DISABLE_MOB_DAMAGE_COMMENT)
 					.define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
+
+			//Compatibility
+			builder.pop().comment(COMPATIBILITY_COMMENT).push("compatibility");
+			alwaysAffectAE2Singularities = builder
+					.comment(ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT)
+					.define("alwaysAffectAE2Singularities", ALWAYS_AFFECT_AE2_SINGULARITIES_DEFAULT);
 		}
 
 		@Override
@@ -107,6 +118,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean disableMobDamage() {
 			return disableMobDamage.get();
+		}
+
+		@Override
+		public boolean alwaysAffectAE2Singularities() {
+			return alwaysAffectAE2Singularities.get();
 		}
 	}
 

@@ -32,8 +32,11 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> disableItemDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disableMobDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
+		public final PropertyMirror<Boolean> alwaysAffectAE2Singularities = PropertyMirror.create(ConfigTypes.BOOLEAN);
+
 		public ConfigTree buildConfig() {
 			return ConfigTree.builder()
+					//General
 					.fork("general")
 					.withComment(GENERAL_COMMENT)
 
@@ -46,6 +49,7 @@ public class FiberTNTUtilsConfig {
 					.finishValue(sizeMultiplier::mirror)
 
 					.finishBranch()
+					//Block damage
 					.fork("blockDamage")
 					.withComment(BLOCK_DAMAGE_COMMENT)
 
@@ -66,6 +70,7 @@ public class FiberTNTUtilsConfig {
 					.finishValue(spareBlockEntities::mirror)
 
 					.finishBranch()
+					//Entity damage
 					.fork("entityDamage")
 					.withComment(ENTITY_DAMAGE_COMMENT)
 
@@ -84,6 +89,15 @@ public class FiberTNTUtilsConfig {
 					.beginValue("disableMobDamage", ConfigTypes.BOOLEAN, DISABLE_MOB_DAMAGE_DEFAULT)
 					.withComment(DISABLE_MOB_DAMAGE_COMMENT)
 					.finishValue(disableMobDamage::mirror)
+
+					.finishBranch()
+					//Compatibility
+					.fork("compatibility")
+					.withComment(COMPATIBILITY_COMMENT)
+
+					.beginValue("alwaysAffectAE2Singularities", ConfigTypes.BOOLEAN, ALWAYS_AFFECT_AE2_SINGULARITIES_DEFAULT)
+					.withComment(ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT)
+					.finishValue(alwaysAffectAE2Singularities::mirror)
 
 					.finishBranch()
 					.build();
@@ -137,6 +151,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean disableMobDamage() {
 			return disableMobDamage.getValue();
+		}
+
+		@Override
+		public boolean alwaysAffectAE2Singularities() {
+			return alwaysAffectAE2Singularities.getValue();
 		}
 	}
 

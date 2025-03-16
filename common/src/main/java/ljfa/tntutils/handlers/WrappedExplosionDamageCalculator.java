@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import ljfa.tntutils.TNTUtils;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -25,6 +26,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	private final boolean disablePlayerDamage    = TNTUtils.config().disablePlayerDamage();
 	private final boolean disableMobDamage       = TNTUtils.config().disableMobDamage();
 	private final boolean disableItemDamage      = TNTUtils.config().disableItemDamage();
+	private final boolean alwaysAffectAE2Singularities = TNTUtils.config().alwaysAffectAE2Singularities();
 
 	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
 		this.original = original;
@@ -56,10 +58,16 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 		if(disableEntityDamage
 				|| (disablePlayerDamage && entity instanceof Player)
 				|| (disableMobDamage && entity instanceof Mob)
-				|| (disableItemDamage && entity instanceof ItemEntity))
-			return false;
-		else
-			return original.shouldDamageEntity(explosion, entity);
+				|| (disableItemDamage && entity instanceof ItemEntity)
+		) {
+			if(!(alwaysAffectAE2Singularities && isAE2Singularity(entity)))
+				return false;
+		}
+		return original.shouldDamageEntity(explosion, entity);
+	}
+
+	private static boolean isAE2Singularity(Entity entity) {
+		return entity instanceof ItemEntity ie && ie.getItem().getItemHolder().is(ResourceLocation.fromNamespaceAndPath("ae2", "singularity"));
 	}
 
 	@Override
