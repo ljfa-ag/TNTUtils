@@ -3,6 +3,7 @@ package ljfa.tntutils;
 public interface TNTUtilsConfigAccess {
 	//General options
 	boolean addExplodeCommand();
+	boolean disableExplosions();
 	float sizeMultiplier();
 
 	//Block damage options
@@ -23,6 +24,8 @@ public interface TNTUtilsConfigAccess {
 	static final String GENERAL_COMMENT = "General options";
 	static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
 	static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
+	static final String DISABLE_EXPLOSIONS_COMMENT = "Disables all effects from explosions";
+	static final boolean DISABLE_EXPLOSIONS_DEFAULT = false;
 	static final String SIZE_MULTIPLIER_COMMENT = "Multiplies the size of all explosions by this value";
 	static final float SIZE_MULTIPLIER_MIN = 0.0f;
 	static final float SIZE_MULTIPLIER_MAX = 50.0f;

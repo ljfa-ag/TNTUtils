@@ -20,6 +20,7 @@ import net.fabricmc.loader.api.FabricLoader;
 public class FiberTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
 		public final PropertyMirror<Boolean> addExplodeCommand = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disableExplosions = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 
 		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
@@ -43,6 +44,10 @@ public class FiberTNTUtilsConfig {
 					.beginValue("addExplodeCommand", ConfigTypes.BOOLEAN, ADD_EXPLODE_COMMAND_DEFAULT)
 					.withComment(ADD_EXPLODE_COMMAND_COMMENT)
 					.finishValue(addExplodeCommand::mirror)
+
+					.beginValue("disableExplosions", ConfigTypes.BOOLEAN, DISABLE_EXPLOSIONS_DEFAULT)
+					.withComment(DISABLE_EXPLOSIONS_COMMENT)
+					.finishValue(disableExplosions::mirror)
 
 					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(SIZE_MULTIPLIER_MIN).withMaximum(SIZE_MULTIPLIER_MAX), SIZE_MULTIPLIER_DEFAULT)
 					.withComment(SIZE_MULTIPLIER_COMMENT)
@@ -106,6 +111,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean addExplodeCommand() {
 			return addExplodeCommand.getValue();
+		}
+
+		@Override
+		public boolean disableExplosions() {
+			return disableExplosions.getValue();
 		}
 
 		@Override

@@ -8,6 +8,7 @@ import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 public class NeoforgeTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
 		public final BooleanValue addExplodeCommand;
+		public final BooleanValue disableExplosions;
 		public final DoubleValue sizeMultiplier;
 
 		public final DoubleValue dropChanceMultiplier;
@@ -29,6 +30,9 @@ public class NeoforgeTNTUtilsConfig {
 					.comment(ADD_EXPLODE_COMMAND_COMMENT)
 					.gameRestart()
 					.define("addExplodeCommand", ADD_EXPLODE_COMMAND_DEFAULT);
+			disableExplosions = builder
+					.comment(DISABLE_EXPLOSIONS_COMMENT)
+					.define("disableExplosions", DISABLE_EXPLOSIONS_DEFAULT);
 			sizeMultiplier = builder
 					.comment(SIZE_MULTIPLIER_COMMENT)
 					.defineInRange("sizeMultiplier", SIZE_MULTIPLIER_DEFAULT, SIZE_MULTIPLIER_MIN, SIZE_MULTIPLIER_MAX);
@@ -73,6 +77,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean addExplodeCommand() {
 			return addExplodeCommand.get();
+		}
+
+		@Override
+		public boolean disableExplosions() {
+			return disableExplosions.get();
 		}
 
 		@Override
