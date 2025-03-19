@@ -1,13 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "ljfa.tntutils.mixin",
+  "package": "ljfa.tntutils.neoforge.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [],
-  "client": [],
-  "server": [],
-  "injectors": {
-    "defaultRequire": 1
-  }
+  "mixins": []
 }
 

@@ -17,10 +17,6 @@ repositories {
 	}
 }
 
-fabricApi {
-	configureDataGeneration()
-}
-
 dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.layered {
@@ -52,6 +48,10 @@ loom {
             ideConfigGenerated(true)
             runDir('runs/server')
         }
+    }
+    
+    runConfigs.configureEach {
+        property('mixin.debug.countInjections', 'true')
     }
 }
 

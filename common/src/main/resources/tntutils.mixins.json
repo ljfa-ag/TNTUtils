@@ -5,9 +5,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
 	"BlockBehaviourMixin"
-  ],
-  "injectors": {
-    "defaultRequire": 1
-  }
+  ]
 }
 
