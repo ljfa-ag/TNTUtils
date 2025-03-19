@@ -26,7 +26,7 @@ public abstract class ExplosionFabricMixin {
 	@Inject(method = "finalizeExplosion", at = @At("HEAD"), cancellable = true)
 	private void tntutils$onFinalizeExplosion(CallbackInfo ci) {
 		//Don't cancel finalizeExplosion on the client, so that particles and sound are still played, like in NeoForge
-		if(ExplosionHandler.shouldCancelExplosion() && !level.isClientSide())
+		if(!level.isClientSide() && ExplosionHandler.shouldCancelExplosion())
 			ci.cancel();
 	}
 }

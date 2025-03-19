@@ -66,8 +66,10 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 		return original.shouldDamageEntity(explosion, entity);
 	}
 
+	private static final ResourceLocation AE2_SINGULARITY = ResourceLocation.fromNamespaceAndPath("ae2", "singularity");
+
 	private static boolean isAE2Singularity(Entity entity) {
-		return entity instanceof ItemEntity ie && ie.getItem().getItemHolder().is(ResourceLocation.fromNamespaceAndPath("ae2", "singularity"));
+		return entity instanceof ItemEntity ie && ie.getItem().getItemHolder().is(AE2_SINGULARITY);
 	}
 
 	@Override
