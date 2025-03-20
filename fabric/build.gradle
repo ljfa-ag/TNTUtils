@@ -53,6 +53,8 @@ loom {
     runConfigs.configureEach {
         property('mixin.debug.countInjections', 'true')
     }
+    
+    mixin.useLegacyMixinAp = false
 }
 
 tasks.named('compileJava', JavaCompile) {
