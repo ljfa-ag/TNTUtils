@@ -1,6 +1,8 @@
 plugins {
 	id 'fabric-loom'
 	id 'maven-publish'
+    id 'net.darkhax.curseforgegradle'
+    id 'com.modrinth.minotaur'
 }
 
 version = "${minecraft_version}-${mod_version}"
@@ -94,6 +96,25 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    apiToken = findProperty('curseForgeApiKey')
+    def mainFile = upload(227449, remapJar)
+    mainFile.addModLoader('Fabric')
+    mainFile.releaseType = mod_release_type
+    mainFile.changelog = file('../changelog.md')
+    mainFile.changelogType = 'markdown'
+}
+
+modrinth {
+    token = findProperty('modrinthApiToken')
+    projectId = 'tntutils'
+    versionType = mod_release_type
+    uploadFile = remapJar
+    gameVersions = [minecraft_version]
+    loaders = ['fabric']
+    changelog = file('../changelog.md').text
+}
 
 publishing {
 	publications {

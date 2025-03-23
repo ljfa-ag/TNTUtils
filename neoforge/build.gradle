@@ -2,6 +2,8 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev'
+    id 'net.darkhax.curseforgegradle'
+    id 'com.modrinth.minotaur'
 }
 
 version = "${minecraft_version}-${mod_version}"
@@ -120,6 +122,25 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
 sourceSets.main.resources.srcDir generateModMetadata
 // To avoid having to run "generateModMetadata" manually, make it run on every project reload
 neoForge.ideSyncTask generateModMetadata
+
+task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+    apiToken = findProperty('curseForgeApiKey')
+    def mainFile = upload(227449, jar)
+    mainFile.addModLoader('NeoForge')
+    mainFile.releaseType = mod_release_type
+    mainFile.changelog = file('../changelog.md')
+    mainFile.changelogType = 'markdown'
+}
+
+modrinth {
+    token = findProperty('modrinthApiToken')
+    projectId = 'tntutils'
+    versionType = mod_release_type
+    uploadFile = jar
+    gameVersions = [minecraft_version]
+    loaders = ['neoforge']
+    changelog = file('../changelog.md').text
+}
 
 publishing {
     publications {
