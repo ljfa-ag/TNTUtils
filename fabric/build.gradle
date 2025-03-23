@@ -3,8 +3,8 @@ plugins {
 	id 'maven-publish'
 }
 
-version = project.mod_version
-group = project.mod_group_id
+version = "${minecraft_version}-${mod_version}"
+group = mod_group_id
 
 base {
     archivesName = "${mod_id}-fabric"
@@ -76,7 +76,7 @@ processResources {
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version,
+            mod_version            : version,
             mod_authors            : mod_authors,
             mod_description        : mod_description
     ]
