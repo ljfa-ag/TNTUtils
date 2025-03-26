@@ -6,6 +6,7 @@ public interface TNTUtilsConfigAccess {
 	boolean disableExplosions();
 	float sizeMultiplier();
 	boolean preventChainExplosions();
+	boolean disableTNT();
 
 	//Block damage options
 	float dropChanceMultiplier();
@@ -33,6 +34,8 @@ public interface TNTUtilsConfigAccess {
 	static final float SIZE_MULTIPLIER_DEFAULT = 1.0f;
 	static final String PREVENT_CHAIN_EXPLOSIONS_COMMENT = "Prevents explosion from triggering TNT, thus preventing chain explosions";
 	static final boolean PREVENT_CHAIN_EXPLOSIONS_DEFAULT = false;
+	static final String DISABLE_TNT_COMMENT = "Disables TNT explosions";
+	static final boolean DISABLE_TNT_DEFAULT = false;
 
 	static final String BLOCK_DAMAGE_COMMENT = "Block damage options";
 	static final String DROP_CHANCE_MULTIPLIER_COMMENT = """

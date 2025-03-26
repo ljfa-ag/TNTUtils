@@ -11,6 +11,7 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableExplosions;
 		public final DoubleValue sizeMultiplier;
 		public final BooleanValue preventChainExplosions;
+		public final BooleanValue disableTNT;
 
 		public final DoubleValue dropChanceMultiplier;
 		public final BooleanValue disableBlockDamage;
@@ -40,6 +41,9 @@ public class NeoforgeTNTUtilsConfig {
 			preventChainExplosions = builder
 					.comment(PREVENT_CHAIN_EXPLOSIONS_COMMENT)
 					.define("preventChainExplosions", PREVENT_CHAIN_EXPLOSIONS_DEFAULT);
+			disableTNT = builder
+					.comment(DISABLE_TNT_COMMENT)
+					.define("disableTNT", DISABLE_TNT_DEFAULT);
 
 			//Block damage
 			builder.pop().comment(BLOCK_DAMAGE_COMMENT).push("blockDamage");
@@ -96,6 +100,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean preventChainExplosions() {
 			return preventChainExplosions.get();
+		}
+
+		@Override
+		public boolean disableTNT() {
+			return disableTNT.get();
 		}
 
 		@Override

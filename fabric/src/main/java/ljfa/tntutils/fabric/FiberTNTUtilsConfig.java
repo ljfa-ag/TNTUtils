@@ -23,6 +23,7 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> disableExplosions = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 		public final PropertyMirror<Boolean> preventChainExplosions = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disableTNT = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
 		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 		public final PropertyMirror<Boolean> disableBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
@@ -57,6 +58,10 @@ public class FiberTNTUtilsConfig {
 					.beginValue("preventChainExplosions", ConfigTypes.BOOLEAN, PREVENT_CHAIN_EXPLOSIONS_DEFAULT)
 					.withComment(PREVENT_CHAIN_EXPLOSIONS_COMMENT)
 					.finishValue(preventChainExplosions::mirror)
+
+					.beginValue("disableTNT", ConfigTypes.BOOLEAN, DISABLE_TNT_DEFAULT)
+					.withComment(DISABLE_TNT_COMMENT)
+					.finishValue(disableTNT::mirror)
 
 					.finishBranch()
 					//Block damage
@@ -131,6 +136,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean preventChainExplosions() {
 			return preventChainExplosions.getValue();
+		}
+
+		@Override
+		public boolean disableTNT() {
+			return disableTNT.getValue();
 		}
 
 		@Override

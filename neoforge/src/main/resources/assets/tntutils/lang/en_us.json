@@ -4,6 +4,7 @@
 	"tntutils.configuration.disableExplosions": "Disable explosions",
 	"tntutils.configuration.sizeMultiplier": "Size multiplier",
 	"tntutils.configuration.preventChainExplosions": "Prevent chain explosions",
+	"tntutils.configuration.disableTNT": "Disable TNT",
 	"tntutils.configuration.blockDamage": "Block damage",
 	"tntutils.configuration.dropChanceMultiplier": "Drop chance multiplier",
 	"tntutils.configuration.disableBlockDamage": "Disable block damage",
