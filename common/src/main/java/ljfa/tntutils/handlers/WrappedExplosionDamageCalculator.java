@@ -9,6 +9,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.vehicle.MinecartTNT;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
@@ -19,6 +20,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	private final ExplosionDamageCalculator original;
 
 	//Cache config values to avoid reading them thousands of times per explosion
+	private final boolean preventChainExplosions = TNTUtils.config().preventChainExplosions();
 	private final boolean disableBlockDamage     = TNTUtils.config().disableBlockDamage();
 	private final boolean spareBlockEntities     = TNTUtils.config().spareBlockEntities();
 	private final boolean disableBlockTriggering = TNTUtils.config().disableBlockTriggering();
@@ -59,6 +61,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 				|| (disablePlayerDamage && entity instanceof Player)
 				|| (disableMobDamage && entity instanceof Mob)
 				|| (disableItemDamage && entity instanceof ItemEntity)
+				|| (preventChainExplosions && entity instanceof MinecartTNT)
 		) {
 			if(!(alwaysAffectAE2Singularities && isAE2Singularity(entity)))
 				return false;
