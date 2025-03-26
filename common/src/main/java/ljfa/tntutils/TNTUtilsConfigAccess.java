@@ -32,9 +32,9 @@ public interface TNTUtilsConfigAccess {
 	static final float SIZE_MULTIPLIER_MIN = 0.0f;
 	static final float SIZE_MULTIPLIER_MAX = 50.0f;
 	static final float SIZE_MULTIPLIER_DEFAULT = 1.0f;
-	static final String PREVENT_CHAIN_EXPLOSIONS_COMMENT = "Prevents explosion from triggering TNT, thus preventing chain explosions";
+	static final String PREVENT_CHAIN_EXPLOSIONS_COMMENT = "Prevents explosions from triggering TNT (blocks and minecarts), thus preventing chain explosions";
 	static final boolean PREVENT_CHAIN_EXPLOSIONS_DEFAULT = false;
-	static final String DISABLE_TNT_COMMENT = "Disables TNT explosions";
+	static final String DISABLE_TNT_COMMENT = "Disables TNT (block and minecart) explosions";
 	static final boolean DISABLE_TNT_DEFAULT = false;
 
 	static final String BLOCK_DAMAGE_COMMENT = "Block damage options";

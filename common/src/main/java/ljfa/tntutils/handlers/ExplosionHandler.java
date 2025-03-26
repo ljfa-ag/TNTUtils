@@ -1,6 +1,10 @@
 package ljfa.tntutils.handlers;
 
 import ljfa.tntutils.TNTUtils;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
@@ -14,5 +18,14 @@ public class ExplosionHandler {
 	public static void onExplosionStart(Explosion expl) {
 		expl.damageCalculator = new WrappedExplosionDamageCalculator(expl.damageCalculator);
 		expl.radius *= TNTUtils.config().sizeMultiplier();
+	}
+
+	public static void disarmPrimedTnt(Entity tnt) {
+		tnt.discard();
+		if(!tnt.level().isClientSide()) {
+			var itemEntity = new ItemEntity(tnt.level(), tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(Items.TNT));
+			itemEntity.setDefaultPickUpDelay();
+			tnt.level().addFreshEntity(itemEntity);
+		}
 	}
 }
