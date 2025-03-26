@@ -6,7 +6,8 @@
   "mixins": [
 	"BlockBehaviourMixin",
 	"TntBlockMixin",
-	"PrimedTntMixin"
+	"PrimedTntMixin",
+	"MinecartTNTMixin"
   ]
 }
 
