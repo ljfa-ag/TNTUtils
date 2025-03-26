@@ -22,6 +22,7 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> addExplodeCommand = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disableExplosions = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Float> sizeMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
+		public final PropertyMirror<Boolean> preventChainExplosions = PropertyMirror.create(ConfigTypes.BOOLEAN);
 
 		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 		public final PropertyMirror<Boolean> disableBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
@@ -52,6 +53,10 @@ public class FiberTNTUtilsConfig {
 					.beginValue("sizeMultiplier", ConfigTypes.FLOAT.withMinimum(SIZE_MULTIPLIER_MIN).withMaximum(SIZE_MULTIPLIER_MAX), SIZE_MULTIPLIER_DEFAULT)
 					.withComment(SIZE_MULTIPLIER_COMMENT)
 					.finishValue(sizeMultiplier::mirror)
+
+					.beginValue("preventChainExplosions", ConfigTypes.BOOLEAN, PREVENT_CHAIN_EXPLOSIONS_DEFAULT)
+					.withComment(PREVENT_CHAIN_EXPLOSIONS_COMMENT)
+					.finishValue(preventChainExplosions::mirror)
 
 					.finishBranch()
 					//Block damage
@@ -121,6 +126,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public float sizeMultiplier() {
 			return sizeMultiplier.getValue();
+		}
+
+		@Override
+		public boolean preventChainExplosions() {
+			return preventChainExplosions.getValue();
 		}
 
 		@Override
