@@ -3,6 +3,7 @@ package ljfa.tntutils.handlers;
 import java.util.Optional;
 
 import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.TNTUtilsTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
@@ -43,11 +44,14 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
 		switch(explosion.getBlockInteraction()) {
 			case DESTROY, DESTROY_WITH_DECAY -> {
-				if(disableBlockDamage || (spareBlockEntities && state.hasBlockEntity()))
+				if(disableBlockDamage
+						|| (spareBlockEntities && state.hasBlockEntity())
+						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
 					return false;
 			}
 			case TRIGGER_BLOCK -> {
-				if(disableBlockTriggering)
+				if(disableBlockTriggering
+						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_TRIGGER_BLACKLIST))
 					return false;
 			}
 			default -> {}
