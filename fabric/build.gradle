@@ -56,6 +56,17 @@ loom {
         property('mixin.debug.countInjections', 'true')
     }
     
+    mods {
+        "${mod_id}" {
+            sourceSet sourceSets.main
+            sourceSet project(":common").sourceSets.main
+            
+            //workaround to add the correct Eclipse output folder from :common to the fabric.classPathGroups property,
+            //to make sure the assets and data from :common are loaded properly when launching in Eclipse
+            getModFiles().from(project(":common").file("bin/main"))
+        }
+    }
+    
     mixin.useLegacyMixinAp = false
 }
 
