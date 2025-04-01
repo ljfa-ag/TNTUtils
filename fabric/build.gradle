@@ -1,6 +1,6 @@
 plugins {
-	id 'fabric-loom'
-	id 'maven-publish'
+    id 'fabric-loom'
+    id 'maven-publish'
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
@@ -13,24 +13,24 @@ base {
 }
 
 repositories {
-	maven {
-		name = 'ParchmentMC'
-		url = 'https://maven.parchmentmc.org'
-	}
+    maven {
+        name = 'ParchmentMC'
+        url = 'https://maven.parchmentmc.org'
+    }
 }
 
 dependencies {
-	minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.layered {
         officialMojangMappings()
         parchment("org.parchmentmc.data:parchment-${parchment_minecraft_version}:${parchment_mappings_version}@zip")
     }
-	modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-	implementation project(":common")
-	
-	implementation "me.zeroeightsix:fiber:0.23.0-2"
-	include "me.zeroeightsix:fiber:0.23.0-2"
+    modImplementation "net.fabricmc:fabric-loader:${project.fabric_loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation project(":common")
+    
+    implementation "me.zeroeightsix:fiber:0.23.0-2"
+    include "me.zeroeightsix:fiber:0.23.0-2"
 }
 
 loom {
@@ -103,7 +103,7 @@ tasks.named('javadoc', Javadoc).configure {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = project.java_version as Integer
+    it.options.release = project.java_version as Integer
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
@@ -128,13 +128,13 @@ modrinth {
 }
 
 publishing {
-	publications {
-		create("mavenJava", MavenPublication) {
-			from components.java
-		}
-	}
+    publications {
+        create("mavenJava", MavenPublication) {
+            from components.java
+        }
+    }
 
-	repositories {
+    repositories {
 
-	}
+    }
 }
