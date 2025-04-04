@@ -44,14 +44,18 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
 		switch(explosion.getBlockInteraction()) {
 			case DESTROY, DESTROY_WITH_DECAY -> {
-				if(disableBlockDamage
+				if(
+						(disableBlockDamage
 						|| (spareBlockEntities && state.hasBlockEntity())
 						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
+					&& !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST))
 					return false;
 			}
 			case TRIGGER_BLOCK -> {
-				if(disableBlockTriggering
-						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_TRIGGER_BLACKLIST))
+				if(
+						(disableBlockTriggering
+						|| state.is(TNTUtilsTags.BLOCK_TRIGGER_BLACKLIST))
+					&& !state.is(TNTUtilsTags.BLOCK_TRIGGER_WHITELIST))
 					return false;
 			}
 			default -> {}
