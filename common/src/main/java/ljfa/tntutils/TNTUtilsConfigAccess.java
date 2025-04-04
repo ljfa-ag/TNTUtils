@@ -47,11 +47,15 @@ public interface TNTUtilsConfigAccess {
 			"blockExplosionDropDecay" to "false".""";
 	static final float DROP_CHANCE_MULTIPLIER_MIN = 0.0f;
 	static final float DROP_CHANCE_MULTIPLIER_DEFAULT = 1.0f;
-	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Prevents explosions from destroying blocks";
+	static final String DISABLE_BLOCK_DAMAGE_COMMENT = "Prevents explosions from destroying blocks. Will not affect blocks tagged with #tntutils:explosion_whitelist.\n"
+			+ "Individual blocks can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
 	static final boolean DISABLE_BLOCK_DAMAGE_DEFAULT = false;
-	static final String DISABLE_BLOCK_TRIGGERING_COMMENT = "Prevents explosions from triggering blocks (e.g. Wind Charge explosions flipping levers, etc.)";
+	static final String DISABLE_BLOCK_TRIGGERING_COMMENT = "Prevents explosions from triggering blocks (e.g. Wind Charge explosions flipping levers, etc.). Will not\n"
+			+ "affect blocks tagged with #tntutils:trigger_whitelist.\n"
+			+ "Individual blocks can be exempted from triggering by tagging them with #tntutils:trigger_whitelist.";
 	static final boolean DISABLE_BLOCK_TRIGGERING_DEFAULT = false;
-	static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities";
+	static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities. Will not affect blocks tagged with\n"
+			+ "#tntutils:explosion_whitelist.";
 	static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;
 
 	static final String ENTITY_DAMAGE_COMMENT = "Entity damage options";
@@ -65,6 +69,7 @@ public interface TNTUtilsConfigAccess {
 	static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
 
 	static final String COMPATIBILITY_COMMENT = "Options for compatibility with other mods";
-	static final String ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT = "Singularities from Applied Energistics 2 will always be affected by explosions, even when entity or\nitem damage is disabled, to ensure that they can be entangled";
+	static final String ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT = "Singularities from Applied Energistics 2 will always be affected by explosions, even when entity or\n"
+			+ "item damage is disabled, to ensure that they can be entangled";
 	static final boolean ALWAYS_AFFECT_AE2_SINGULARITIES_DEFAULT = true;
 }
