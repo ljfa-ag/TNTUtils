@@ -59,13 +59,15 @@ public interface TNTUtilsConfigAccess {
 	static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;
 
 	static final String ENTITY_DAMAGE_COMMENT = "Entity damage options";
-	static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.)";
+	static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.). Will not affect entities\n"
+			+ "tagged with #tntutils:explosion_whitelist.\n"
+			+ "Individual entities can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
 	static final boolean DISABLE_ENTITY_DAMAGE_DEFAULT = false;
 	static final String DISABLE_PLAYER_DAMAGE_COMMENT = "Disables explosion damage to players";
 	static final boolean DISABLE_PLAYER_DAMAGE_DEFAULT = false;
 	static final String DISABLE_ITEM_DAMAGE_COMMENT = "Disables explosion damage to items laying on the ground";
 	static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
-	static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals";
+	static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entities tagged with #tntutils:explosion_whitelist.";
 	static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
 
 	static final String COMPATIBILITY_COMMENT = "Options for compatibility with other mods";

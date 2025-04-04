@@ -48,14 +48,16 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 						(disableBlockDamage
 						|| (spareBlockEntities && state.hasBlockEntity())
 						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
-					&& !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST))
+					&& !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST)
+				)
 					return false;
 			}
 			case TRIGGER_BLOCK -> {
 				if(
 						(disableBlockTriggering
 						|| state.is(TNTUtilsTags.BLOCK_TRIGGER_BLACKLIST))
-					&& !state.is(TNTUtilsTags.BLOCK_TRIGGER_WHITELIST))
+					&& !state.is(TNTUtilsTags.BLOCK_TRIGGER_WHITELIST)
+				)
 					return false;
 			}
 			default -> {}
@@ -65,11 +67,14 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
-		if(disableEntityDamage
+		if(
+				(disableEntityDamage
 				|| (disablePlayerDamage && entity instanceof Player)
 				|| (disableMobDamage && entity instanceof Mob)
 				|| (disableItemDamage && entity instanceof ItemEntity)
 				|| (preventChainExplosions && entity instanceof MinecartTNT)
+				|| entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
+			&& !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
 		) {
 			if(!(alwaysAffectAE2Singularities && isAE2Singularity(entity)))
 				return false;
