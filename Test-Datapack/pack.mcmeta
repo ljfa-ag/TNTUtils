@@ -1,0 +1,10 @@
+{
+  "pack": {
+    "description": "Data pack for testing TNTUtils tags",
+    "pack_format": 48,
+    "supported_formats": {
+      "min_inclusive": 4,
+      "max_inclusive": 10000
+    }
+  }
+}
