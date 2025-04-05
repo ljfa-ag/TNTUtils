@@ -20,9 +20,6 @@ public interface TNTUtilsConfigAccess {
 	boolean disableItemDamage();
 	boolean disableMobDamage();
 
-	//Compatibility options
-	boolean alwaysAffectAE2Singularities();
-
 	static final String GENERAL_COMMENT = "General options";
 	static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
 	static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
@@ -70,9 +67,4 @@ public interface TNTUtilsConfigAccess {
 	static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
 	static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entities tagged with #tntutils:explosion_whitelist.";
 	static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
-
-	static final String COMPATIBILITY_COMMENT = "Options for compatibility with other mods";
-	static final String ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT = "Singularities from Applied Energistics 2 will always be affected by explosions, even when entity or\n"
-			+ "item damage is disabled, to ensure that they can be entangled";
-	static final boolean ALWAYS_AFFECT_AE2_SINGULARITIES_DEFAULT = true;
 }

@@ -23,8 +23,6 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableItemDamage;
 		public final BooleanValue disableMobDamage;
 
-		public final BooleanValue alwaysAffectAE2Singularities;
-
 		public Common(ModConfigSpec.Builder builder) {
 			//General
 			builder.comment(GENERAL_COMMENT).push("general");
@@ -74,12 +72,6 @@ public class NeoforgeTNTUtilsConfig {
 			disableMobDamage = builder
 					.comment(DISABLE_MOB_DAMAGE_COMMENT)
 					.define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
-
-			//Compatibility
-			builder.pop().comment(COMPATIBILITY_COMMENT).push("compatibility");
-			alwaysAffectAE2Singularities = builder
-					.comment(ALWAYS_AFFECT_AE2_SINGULARITIES_COMMENT)
-					.define("alwaysAffectAE2Singularities", ALWAYS_AFFECT_AE2_SINGULARITIES_DEFAULT);
 		}
 
 		@Override
@@ -145,11 +137,6 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean disableMobDamage() {
 			return disableMobDamage.get();
-		}
-
-		@Override
-		public boolean alwaysAffectAE2Singularities() {
-			return alwaysAffectAE2Singularities.get();
 		}
 	}
 
