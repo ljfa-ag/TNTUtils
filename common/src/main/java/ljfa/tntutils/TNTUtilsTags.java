@@ -6,6 +6,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
 public class TNTUtilsTags {
@@ -39,6 +40,18 @@ public class TNTUtilsTags {
 	 * The whitelist takes precedence over the blacklist.
 	 */
 	public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
+
+	//Item tags
+	//TODO: The Nether Star is hardcoded to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.
+	/**
+	 * Items tagged with this will not be damaged by explosions in ItemEntity form (unless whitelisted).
+	 */
+	public static final TagKey<Item> ITEM_EXPLOSION_BLACKLIST = create(Registries.ITEM, "explosion_blacklist");
+	/**
+	 * Items tagged with this will always be damaged by explosions, even when the "disableItemDamage" config option is true,
+	 * The whitelist takes precedence over the blacklist.
+	 */
+	public static final TagKey<Item> ITEM_EXPLOSION_WHITELIST = create(Registries.ITEM, "explosion_whitelist");
 
 	private static <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registryKey, String name) {
 		return TagKey.create(registryKey, ResourceLocation.fromNamespaceAndPath(TNTUtils.MOD_ID, name));

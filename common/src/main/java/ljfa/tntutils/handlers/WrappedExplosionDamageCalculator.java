@@ -5,7 +5,6 @@ import java.util.Optional;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -29,7 +28,6 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	private final boolean disablePlayerDamage    = TNTUtils.config().disablePlayerDamage();
 	private final boolean disableMobDamage       = TNTUtils.config().disableMobDamage();
 	private final boolean disableItemDamage      = TNTUtils.config().disableItemDamage();
-	private final boolean alwaysAffectAE2Singularities = TNTUtils.config().alwaysAffectAE2Singularities();
 
 	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
 		this.original = original;
@@ -71,21 +69,18 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 				(disableEntityDamage
 				|| (disablePlayerDamage && entity instanceof Player)
 				|| (disableMobDamage && entity instanceof Mob)
-				|| (disableItemDamage && entity instanceof ItemEntity)
 				|| (preventChainExplosions && entity instanceof MinecartTNT)
+				|| (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
 				|| entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
 			&& !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
-		) {
-			if(!(alwaysAffectAE2Singularities && isAE2Singularity(entity)))
-				return false;
-		}
+		)
+			return false;
 		return original.shouldDamageEntity(explosion, entity);
 	}
 
-	private static final ResourceLocation AE2_SINGULARITY = ResourceLocation.fromNamespaceAndPath("ae2", "singularity");
-
-	private static boolean isAE2Singularity(Entity entity) {
-		return entity instanceof ItemEntity ie && ie.getItem().getItemHolder().is(AE2_SINGULARITY);
+	private boolean shouldSpareItemEntity(ItemEntity entity) {
+		return (disableItemDamage || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
+				&& !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
 	}
 
 	@Override

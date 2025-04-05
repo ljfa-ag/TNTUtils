@@ -65,7 +65,8 @@ public interface TNTUtilsConfigAccess {
 	static final boolean DISABLE_ENTITY_DAMAGE_DEFAULT = false;
 	static final String DISABLE_PLAYER_DAMAGE_COMMENT = "Disables explosion damage to players";
 	static final boolean DISABLE_PLAYER_DAMAGE_DEFAULT = false;
-	static final String DISABLE_ITEM_DAMAGE_COMMENT = "Disables explosion damage to items laying on the ground";
+	static final String DISABLE_ITEM_DAMAGE_COMMENT = "Disables explosion damage to items laying on the ground. Will not affect items tagged with #tntutils:explosion_whitelist.\n"
+			+ "Individual items can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
 	static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
 	static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entities tagged with #tntutils:explosion_whitelist.";
 	static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
