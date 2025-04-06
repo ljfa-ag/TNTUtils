@@ -1,9 +1,9 @@
 - Added the config option `preventChainExplosions`: Prevents explosions from igniting TNT and TNT minecarts, so that explosions cannot chain
 - Added the config option `disableTNT`: Prevents TNT and TNT minecarts from being ignited
 - Added various tags:
-  - The block tag `#explosion_blacklist`: These blocks will not be destroyed by explosions
-  - The block tag `#explosion_whitelist`: These blocks can be destroyed by explosions, even when the `disableBlockDamage` or `spareBlockEntities` options are turned on. The whitelist takes precedence over the blacklist.
-  - The block tags `#trigger_blacklist` and `#trigger_whitelist`: Simliar to the above but for triggering blocks by Wind Charge explosions, etc.
-  - The entity tags `#explosion_blacklist` and `#explosion_whitelist`: Similar to the above but for entity damage
-  - The item tags `#explosion_blacklist` and `#explosion_whitelist`: Similar to the above but for items laying on the ground
-- Removed the config option `alwaysAffectAE2Singularities`, instead, AE2 Singularities are tagged with `#explosion_whitelist` by default
+  - The block tag `#tntutils:explosion_blacklist`: These blocks will not be destroyed by explosions
+  - The block tag `#tntutils:explosion_whitelist`: These blocks can be destroyed by explosions, even when the `disableBlockDamage` or `spareBlockEntities` options are turned on. The whitelist takes precedence over the blacklist.
+  - The block tags `#tntutils:trigger_blacklist` and `#tntutils:trigger_whitelist`: Simliar to the above but for triggering blocks by Wind Charge explosions, etc.
+  - The entity tags `#tntutils:explosion_blacklist` and `#tntutils:explosion_whitelist`: Similar to the above but for entity damage
+  - The item tags `#tntutils:explosion_blacklist` and `#tntutils:explosion_whitelist`: Similar to the above but for items laying on the ground
+- Removed the config option `alwaysAffectAE2Singularities`. Instead, AE2 Singularities are tagged with `#tntutils:explosion_whitelist` by default
