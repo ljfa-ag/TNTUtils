@@ -1,15 +1,9 @@
-First prerelease for Minecraft 1.21.1. Due to the large difference from Minecraft 1.12 to 1.21, the mod has been
-rewritten from scratch, supporting both NeoForge and Fabric.
-
-**Please note that TNTUtils is still work in progress, not all features of the 1.12 version have been implemented yet.**
-See the config file for the features that are available.
-Please report any issues you encounter to our [issue tracker](https://github.com/ljfa-ag/TNTUtils/issues).
-
-Some notable differences from the 1.12 version:
-- The "/explosion" command has been renamed to "/explode" and now supports an additional argument specifying how the
-  explosion interacts with blocks
-- The "dropChanceIncrease" option is now called "dropChanceMultiplier" and simply multiplies the drop chance by the given factor.
-  Note that you can use the vanilla game rules "mobExplosionDropDecay", "tntExplosionDropDecay" and "blockExplosionDropDecay"
-  to force the block drop chance to 100% depending on the explosion source.
-- Added an option "alwaysAffectAE2Singularities", which makes sure that Applied Energistics 2 Singularities will always
-  be affected by explosions, so they can be entangled
+- Added the config option `preventChainExplosions`: Prevents explosions from igniting TNT and TNT minecarts, so that explosions cannot chain
+- Added the config option `disableTNT`: Prevents TNT and TNT minecarts from being ignited
+- Added various tags:
+  - The block tag `#explosion_blacklist`: These blocks will not be destroyed by explosions
+  - The block tag `#explosion_whitelist`: These blocks can be destroyed by explosions, even when the `disableBlockDamage` or `spareBlockEntities` options are turned on. The whitelist takes precedence over the blacklist.
+  - The block tags `#trigger_blacklist` and `#trigger_whitelist`: Simliar to the above but for triggering blocks by Wind Charge explosions, etc.
+  - The entity tags `#explosion_blacklist` and `#explosion_whitelist`: Similar to the above but for entity damage
+  - The item tags `#explosion_blacklist` and `#explosion_whitelist`: Similar to the above but for items laying on the ground
+- Removed the config option `alwaysAffectAE2Singularities`, instead, AE2 Singularities are tagged with `#explosion_whitelist` by default
