@@ -112,6 +112,7 @@ task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge)
     apiToken = findProperty('curseForgeApiKey')
     def mainFile = upload(227449, remapJar)
     mainFile.addModLoader('Fabric')
+    mainFile.addRequirement('fabric-api')
     mainFile.releaseType = mod_release_type
     mainFile.changelog = file('../changelog.md')
     mainFile.changelogType = 'markdown'
@@ -124,6 +125,9 @@ modrinth {
     uploadFile = remapJar
     gameVersions = [minecraft_version]
     loaders = ['fabric']
+    dependencies {
+        required.project 'fabric-api'
+    }
     changelog = file('../changelog.md').text
 }
 
