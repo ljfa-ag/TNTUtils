@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.StandardOpenOption;
+import java.util.Map;
 
 import io.github.fablabsmc.fablabs.api.fiber.v1.exception.ValueDeserializationException;
 import io.github.fablabsmc.fablabs.api.fiber.v1.schema.type.derived.ConfigTypes;
@@ -29,6 +30,8 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> disableBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disableBlockTriggering = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> spareBlockEntities = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Map<String, Float>> modifyExplosionResistances = PropertyMirror.create(
+				ConfigTypes.makeMap(ConfigTypes.STRING, ConfigTypes.FLOAT.withMinimum(0.0f)));
 
 		public final PropertyMirror<Boolean> disableEntityDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disablePlayerDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
@@ -81,6 +84,10 @@ public class FiberTNTUtilsConfig {
 					.beginValue("spareBlockEntities", ConfigTypes.BOOLEAN, SPARE_BLOCK_ENTITIES_DEFAULT)
 					.withComment(SPARE_BLOCK_ENTITIES_COMMENT)
 					.finishValue(spareBlockEntities::mirror)
+
+					.beginValue("modifyExplosionResistances", modifyExplosionResistances.getMirroredType(), Map.of())
+					.withComment(MODIFY_EXPLOSION_RESISTANCES_COMMENT + "\nThis is an object of entries of the form \"mod_id:block_id\": value")
+					.finishValue(modifyExplosionResistances::mirror)
 
 					.finishBranch()
 					//Entity damage

@@ -54,6 +54,7 @@ public interface TNTUtilsConfigAccess {
 	static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities. Will not affect blocks tagged with\n"
 			+ "#tntutils:explosion_whitelist.";
 	static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;
+	static final String MODIFY_EXPLOSION_RESISTANCES_COMMENT = "Changes the explosion resistance of individual blocks.";
 
 	static final String ENTITY_DAMAGE_COMMENT = "Entity damage options";
 	static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.). Will not affect entities\n"

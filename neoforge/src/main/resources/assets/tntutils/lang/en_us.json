@@ -10,6 +10,7 @@
 	"tntutils.configuration.disableBlockDamage": "Disable block damage",
 	"tntutils.configuration.disableBlockTriggering": "Disable block triggering",
 	"tntutils.configuration.spareBlockEntities": "Spare block entities",
+	"tntutils.configuration.modifyExplosionResistances": "Modify explosion resistances",
 	"tntutils.configuration.entityDamage": "Entity damage",
 	"tntutils.configuration.disableEntityDamage": "Disable entity damage",
 	"tntutils.configuration.disablePlayerDamage": "Disable player damage",

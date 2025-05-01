@@ -1,8 +1,14 @@
 package ljfa.tntutils.neoforge;
 
+import java.util.Map;
+
+import com.electronwill.nightconfig.core.Config;
+import com.electronwill.nightconfig.core.InMemoryFormat;
+
 import ljfa.tntutils.TNTUtilsConfigAccess;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
 import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 
 public class NeoforgeTNTUtilsConfig {
@@ -17,6 +23,7 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableBlockDamage;
 		public final BooleanValue disableBlockTriggering;
 		public final BooleanValue spareBlockEntities;
+		public final ConfigValue<Config> modifyExplosionResistances;
 
 		public final BooleanValue disableEntityDamage;
 		public final BooleanValue disablePlayerDamage;
@@ -57,6 +64,9 @@ public class NeoforgeTNTUtilsConfig {
 			spareBlockEntities = builder
 					.comment(SPARE_BLOCK_ENTITIES_COMMENT)
 					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
+			modifyExplosionResistances = builder
+					.comment(MODIFY_EXPLOSION_RESISTANCES_COMMENT + "\nThis is a table of entries of the form \"mod_id:block_id\" = value (the block ID must be double-quoted)")
+					.define("modifyExplosionResistances", Config.wrap(Map.of(), InMemoryFormat.defaultInstance()), obj -> obj instanceof Config);
 
 			//Entity damage
 			builder.pop().comment(ENTITY_DAMAGE_COMMENT).push("entityDamage");
