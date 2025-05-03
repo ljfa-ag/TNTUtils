@@ -132,10 +132,10 @@ public class FiberTNTUtilsConfig {
 					builder.put(block, entry.getValue());
 				}
 				catch(Exception e) {
-					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value", e);
+					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
 				}
 			}
-			explosionResistanceMap = builder.buildOrThrow();
+			explosionResistanceMap = builder.buildKeepingLast();
 		}
 
 		@Override
@@ -220,12 +220,12 @@ public class FiberTNTUtilsConfig {
 		//try reading the config file
 		try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
 			FiberSerialization.deserialize(configTree, reader, serializer);
+			COMMON.createExplosionResistanceMap();
 		}
 		catch (NoSuchFileException ignored) {}
 		catch (IOException | ValueDeserializationException e) {
 			TNTUtils.logger.error("Error reading config file", e);
 		}
-		COMMON.createExplosionResistanceMap();
 
 		//write the config file
 		//TODO: Can we avoid writing the config from scratch if nothing has changed?

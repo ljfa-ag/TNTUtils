@@ -107,10 +107,10 @@ public class NeoforgeTNTUtilsConfig {
 					builder.put(block, floatValue);
 				}
 				catch(Exception e) {
-					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value", e);
+					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
 				}
 			}
-			explosionResistanceMap = builder.buildOrThrow();
+			explosionResistanceMap = builder.buildKeepingLast();
 		}
 
 		@Override
