@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.StandardOpenOption;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import com.google.common.collect.ImmutableMap;
@@ -224,7 +226,16 @@ public class FiberTNTUtilsConfig {
 		}
 		catch (NoSuchFileException ignored) {}
 		catch (IOException | ValueDeserializationException e) {
-			TNTUtils.logger.error("Error reading config file", e);
+			TNTUtils.logger.error("Error reading config file, will create a backup", e);
+			var timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+			var backupFile = configFile.resolveSibling("tntutils-" + timestamp + ".json5.bak");
+			try {
+				Files.move(configFile, backupFile);
+			}
+			catch(IOException e1) {
+				TNTUtils.logger.error("Error backing up config file", e1);
+				return; //don't write if backup failed
+			}
 		}
 
 		//write the config file
