@@ -1,9 +1,5 @@
 package ljfa.tntutils;
 
-import java.util.Map;
-
-import net.minecraft.world.level.block.Block;
-
 public interface TNTUtilsConfigAccess {
 	//General options
 	boolean addExplodeCommand();
@@ -17,7 +13,6 @@ public interface TNTUtilsConfigAccess {
 	boolean disableBlockDamage();
 	boolean disableBlockTriggering();
 	boolean spareBlockEntities();
-	Map<Block, Float> explosionResistanceMap();
 
 	//Entity damage options
 	boolean disableEntityDamage();

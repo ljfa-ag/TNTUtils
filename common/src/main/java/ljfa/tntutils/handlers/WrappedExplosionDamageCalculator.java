@@ -1,6 +1,5 @@
 package ljfa.tntutils.handlers;
 
-import java.util.Map;
 import java.util.Optional;
 
 import ljfa.tntutils.TNTUtils;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.vehicle.MinecartTNT;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
@@ -30,7 +28,6 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	private final boolean disablePlayerDamage    = TNTUtils.config().disablePlayerDamage();
 	private final boolean disableMobDamage       = TNTUtils.config().disableMobDamage();
 	private final boolean disableItemDamage      = TNTUtils.config().disableItemDamage();
-	private final Map<Block, Float> explosionResistanceMap = TNTUtils.config().explosionResistanceMap();
 
 	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
 		this.original = original;
@@ -38,8 +35,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
 	@Override
 	public Optional<Float> getBlockExplosionResistance(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, FluidState fluid) {
-		return Optional.ofNullable(explosionResistanceMap.get(state.getBlock()))
-				.or(() -> original.getBlockExplosionResistance(explosion, reader, pos, state, fluid));
+		return original.getBlockExplosionResistance(explosion, reader, pos, state, fluid);
 	}
 
 	@Override

@@ -10,8 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-import com.google.common.collect.ImmutableMap;
-
 import io.github.fablabsmc.fablabs.api.fiber.v1.exception.ValueDeserializationException;
 import io.github.fablabsmc.fablabs.api.fiber.v1.schema.type.derived.ConfigTypes;
 import io.github.fablabsmc.fablabs.api.fiber.v1.serialization.FiberSerialization;
@@ -21,9 +19,6 @@ import io.github.fablabsmc.fablabs.api.fiber.v1.tree.PropertyMirror;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsConfigAccess;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 
 public class FiberTNTUtilsConfig {
 	public static class Common implements TNTUtilsConfigAccess {
@@ -39,7 +34,6 @@ public class FiberTNTUtilsConfig {
 		public final PropertyMirror<Boolean> spareBlockEntities = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Map<String, Float>> modifyExplosionResistances = PropertyMirror.create(
 				ConfigTypes.makeMap(ConfigTypes.STRING, ConfigTypes.FLOAT.withMinimum(0.0f)));
-		private Map<Block, Float> explosionResistanceMap;
 
 		public final PropertyMirror<Boolean> disableEntityDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disablePlayerDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
@@ -122,24 +116,6 @@ public class FiberTNTUtilsConfig {
 					.build();
 		}
 
-		private void createExplosionResistanceMap() {
-			TNTUtils.logger.debug("Creating explosion resistance map");
-			var configMap = modifyExplosionResistances.getValue();
-			var builder = ImmutableMap.<Block, Float>builderWithExpectedSize(configMap.size());
-			for(var entry : configMap.entrySet()) {
-				try {
-					var key = entry.getKey();
-					var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
-							.orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
-					builder.put(block, entry.getValue());
-				}
-				catch(Exception e) {
-					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
-				}
-			}
-			explosionResistanceMap = builder.buildKeepingLast();
-		}
-
 		@Override
 		public boolean addExplodeCommand() {
 			return addExplodeCommand.getValue();
@@ -186,11 +162,6 @@ public class FiberTNTUtilsConfig {
 		}
 
 		@Override
-		public Map<Block, Float> explosionResistanceMap() {
-			return explosionResistanceMap;
-		}
-
-		@Override
 		public boolean disableEntityDamage() {
 			return disableEntityDamage.getValue();
 		}
@@ -222,7 +193,6 @@ public class FiberTNTUtilsConfig {
 		//try reading the config file
 		try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
 			FiberSerialization.deserialize(configTree, reader, serializer);
-			COMMON.createExplosionResistanceMap();
 		}
 		catch (NoSuchFileException ignored) {}
 		catch (IOException | ValueDeserializationException e) {

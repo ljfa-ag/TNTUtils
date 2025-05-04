@@ -4,13 +4,8 @@ import java.util.Map;
 
 import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.InMemoryFormat;
-import com.google.common.collect.ImmutableMap;
 
-import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsConfigAccess;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
 import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
@@ -29,7 +24,6 @@ public class NeoforgeTNTUtilsConfig {
 		public final BooleanValue disableBlockTriggering;
 		public final BooleanValue spareBlockEntities;
 		public final ConfigValue<Config> modifyExplosionResistances;
-		private volatile Map<Block, Float> explosionResistanceMap; //volatile since ModConfigEvent.Reloading can be fired from any thread
 
 		public final BooleanValue disableEntityDamage;
 		public final BooleanValue disablePlayerDamage;
@@ -90,29 +84,6 @@ public class NeoforgeTNTUtilsConfig {
 					.define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
 		}
 
-		public void createExplosionResistanceMap() {
-			TNTUtils.logger.debug("Creating explosion resistance map");
-			var configTable = modifyExplosionResistances.get();
-			var builder = ImmutableMap.<Block, Float>builderWithExpectedSize(configTable.size());
-			for(var entry : configTable.entrySet()) {
-				try {
-					var key = entry.getKey();
-					var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
-							.orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
-					if(!(entry.getValue() instanceof Number value))
-						throw new RuntimeException("The explosion resistance for \"" + key + "\" must be a number");
-					var floatValue = value.floatValue();
-					if(!(floatValue >= 0.0f)) //implicit check for NaN
-						throw new RuntimeException("The explosion resistance for \"" + key + "\" must be at least 0");
-					builder.put(block, floatValue);
-				}
-				catch(Exception e) {
-					TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
-				}
-			}
-			explosionResistanceMap = builder.buildKeepingLast();
-		}
-
 		@Override
 		public boolean addExplodeCommand() {
 			return addExplodeCommand.get();
@@ -156,11 +127,6 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean spareBlockEntities() {
 			return spareBlockEntities.get();
-		}
-
-		@Override
-		public Map<Block, Float> explosionResistanceMap() {
-			return explosionResistanceMap;
 		}
 
 		@Override

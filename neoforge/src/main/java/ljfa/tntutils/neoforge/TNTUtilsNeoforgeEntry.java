@@ -8,7 +8,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.config.ModConfigEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
@@ -25,8 +24,6 @@ public class TNTUtilsNeoforgeEntry {
 		modContainer.registerConfig(ModConfig.Type.COMMON, NeoforgeTNTUtilsConfig.commonSpec);
 		if(FMLLoader.getDist() == Dist.CLIENT)
 			modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-		modEventBus.addListener((ModConfigEvent.Loading e) -> NeoforgeTNTUtilsConfig.COMMON.createExplosionResistanceMap());
-		modEventBus.addListener((ModConfigEvent.Reloading e) -> NeoforgeTNTUtilsConfig.COMMON.createExplosionResistanceMap());
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
