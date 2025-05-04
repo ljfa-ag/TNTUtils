@@ -66,6 +66,7 @@ public class NeoforgeTNTUtilsConfig {
 					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
 			modifyExplosionResistances = builder
 					.comment(MODIFY_EXPLOSION_RESISTANCES_COMMENT + "\nThis is a table of entries of the form \"mod_id:block_id\" = value (the block ID must be double-quoted)")
+					.gameRestart()
 					.define("modifyExplosionResistances", Config.wrap(Map.of(), InMemoryFormat.defaultInstance()), obj -> obj instanceof Config);
 
 			//Entity damage

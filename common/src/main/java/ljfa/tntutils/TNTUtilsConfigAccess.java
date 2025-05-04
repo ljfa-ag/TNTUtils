@@ -13,6 +13,7 @@ public interface TNTUtilsConfigAccess {
 	boolean disableBlockDamage();
 	boolean disableBlockTriggering();
 	boolean spareBlockEntities();
+	//the implementation of modifyExplosionResistances is loader specific and does not appear here
 
 	//Entity damage options
 	boolean disableEntityDamage();

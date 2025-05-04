@@ -3,6 +3,8 @@ package ljfa.tntutils.neoforge;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.command.ExplodeCommand;
 import ljfa.tntutils.handlers.ExplosionHandler;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -27,11 +29,11 @@ public class TNTUtilsNeoforgeEntry {
 	}
 
 	private void commonSetup(FMLCommonSetupEvent event) {
-		var eventBus = NeoForge.EVENT_BUS;
+		event.enqueueWork(this::modifyExplosionResistances);
 
+		var eventBus = NeoForge.EVENT_BUS;
 		if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
 			eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
-
 		eventBus.addListener(this::onExplosionStart);
 	}
 
@@ -40,5 +42,26 @@ public class TNTUtilsNeoforgeEntry {
 			e.setCanceled(true);
 		else
 			ExplosionHandler.onExplosionStart(e.getExplosion());
+	}
+
+	private void modifyExplosionResistances() {
+		TNTUtils.logger.debug("Modifying explosion resistances");
+		for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
+			try {
+				var key = entry.getKey();
+				var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
+						.orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
+				if(!(entry.getValue() instanceof Number value))
+					throw new RuntimeException("The explosion resistance for \"" + key + "\" must be a number");
+				var floatValue = value.floatValue();
+				if(!(floatValue >= 0.0f)) //implicit check for NaN
+					throw new RuntimeException("The explosion resistance for \"" + key + "\" must be at least 0");
+
+				block.explosionResistance = floatValue;
+			}
+			catch(Exception e) {
+				TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
+			}
+		}
 	}
 }

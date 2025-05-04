@@ -3,3 +3,5 @@ accessible field net/minecraft/world/level/Explosion radius F
 mutable field net/minecraft/world/level/Explosion radius F
 accessible field net/minecraft/world/level/Explosion damageCalculator Lnet/minecraft/world/level/ExplosionDamageCalculator;
 mutable field net/minecraft/world/level/Explosion damageCalculator Lnet/minecraft/world/level/ExplosionDamageCalculator;
+accessible field net/minecraft/world/level/block/state/BlockBehaviour explosionResistance F
+mutable field net/minecraft/world/level/block/state/BlockBehaviour explosionResistance F
