@@ -1,4 +1,12 @@
 {
+	"tag.block.tntutils.explosion_blacklist": "Explosion blacklist",
+	"tag.block.tntutils.explosion_whitelist": "Explosion whitelist",
+	"tag.block.tntutils.trigger_blacklist": "Explosion trigger blacklist",
+	"tag.block.tntutils.trigger_whitelist": "Explosion trigger whitelist",
+	"tag.entity_type.tntutils.explosion_blacklist": "Explosion blacklist",
+	"tag.entity_type.tntutils.explosion_whitelist": "Explosion whitelist",
+	"tag.item.tntutils.explosion_blacklist": "Explosion blacklist",
+	"tag.item.tntutils.explosion_whitelist": "Explosion whitelist",
 	"tntutils.configuration.general": "General",
 	"tntutils.configuration.addExplodeCommand": "Add '/explode' command",
 	"tntutils.configuration.disableExplosions": "Disable explosions",
