@@ -69,7 +69,20 @@ public class NeoforgeTNTUtilsConfig {
 					.comment(SPARE_BLOCK_ENTITIES_COMMENT)
 					.define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
 			modifyExplosionResistances = builder
-					.comment(MODIFY_EXPLOSION_RESISTANCES_COMMENT + "\nThis is a table of entries of the form \"mod_id:block_id\" = value (the block ID must be double-quoted)")
+					.comment(MODIFY_EXPLOSION_RESISTANCES_COMMENT)
+					.comment("""
+							Syntax:
+							EITHER as inline table (no newlines allowed):
+							 modifyExplosionResistances = {"mod_id:block_id" = value, ...}
+							OR as subtable:
+							 [blockDamage.modifyExplosionResistances]
+							 	"mod_id:block_id" = value
+							 	...
+							Note that the block IDs must be double-quoted.""")
+							/* It might be confusing to users that by default, empty tables are serialized as {},
+							 * but when values are added and the TOML file is written to, the inline table will be
+							 * replaced by an ordinary subtable. Hence the syntax explanation for both.
+							 */
 					.gameRestart()
 					.define("modifyExplosionResistances", Config.wrap(Map.of(), InMemoryFormat.defaultInstance()), obj -> obj instanceof Config);
 
