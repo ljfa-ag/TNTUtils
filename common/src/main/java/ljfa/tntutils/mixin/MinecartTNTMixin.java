@@ -23,9 +23,8 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
 			at = @At("HEAD"),
 			cancellable = true)
 	private void onPrimeFuse(CallbackInfo ci) {
-		if(TNTUtils.config().disableTNT()) {
-			if(!this.level().isClientSide())
-				this.destroy(this.shadow$getDropItem());
+		if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
+			this.destroy(this.shadow$getDropItem());
 			ci.cancel();
 		}
 	}
@@ -35,9 +34,8 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
 			at = @At("HEAD"),
 			cancellable = true)
 	private void onExplode(CallbackInfo ci) {
-		if(TNTUtils.config().disableTNT()) {
-			if(!this.level().isClientSide())
-				this.destroy(this.shadow$getDropItem());
+		if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
+			this.destroy(this.shadow$getDropItem());
 			ci.cancel();
 		}
 	}

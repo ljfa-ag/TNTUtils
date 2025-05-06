@@ -22,10 +22,8 @@ public class ExplosionHandler {
 
 	public static void disarmPrimedTnt(Entity tnt) {
 		tnt.discard();
-		if(!tnt.level().isClientSide()) {
-			var itemEntity = new ItemEntity(tnt.level(), tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(Items.TNT));
-			itemEntity.setDefaultPickUpDelay();
-			tnt.level().addFreshEntity(itemEntity);
-		}
+		var itemEntity = new ItemEntity(tnt.level(), tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(Items.TNT));
+		itemEntity.setDefaultPickUpDelay();
+		tnt.level().addFreshEntity(itemEntity);
 	}
 }

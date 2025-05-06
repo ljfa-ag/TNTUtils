@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 public abstract class PrimedTntMixin extends Entity {
 	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
 	private void onTick(CallbackInfo ci) {
-		if(TNTUtils.config().disableTNT()) {
+		if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
 			ExplosionHandler.disarmPrimedTnt(this);
 			ci.cancel();
 		}
