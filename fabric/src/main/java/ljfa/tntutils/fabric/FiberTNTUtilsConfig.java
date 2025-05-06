@@ -30,6 +30,7 @@ public class FiberTNTUtilsConfig {
 
 		public final PropertyMirror<Float> dropChanceMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 		public final PropertyMirror<Boolean> disableBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+		public final PropertyMirror<Boolean> disableCreeperBlockDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> disableBlockTriggering = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Boolean> spareBlockEntities = PropertyMirror.create(ConfigTypes.BOOLEAN);
 		public final PropertyMirror<Map<String, Float>> modifyExplosionResistances = PropertyMirror.create(
@@ -78,6 +79,10 @@ public class FiberTNTUtilsConfig {
 					.beginValue("disableBlockDamage", ConfigTypes.BOOLEAN, DISABLE_BLOCK_DAMAGE_DEFAULT)
 					.withComment(DISABLE_BLOCK_DAMAGE_COMMENT)
 					.finishValue(disableBlockDamage::mirror)
+
+					.beginValue("disableCreeperBlockDamage", ConfigTypes.BOOLEAN, DISABLE_CREEPER_BLOCK_DAMAGE_DEFAULT)
+					.withComment(DISABLE_CREEPER_BLOCK_DAMAGE_COMMENT)
+					.finishValue(disableCreeperBlockDamage::mirror)
 
 					.beginValue("disableBlockTriggering", ConfigTypes.BOOLEAN, DISABLE_BLOCK_TRIGGERING_DEFAULT)
 					.withComment(DISABLE_BLOCK_TRIGGERING_COMMENT)
@@ -149,6 +154,11 @@ public class FiberTNTUtilsConfig {
 		@Override
 		public boolean disableBlockDamage() {
 			return disableBlockDamage.getValue();
+		}
+
+		@Override
+		public boolean disableCreeperBlockDamage() {
+			return disableCreeperBlockDamage.getValue();
 		}
 
 		@Override

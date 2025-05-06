@@ -21,6 +21,7 @@ public class NeoforgeTNTUtilsConfig {
 
 		public final DoubleValue dropChanceMultiplier;
 		public final BooleanValue disableBlockDamage;
+		public final BooleanValue disableCreeperBlockDamage;
 		public final BooleanValue disableBlockTriggering;
 		public final BooleanValue spareBlockEntities;
 		public final ConfigValue<Config> modifyExplosionResistances;
@@ -58,6 +59,9 @@ public class NeoforgeTNTUtilsConfig {
 			disableBlockDamage = builder
 					.comment(DISABLE_BLOCK_DAMAGE_COMMENT)
 					.define("disableBlockDamage", DISABLE_BLOCK_DAMAGE_DEFAULT);
+			disableCreeperBlockDamage = builder
+					.comment(DISABLE_CREEPER_BLOCK_DAMAGE_COMMENT)
+					.define("disableCreeperBlockDamage", DISABLE_CREEPER_BLOCK_DAMAGE_DEFAULT);
 			disableBlockTriggering = builder
 					.comment(DISABLE_BLOCK_TRIGGERING_COMMENT)
 					.define("disableBlockTriggering", DISABLE_BLOCK_TRIGGERING_DEFAULT);
@@ -118,6 +122,11 @@ public class NeoforgeTNTUtilsConfig {
 		@Override
 		public boolean disableBlockDamage() {
 			return disableBlockDamage.get();
+		}
+
+		@Override
+		public boolean disableCreeperBlockDamage() {
+			return disableCreeperBlockDamage.get();
 		}
 
 		@Override

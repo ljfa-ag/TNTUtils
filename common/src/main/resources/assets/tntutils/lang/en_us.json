@@ -16,6 +16,7 @@
 	"tntutils.configuration.blockDamage": "Block damage",
 	"tntutils.configuration.dropChanceMultiplier": "Drop chance multiplier",
 	"tntutils.configuration.disableBlockDamage": "Disable block damage",
+	"tntutils.configuration.disableCreeperBlockDamage": "Disable Creeper block damage",
 	"tntutils.configuration.disableBlockTriggering": "Disable block triggering",
 	"tntutils.configuration.spareBlockEntities": "Spare block entities",
 	"tntutils.configuration.modifyExplosionResistances": "Modify explosion resistances",

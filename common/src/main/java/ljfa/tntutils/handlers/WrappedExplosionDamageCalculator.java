@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.MinecartTNT;
 import net.minecraft.world.level.BlockGetter;
@@ -20,14 +21,15 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 	private final ExplosionDamageCalculator original;
 
 	//Cache config values to avoid reading them thousands of times per explosion
-	private final boolean preventChainExplosions = TNTUtils.config().preventChainExplosions();
-	private final boolean disableBlockDamage     = TNTUtils.config().disableBlockDamage();
-	private final boolean spareBlockEntities     = TNTUtils.config().spareBlockEntities();
-	private final boolean disableBlockTriggering = TNTUtils.config().disableBlockTriggering();
-	private final boolean disableEntityDamage    = TNTUtils.config().disableEntityDamage();
-	private final boolean disablePlayerDamage    = TNTUtils.config().disablePlayerDamage();
-	private final boolean disableMobDamage       = TNTUtils.config().disableMobDamage();
-	private final boolean disableItemDamage      = TNTUtils.config().disableItemDamage();
+	private final boolean preventChainExplosions    = TNTUtils.config().preventChainExplosions();
+	private final boolean disableBlockDamage        = TNTUtils.config().disableBlockDamage();
+	private final boolean disableCreeperBlockDamage = TNTUtils.config().disableCreeperBlockDamage();
+	private final boolean disableBlockTriggering    = TNTUtils.config().disableBlockTriggering();
+	private final boolean spareBlockEntities        = TNTUtils.config().spareBlockEntities();
+	private final boolean disableEntityDamage       = TNTUtils.config().disableEntityDamage();
+	private final boolean disablePlayerDamage       = TNTUtils.config().disablePlayerDamage();
+	private final boolean disableMobDamage          = TNTUtils.config().disableMobDamage();
+	private final boolean disableItemDamage         = TNTUtils.config().disableItemDamage();
 
 	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
 		this.original = original;
@@ -44,6 +46,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 			case DESTROY, DESTROY_WITH_DECAY -> {
 				if(
 						(disableBlockDamage
+						|| (disableCreeperBlockDamage && explosion.getDirectSourceEntity() instanceof Creeper)
 						|| (spareBlockEntities && state.hasBlockEntity())
 						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
 					&& !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST)
