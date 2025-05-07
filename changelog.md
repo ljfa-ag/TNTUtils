@@ -1,9 +1,5 @@
-- Added the config option `preventChainExplosions`: Prevents explosions from igniting TNT and TNT minecarts, so that explosions cannot chain
-- Added the config option `disableTNT`: Prevents TNT and TNT minecarts from being ignited
-- Added various tags:
-  - The block tag `#tntutils:explosion_blacklist`: These blocks will not be destroyed by explosions
-  - The block tag `#tntutils:explosion_whitelist`: These blocks can be destroyed by explosions, even when the `disableBlockDamage` or `spareBlockEntities` options are turned on. The whitelist takes precedence over the blacklist.
-  - The block tags `#tntutils:trigger_blacklist` and `#tntutils:trigger_whitelist`: Simliar to the above but for triggering blocks by Wind Charge explosions, etc.
-  - The entity tags `#tntutils:explosion_blacklist` and `#tntutils:explosion_whitelist`: Similar to the above but for entity damage
-  - The item tags `#tntutils:explosion_blacklist` and `#tntutils:explosion_whitelist`: Similar to the above but for items laying on the ground
-- Removed the config option `alwaysAffectAE2Singularities`. Instead, AE2 Singularities are tagged with `#tntutils:explosion_whitelist` by default
+- Added the config option `disableCreeperBlockDamage`: Prevents Creepers from destroying blocks
+- Added the config option `modifyExplosionResistances`: Allows changing of explosion resistances for individual blocks
+- \[Fabric only\] The config file will now be backed up if it contains syntax errors (NeoForge already handles this)
+- TNT minecarts will now be damaged and destroyed by explosions when `preventChainExplosions` is turned on, rather than be immune to explosion damage
+- Fixed desync issues with TNT and TNT minecarts when client and server have differing config options
