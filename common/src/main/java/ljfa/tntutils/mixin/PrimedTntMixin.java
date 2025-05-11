@@ -14,15 +14,15 @@ import net.minecraft.world.level.Level;
 
 @Mixin(PrimedTnt.class)
 public abstract class PrimedTntMixin extends Entity {
-	@Inject(method = "tick", at = @At("HEAD"), cancellable = true)
-	private void onTick(CallbackInfo ci) {
-		if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
-			ExplosionHandler.disarmPrimedTnt(this);
-			ci.cancel();
-		}
-	}
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
+    private void onTick(CallbackInfo ci) {
+        if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
+            ExplosionHandler.disarmPrimedTnt(this);
+            ci.cancel();
+        }
+    }
 
-	private PrimedTntMixin(EntityType<?> entityType, Level level) {
-		super(entityType, level);
-	}
+    private PrimedTntMixin(EntityType<?> entityType, Level level) {
+        super(entityType, level);
+    }
 }

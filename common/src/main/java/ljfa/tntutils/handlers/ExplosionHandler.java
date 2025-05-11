@@ -8,22 +8,22 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
-	public static boolean shouldCancelExplosion() {
-		return TNTUtils.config().disableExplosions();
-	}
+    public static boolean shouldCancelExplosion() {
+        return TNTUtils.config().disableExplosions();
+    }
 
-	/**
-	 * Called as or just before {@link Explosion#explode()} is called.
-	 */
-	public static void onExplosionStart(Explosion expl) {
-		expl.damageCalculator = new WrappedExplosionDamageCalculator(expl.damageCalculator);
-		expl.radius *= TNTUtils.config().sizeMultiplier();
-	}
+    /**
+     * Called as or just before {@link Explosion#explode()} is called.
+     */
+    public static void onExplosionStart(Explosion expl) {
+        expl.damageCalculator = new WrappedExplosionDamageCalculator(expl.damageCalculator);
+        expl.radius *= TNTUtils.config().sizeMultiplier();
+    }
 
-	public static void disarmPrimedTnt(Entity tnt) {
-		tnt.discard();
-		var itemEntity = new ItemEntity(tnt.level(), tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(Items.TNT));
-		itemEntity.setDefaultPickUpDelay();
-		tnt.level().addFreshEntity(itemEntity);
-	}
+    public static void disarmPrimedTnt(Entity tnt) {
+        tnt.discard();
+        var itemEntity = new ItemEntity(tnt.level(), tnt.getX(), tnt.getY(), tnt.getZ(), new ItemStack(Items.TNT));
+        itemEntity.setDefaultPickUpDelay();
+        tnt.level().addFreshEntity(itemEntity);
+    }
 }

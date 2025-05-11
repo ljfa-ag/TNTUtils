@@ -30,26 +30,26 @@ else:
 
 print("In TNTUtilsConfigAccess:\n" + "-" * horiz_line_len)
 print(f"""\
-\t{opt_type} {opt_name}();
+    {opt_type} {opt_name}();
 ...
-\tstatic final String {comment_name} = "Comment";
-\tstatic final {opt_type} {default_name} = false;
+    static final String {comment_name} = "Comment";
+    static final {opt_type} {default_name} = false;
 """)
 
 fiber_config_type = "ConfigTypes." + opt_boxed_type.upper()
 
 print("In FiberTNTUtilsConfig:\n" + "-" * horiz_line_len)
 print(f"""\
-\t\tpublic final PropertyMirror<{opt_boxed_type}> {opt_name} = PropertyMirror.create({fiber_config_type});
+        public final PropertyMirror<{opt_boxed_type}> {opt_name} = PropertyMirror.create({fiber_config_type});
 ...
-\t\t\t\t\t.beginValue("{opt_name}", {fiber_config_type}, {default_name})
-\t\t\t\t\t.withComment({comment_name})
-\t\t\t\t\t.finishValue({opt_name}::mirror)
+                    .beginValue("{opt_name}", {fiber_config_type}, {default_name})
+                    .withComment({comment_name})
+                    .finishValue({opt_name}::mirror)
 ...
-\t\t@Override
-\t\tpublic {opt_type} {opt_name}() {{
-\t\t\treturn {opt_name}.getValue();
-\t\t}}
+        @Override
+        public {opt_type} {opt_name}() {{
+            return {opt_name}.getValue();
+        }}
 """)
 
 match opt_type:
@@ -65,19 +65,19 @@ match opt_type:
 
 print("In NeoforgeTNTUtilsConfig:\n" + "-" * horiz_line_len)
 print(f"""\
-\t\tpublic final {neo_value_type} {opt_name};
+        public final {neo_value_type} {opt_name};
 ...
-\t\t\t{opt_name} = builder
-\t\t\t\t\t.comment({comment_name})
-\t\t\t\t\t.define("{opt_name}", {default_name});
+            {opt_name} = builder
+                    .comment({comment_name})
+                    .define("{opt_name}", {default_name});
 ...
-\t\t@Override
-\t\tpublic {opt_type} {opt_name}() {{
-\t\t\treturn {opt_name}{neo_value_getter};
-\t\t}}
+        @Override
+        public {opt_type} {opt_name}() {{
+            return {opt_name}{neo_value_getter};
+        }}
 """)
 
-print("In Neo en_us.json:\n" + "-" * horiz_line_len)
+print("In en_us.json:\n" + "-" * horiz_line_len)
 print(f"""\
-\t"tntutils.configuration.{opt_name}": "Translation"
+  "tntutils.configuration.{opt_name}": "Translation"
 """)

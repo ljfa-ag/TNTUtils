@@ -17,79 +17,79 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.FluidState;
 
 public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator {
-	private final ExplosionDamageCalculator original;
+    private final ExplosionDamageCalculator original;
 
-	//Cache config values to avoid reading them thousands of times per explosion
-	private final boolean disableBlockDamage        = TNTUtils.config().disableBlockDamage();
-	private final boolean disableCreeperBlockDamage = TNTUtils.config().disableCreeperBlockDamage();
-	private final boolean disableBlockTriggering    = TNTUtils.config().disableBlockTriggering();
-	private final boolean spareBlockEntities        = TNTUtils.config().spareBlockEntities();
-	private final boolean disableEntityDamage       = TNTUtils.config().disableEntityDamage();
-	private final boolean disablePlayerDamage       = TNTUtils.config().disablePlayerDamage();
-	private final boolean disableMobDamage          = TNTUtils.config().disableMobDamage();
-	private final boolean disableItemDamage         = TNTUtils.config().disableItemDamage();
+    //Cache config values to avoid reading them thousands of times per explosion
+    private final boolean disableBlockDamage        = TNTUtils.config().disableBlockDamage();
+    private final boolean disableCreeperBlockDamage = TNTUtils.config().disableCreeperBlockDamage();
+    private final boolean disableBlockTriggering    = TNTUtils.config().disableBlockTriggering();
+    private final boolean spareBlockEntities        = TNTUtils.config().spareBlockEntities();
+    private final boolean disableEntityDamage       = TNTUtils.config().disableEntityDamage();
+    private final boolean disablePlayerDamage       = TNTUtils.config().disablePlayerDamage();
+    private final boolean disableMobDamage          = TNTUtils.config().disableMobDamage();
+    private final boolean disableItemDamage         = TNTUtils.config().disableItemDamage();
 
-	public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
-		this.original = original;
-	}
+    public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
+        this.original = original;
+    }
 
-	@Override
-	public Optional<Float> getBlockExplosionResistance(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, FluidState fluid) {
-		return original.getBlockExplosionResistance(explosion, reader, pos, state, fluid);
-	}
+    @Override
+    public Optional<Float> getBlockExplosionResistance(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, FluidState fluid) {
+        return original.getBlockExplosionResistance(explosion, reader, pos, state, fluid);
+    }
 
-	@Override
-	public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
-		switch(explosion.getBlockInteraction()) {
-			case DESTROY, DESTROY_WITH_DECAY -> {
-				if(
-						(disableBlockDamage
-						|| (disableCreeperBlockDamage && explosion.getDirectSourceEntity() instanceof Creeper)
-						|| (spareBlockEntities && state.hasBlockEntity())
-						|| state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
-					&& !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST)
-				)
-					return false;
-			}
-			case TRIGGER_BLOCK -> {
-				if(
-						(disableBlockTriggering
-						|| state.is(TNTUtilsTags.BLOCK_TRIGGER_BLACKLIST))
-					&& !state.is(TNTUtilsTags.BLOCK_TRIGGER_WHITELIST)
-				)
-					return false;
-			}
-			default -> {}
-		}
-		return original.shouldBlockExplode(explosion, reader, pos, state, power);
-	}
+    @Override
+    public boolean shouldBlockExplode(Explosion explosion, BlockGetter reader, BlockPos pos, BlockState state, float power) {
+        switch(explosion.getBlockInteraction()) {
+            case DESTROY, DESTROY_WITH_DECAY -> {
+                if(
+                        (disableBlockDamage
+                        || (disableCreeperBlockDamage && explosion.getDirectSourceEntity() instanceof Creeper)
+                        || (spareBlockEntities && state.hasBlockEntity())
+                        || state.is(TNTUtilsTags.BLOCK_EXPLOSION_BLACKLIST))
+                    && !state.is(TNTUtilsTags.BLOCK_EXPLOSION_WHITELIST)
+                )
+                    return false;
+            }
+            case TRIGGER_BLOCK -> {
+                if(
+                        (disableBlockTriggering
+                        || state.is(TNTUtilsTags.BLOCK_TRIGGER_BLACKLIST))
+                    && !state.is(TNTUtilsTags.BLOCK_TRIGGER_WHITELIST)
+                )
+                    return false;
+            }
+            default -> {}
+        }
+        return original.shouldBlockExplode(explosion, reader, pos, state, power);
+    }
 
-	@Override
-	public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
-		if(
-				(disableEntityDamage
-				|| (disablePlayerDamage && entity instanceof Player)
-				|| (disableMobDamage && entity instanceof Mob)
-				|| (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
-				|| entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
-			&& !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
-		)
-			return false;
-		return original.shouldDamageEntity(explosion, entity);
-	}
+    @Override
+    public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
+        if(
+                (disableEntityDamage
+                || (disablePlayerDamage && entity instanceof Player)
+                || (disableMobDamage && entity instanceof Mob)
+                || (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
+                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
+            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
+        )
+            return false;
+        return original.shouldDamageEntity(explosion, entity);
+    }
 
-	private boolean shouldSpareItemEntity(ItemEntity entity) {
-		return (disableItemDamage || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
-				&& !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
-	}
+    private boolean shouldSpareItemEntity(ItemEntity entity) {
+        return (disableItemDamage || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
+                && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
+    }
 
-	@Override
-	public float getKnockbackMultiplier(Entity entity) {
-		return original.getKnockbackMultiplier(entity);
-	}
+    @Override
+    public float getKnockbackMultiplier(Entity entity) {
+        return original.getKnockbackMultiplier(entity);
+    }
 
-	@Override
-	public float getEntityDamageAmount(Explosion explosion, Entity entity) {
-		return original.getEntityDamageAmount(explosion, entity);
-	}
+    @Override
+    public float getEntityDamageAmount(Explosion explosion, Entity entity) {
+        return original.getEntityDamageAmount(explosion, entity);
+    }
 }

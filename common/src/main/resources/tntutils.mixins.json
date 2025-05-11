@@ -4,10 +4,10 @@
   "package": "ljfa.tntutils.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-	"BlockBehaviourMixin",
-	"TntBlockMixin",
-	"PrimedTntMixin",
-	"MinecartTNTMixin"
+    "BlockBehaviourMixin",
+    "TntBlockMixin",
+    "PrimedTntMixin",
+    "MinecartTNTMixin"
   ]
 }
 

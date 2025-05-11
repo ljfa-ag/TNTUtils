@@ -20,48 +20,48 @@ import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 @Mod(TNTUtils.MOD_ID)
 public class TNTUtilsNeoforgeEntry {
-	public TNTUtilsNeoforgeEntry(IEventBus modEventBus, ModContainer modContainer) {
-		modEventBus.addListener(this::commonSetup);
+    public TNTUtilsNeoforgeEntry(IEventBus modEventBus, ModContainer modContainer) {
+        modEventBus.addListener(this::commonSetup);
 
-		modContainer.registerConfig(ModConfig.Type.COMMON, NeoforgeTNTUtilsConfig.commonSpec);
-		if(FMLLoader.getDist() == Dist.CLIENT)
-			modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
-	}
+        modContainer.registerConfig(ModConfig.Type.COMMON, NeoforgeTNTUtilsConfig.commonSpec);
+        if(FMLLoader.getDist() == Dist.CLIENT)
+            modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+    }
 
-	private void commonSetup(FMLCommonSetupEvent event) {
-		event.enqueueWork(this::modifyExplosionResistances);
+    private void commonSetup(FMLCommonSetupEvent event) {
+        event.enqueueWork(this::modifyExplosionResistances);
 
-		var eventBus = NeoForge.EVENT_BUS;
-		if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
-			eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
-		eventBus.addListener(this::onExplosionStart);
-	}
+        var eventBus = NeoForge.EVENT_BUS;
+        if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
+            eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
+        eventBus.addListener(this::onExplosionStart);
+    }
 
-	private void onExplosionStart(ExplosionEvent.Start e) {
-		if(ExplosionHandler.shouldCancelExplosion())
-			e.setCanceled(true);
-		else
-			ExplosionHandler.onExplosionStart(e.getExplosion());
-	}
+    private void onExplosionStart(ExplosionEvent.Start e) {
+        if(ExplosionHandler.shouldCancelExplosion())
+            e.setCanceled(true);
+        else
+            ExplosionHandler.onExplosionStart(e.getExplosion());
+    }
 
-	private void modifyExplosionResistances() {
-		TNTUtils.logger.debug("Modifying explosion resistances");
-		for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
-			try {
-				var key = entry.getKey();
-				var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
-						.orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
-				if(!(entry.getValue() instanceof Number value))
-					throw new RuntimeException("The explosion resistance for \"" + key + "\" must be a number");
-				var floatValue = value.floatValue();
-				if(!(floatValue >= 0.0f)) //implicit check for NaN
-					throw new RuntimeException("The explosion resistance for \"" + key + "\" must be at least 0");
+    private void modifyExplosionResistances() {
+        TNTUtils.logger.debug("Modifying explosion resistances");
+        for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
+            try {
+                var key = entry.getKey();
+                var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
+                        .orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
+                if(!(entry.getValue() instanceof Number value))
+                    throw new RuntimeException("The explosion resistance for \"" + key + "\" must be a number");
+                var floatValue = value.floatValue();
+                if(!(floatValue >= 0.0f)) //implicit check for NaN
+                    throw new RuntimeException("The explosion resistance for \"" + key + "\" must be at least 0");
 
-				block.explosionResistance = floatValue;
-			}
-			catch(Exception e) {
-				TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
-			}
-		}
-	}
+                block.explosionResistance = floatValue;
+            }
+            catch(Exception e) {
+                TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
+            }
+        }
+    }
 }
