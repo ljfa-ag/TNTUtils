@@ -17,6 +17,7 @@ legacyForge {
         minecraftVersion = project.parchment_minecraft_version
     }
 
+    //FIXME: Access transformers don't seem to work with LegacyForge vanilla mode
     def at = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers.from(at.absolutePath)
@@ -26,8 +27,6 @@ legacyForge {
 
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: project.mixin_version
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: project.mixinextras_version
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: project.mixinextras_version
 }
 
 tasks.withType(JavaCompile).configureEach {
