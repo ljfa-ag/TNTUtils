@@ -8,6 +8,7 @@
     "TntBlockMixin",
     "PrimedTntMixin",
     "MinecartTNTMixin"
-  ]
+  ],
+  "refmap": "tntutils.refmap.json"
 }
 
