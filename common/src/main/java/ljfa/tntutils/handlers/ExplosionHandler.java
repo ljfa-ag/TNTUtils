@@ -1,6 +1,7 @@
 package ljfa.tntutils.handlers;
 
 import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.mixin.ExplosionAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
@@ -16,8 +17,9 @@ public class ExplosionHandler {
      * Called as or just before {@link Explosion#explode()} is called.
      */
     public static void onExplosionStart(Explosion expl) {
-        expl.damageCalculator = new WrappedExplosionDamageCalculator(expl.damageCalculator);
-        expl.radius *= TNTUtils.config().sizeMultiplier();
+        var explA = (ExplosionAccessor) expl;
+        explA.setDamageCalculator(new WrappedExplosionDamageCalculator(explA.getDamageCalculator()));
+        explA.setRadius(explA.getRadius() * TNTUtils.config().sizeMultiplier());
     }
 
     public static void disarmPrimedTnt(Entity tnt) {
