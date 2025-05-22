@@ -12,7 +12,6 @@ public interface TNTUtilsConfigAccess {
     float dropChanceMultiplier();
     boolean disableBlockDamage();
     boolean disableCreeperBlockDamage();
-    boolean disableBlockTriggering();
     boolean spareBlockEntities();
     //the implementation of modifyExplosionResistances is loader specific and does not appear here
 
@@ -52,10 +51,6 @@ public interface TNTUtilsConfigAccess {
             + "blocks tagged with #tntutils:explosion_whitelist.";
     static final boolean DISABLE_CREEPER_BLOCK_DAMAGE_DEFAULT = false;
     static final boolean DISABLE_BLOCK_DAMAGE_DEFAULT = false;
-    static final String DISABLE_BLOCK_TRIGGERING_COMMENT = "Prevents explosions from triggering blocks (e.g. Wind Charge explosions flipping levers, etc.). Will not\n"
-            + "affect blocks tagged with #tntutils:trigger_whitelist.\n"
-            + "Individual blocks can be exempted from triggering by tagging them with #tntutils:trigger_whitelist.";
-    static final boolean DISABLE_BLOCK_TRIGGERING_DEFAULT = false;
     static final String SPARE_BLOCK_ENTITIES_COMMENT = "Prevents explosions from destroying blocks with block entities. Will not affect blocks tagged with\n"
             + "#tntutils:explosion_whitelist.";
     static final boolean SPARE_BLOCK_ENTITIES_DEFAULT = false;

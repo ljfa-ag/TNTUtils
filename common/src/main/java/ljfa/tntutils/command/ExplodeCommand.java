@@ -44,7 +44,6 @@ public class ExplodeCommand {
                                         .then(Commands.literal("block"  ).executes(ctx -> explode(ctx, ExplosionInteraction.BLOCK)))
                                         .then(Commands.literal("mob"    ).executes(ctx -> explode(ctx, ExplosionInteraction.MOB)))
                                         .then(Commands.literal("tnt"    ).executes(ctx -> explode(ctx, ExplosionInteraction.TNT)))
-                                        .then(Commands.literal("trigger").executes(ctx -> explode(ctx, ExplosionInteraction.TRIGGER)))
                                         .then(Commands.literal("none"   ).executes(ctx -> explode(ctx, ExplosionInteraction.NONE)))
                                 )
                         )

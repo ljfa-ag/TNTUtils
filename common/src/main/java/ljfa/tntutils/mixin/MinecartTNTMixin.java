@@ -6,11 +6,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-
 import ljfa.tntutils.TNTUtils;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractMinecart;
 import net.minecraft.world.entity.vehicle.MinecartTNT;
@@ -28,7 +24,7 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
             cancellable = true)
     private void onPrimeFuse(CallbackInfo ci) {
         if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
-            this.destroy(this.shadow$getDropItem());
+            //this.destroy(this.shadow$getDropItem());
             ci.cancel();
         }
     }
@@ -39,18 +35,19 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
             cancellable = true)
     private void onExplode(CallbackInfo ci) {
         if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
-            this.destroy(this.shadow$getDropItem());
+            //this.destroy(this.shadow$getDropItem());
             ci.cancel();
         }
     }
 
-    @ModifyReturnValue(method = "damageSourceIgnitesTnt", at = @At("RETURN"))
+    //FIXME: This method does not exist in 1.20, need to implement this differently
+    /*@ModifyReturnValue(method = "damageSourceIgnitesTnt", at = @At("RETURN"))
     private static boolean changeDamageSourcesIgnitesTNT(boolean original, DamageSource source) {
         if(TNTUtils.config().preventChainExplosions())
             return original && !source.is(DamageTypeTags.IS_EXPLOSION);
         else
             return original;
-    }
+    }*/
 
     private MinecartTNTMixin(EntityType<?> entityType, Level level) {
         super(entityType, level);
