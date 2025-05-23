@@ -106,7 +106,10 @@ tasks.withType(JavaCompile).configureEach {
     it.options.release = project.java_version as Integer
 }
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+java {
+    withSourcesJar()
+    toolchain.languageVersion = JavaLanguageVersion.of(project.java_version)
+}
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = findProperty('curseForgeApiKey')
