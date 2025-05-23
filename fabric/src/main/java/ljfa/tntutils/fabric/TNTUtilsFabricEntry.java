@@ -33,11 +33,9 @@ public class TNTUtilsFabricEntry implements ModInitializer {
         for(var entry : stringMap.entrySet()) {
             try {
                 var id = new ResourceLocation(entry.getKey());
-                var block = BuiltInRegistries.BLOCK.get(id);
-                if(block != null)
-                    setExplosionResistance(id, block, entry.getValue());
-                else
-                    unknownBlocks.put(id, entry.getValue());
+                BuiltInRegistries.BLOCK.getOptional(id).ifPresentOrElse(
+                        block -> setExplosionResistance(id, block, entry.getValue()),
+                        () -> unknownBlocks.put(id, entry.getValue()));
             }
             catch(Exception e) {
                 TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());
@@ -46,7 +44,7 @@ public class TNTUtilsFabricEntry implements ModInitializer {
 
         //install a callback for the unknown blocks
         if(!unknownBlocks.isEmpty()) {
-            TNTUtils.logger.debug("Installing callback to change explosion resistance of " + unknownBlocks.size() + " blocks");
+            TNTUtils.logger.debug("Installing callback to change explosion resistance of " + unknownBlocks.size() + " remaining blocks");
             RegistryEntryAddedCallback.event(BuiltInRegistries.BLOCK).register((rawId, id, block) -> {
                 Float value = unknownBlocks.get(id);
                 if(value != null)
