@@ -18,7 +18,6 @@
       "ljfa.tntutils.fabric.TNTUtilsFabricEntry"
     ]
   },
-  "accessWidener": "tntutils.accesswidener",
   "mixins": [
     "tntutils.mixins.json",
     "tntutils.fabric.mixins.json"
