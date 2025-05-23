@@ -1,11 +1,11 @@
-package ljfa.tntutils.neoforge;
+package ljfa.tntutils.forge;
 
 import ljfa.tntutils.PlatformAbstractions;
 import ljfa.tntutils.TNTUtilsConfigAccess;
 
-public class NeoforgePlatformImpl implements PlatformAbstractions {
+public class ForgePlatformImpl implements PlatformAbstractions {
     @Override
     public TNTUtilsConfigAccess config() {
-        return NeoforgeTNTUtilsConfig.COMMON;
+        return ForgeTNTUtilsConfig.COMMON;
     }
 }

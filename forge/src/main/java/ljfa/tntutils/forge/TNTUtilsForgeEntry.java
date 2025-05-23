@@ -1,29 +1,29 @@
-package ljfa.tntutils.neoforge;
+package ljfa.tntutils.forge;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.command.ExplodeCommand;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLLoader;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.level.ExplosionEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.ModContainer;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
-import net.neoforged.neoforge.event.level.ExplosionEvent;
 
 @Mod(TNTUtils.MOD_ID)
-public class TNTUtilsNeoforgeEntry {
-    public TNTUtilsNeoforgeEntry(IEventBus modEventBus, ModContainer modContainer) {
+public class TNTUtilsForgeEntry {
+    public TNTUtilsForgeEntry(IEventBus modEventBus, ModContainer modContainer) {
         modEventBus.addListener(this::commonSetup);
 
-        modContainer.registerConfig(ModConfig.Type.COMMON, NeoforgeTNTUtilsConfig.commonSpec);
+        modContainer.registerConfig(ModConfig.Type.COMMON, ForgeTNTUtilsConfig.commonSpec);
         if(FMLLoader.getDist() == Dist.CLIENT)
             modContainer.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
@@ -32,7 +32,7 @@ public class TNTUtilsNeoforgeEntry {
         event.enqueueWork(this::modifyExplosionResistances);
 
         var eventBus = NeoForge.EVENT_BUS;
-        if(NeoforgeTNTUtilsConfig.COMMON.addExplodeCommand())
+        if(ForgeTNTUtilsConfig.COMMON.addExplodeCommand())
             eventBus.addListener((RegisterCommandsEvent e) -> ExplodeCommand.register(e.getDispatcher()));
         eventBus.addListener(this::onExplosionStart);
     }
@@ -46,7 +46,7 @@ public class TNTUtilsNeoforgeEntry {
 
     private void modifyExplosionResistances() {
         TNTUtils.logger.debug("Modifying explosion resistances");
-        for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
+        for(var entry : ForgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
             try {
                 var key = entry.getKey();
                 var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))

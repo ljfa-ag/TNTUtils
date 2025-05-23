@@ -1,4 +1,4 @@
-package ljfa.tntutils.neoforge;
+package ljfa.tntutils.forge;
 
 import java.util.Map;
 
@@ -6,12 +6,12 @@ import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.InMemoryFormat;
 
 import ljfa.tntutils.TNTUtilsConfigAccess;
+import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
+import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
+import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
 import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
-import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
-import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
 
-public class NeoforgeTNTUtilsConfig {
+public class ForgeTNTUtilsConfig {
     public static class Common implements TNTUtilsConfigAccess {
         public final BooleanValue addExplodeCommand;
         public final BooleanValue disableExplosions;
