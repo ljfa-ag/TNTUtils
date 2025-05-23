@@ -131,14 +131,7 @@ modrinth {
     changelog = file('../changelog.md').text
 }
 
-publishing {
-    publications {
-        create("mavenJava", MavenPublication) {
-            from components.java
-        }
-    }
-
-    repositories {
-
-    }
+//Fix conflict with Eclipse launch configs when multiple projects with the same name are in the same workspace
+pluginManager.withPlugin('eclipse') {
+    eclipse.project.name = "fabric-${project.minecraft_version}"
 }

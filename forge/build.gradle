@@ -156,19 +156,11 @@ modrinth {
     changelog = file('../changelog.md').text
 }
 
-publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url = "file://${project.projectDir}/repo"
-        }
-    }
-}
-
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+}
+
+//Fix conflict with Eclipse launch configs when multiple projects with the same name are in the same workspace
+pluginManager.withPlugin('eclipse') {
+    eclipse.project.name = "forge-${project.minecraft_version}"
 }
