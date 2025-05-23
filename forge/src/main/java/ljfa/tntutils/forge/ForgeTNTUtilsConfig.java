@@ -6,10 +6,10 @@ import com.electronwill.nightconfig.core.Config;
 import com.electronwill.nightconfig.core.InMemoryFormat;
 
 import ljfa.tntutils.TNTUtilsConfigAccess;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.neoforged.neoforge.common.ModConfigSpec;
 
 public class ForgeTNTUtilsConfig {
     public static class Common implements TNTUtilsConfigAccess {
@@ -22,7 +22,6 @@ public class ForgeTNTUtilsConfig {
         public final DoubleValue dropChanceMultiplier;
         public final BooleanValue disableBlockDamage;
         public final BooleanValue disableCreeperBlockDamage;
-        public final BooleanValue disableBlockTriggering;
         public final BooleanValue spareBlockEntities;
         public final ConfigValue<Config> modifyExplosionResistances;
 
@@ -31,12 +30,11 @@ public class ForgeTNTUtilsConfig {
         public final BooleanValue disableItemDamage;
         public final BooleanValue disableMobDamage;
 
-        public Common(ModConfigSpec.Builder builder) {
+        public Common(ForgeConfigSpec.Builder builder) {
             //General
             builder.comment(GENERAL_COMMENT).push("general");
             addExplodeCommand = builder
                     .comment(ADD_EXPLODE_COMMAND_COMMENT)
-                    .gameRestart()
                     .define("addExplodeCommand", ADD_EXPLODE_COMMAND_DEFAULT);
             disableExplosions = builder
                     .comment(DISABLE_EXPLOSIONS_COMMENT)
@@ -62,9 +60,6 @@ public class ForgeTNTUtilsConfig {
             disableCreeperBlockDamage = builder
                     .comment(DISABLE_CREEPER_BLOCK_DAMAGE_COMMENT)
                     .define("disableCreeperBlockDamage", DISABLE_CREEPER_BLOCK_DAMAGE_DEFAULT);
-            disableBlockTriggering = builder
-                    .comment(DISABLE_BLOCK_TRIGGERING_COMMENT)
-                    .define("disableBlockTriggering", DISABLE_BLOCK_TRIGGERING_DEFAULT);
             spareBlockEntities = builder
                     .comment(SPARE_BLOCK_ENTITIES_COMMENT)
                     .define("spareBlockEntities", SPARE_BLOCK_ENTITIES_DEFAULT);
@@ -83,7 +78,6 @@ public class ForgeTNTUtilsConfig {
                              * but when values are added and the TOML file is written to, the inline table will be
                              * replaced by an ordinary subtable. Hence the syntax explanation for both.
                              */
-                    .gameRestart()
                     .define("modifyExplosionResistances", Config.wrap(Map.of(), InMemoryFormat.defaultInstance()), obj -> obj instanceof Config);
 
             //Entity damage
@@ -143,11 +137,6 @@ public class ForgeTNTUtilsConfig {
         }
 
         @Override
-        public boolean disableBlockTriggering() {
-            return disableBlockTriggering.get();
-        }
-
-        @Override
         public boolean spareBlockEntities() {
             return spareBlockEntities.get();
         }
@@ -173,10 +162,10 @@ public class ForgeTNTUtilsConfig {
         }
     }
 
-    static final ModConfigSpec commonSpec;
+    static final ForgeConfigSpec commonSpec;
     public static final Common COMMON;
     static {
-        var specPair = new ModConfigSpec.Builder().configure(Common::new);
+        var specPair = new ForgeConfigSpec.Builder().configure(Common::new);
         commonSpec = specPair.getRight();
         COMMON = specPair.getLeft();
     }
