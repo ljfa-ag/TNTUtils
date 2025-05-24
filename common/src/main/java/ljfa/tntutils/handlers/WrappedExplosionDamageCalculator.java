@@ -43,34 +43,4 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
         }
         return original.shouldBlockExplode(explosion, reader, pos, state, power);
     }
-
-    //FIXME: We need to use mixins to implement these
-    /*@Override
-    public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
-        if(
-                (disableEntityDamage
-                || (disablePlayerDamage && entity instanceof Player)
-                || (disableMobDamage && entity instanceof Mob)
-                || (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
-                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
-            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
-        )
-            return false;
-        return original.shouldDamageEntity(explosion, entity);
-    }
-
-    private boolean shouldSpareItemEntity(ItemEntity entity) {
-        return (disableItemDamage || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
-                && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
-    }
-
-    @Override
-    public float getKnockbackMultiplier(Entity entity) {
-        return original.getKnockbackMultiplier(entity);
-    }
-
-    @Override
-    public float getEntityDamageAmount(Explosion explosion, Entity entity) {
-        return original.getEntityDamageAmount(explosion, entity);
-    }*/
 }

@@ -4,9 +4,10 @@
   "package": "ljfa.tntutils.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-	"BlockBehaviourAccessor",
-	"ExplosionAccessor",
+    "BlockBehaviourAccessor",
+    "ExplosionAccessor",
     "BlockBehaviourMixin",
+    "ExplosionMixin",
     "TntBlockMixin",
     "PrimedTntMixin",
     "MinecartTNTMixin"
