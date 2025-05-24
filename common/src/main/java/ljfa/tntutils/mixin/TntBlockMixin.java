@@ -13,13 +13,13 @@ import net.minecraft.world.level.block.TntBlock;
 @Mixin(TntBlock.class)
 public abstract class TntBlockMixin extends Block {
     @Inject(method = "wasExploded", at = @At("HEAD"), cancellable = true)
-    private static void onWasExploded(CallbackInfo ci) {
+    private void onWasExploded(CallbackInfo ci) {
         if(TNTUtils.config().preventChainExplosions())
             ci.cancel();
     }
 
     @Inject(method = "dropFromExplosion", at = @At("HEAD"), cancellable = true)
-    private static void onDropFromExplosion(CallbackInfoReturnable<Boolean> ci) {
+    private void onDropFromExplosion(CallbackInfoReturnable<Boolean> ci) {
         if(TNTUtils.config().preventChainExplosions())
             ci.setReturnValue(true);
     }
