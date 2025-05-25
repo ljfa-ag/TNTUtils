@@ -6,7 +6,6 @@
   "mixins": [
     "BlockBehaviourAccessor",
     "ExplosionAccessor",
-    "BlockBehaviourMixin",
     "ExplosionMixin",
     "TntBlockMixin",
     "PrimedTntMixin",
