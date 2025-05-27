@@ -1,5 +1,3 @@
-- Added the config option `disableCreeperBlockDamage`: Prevents Creepers from destroying blocks
-- Added the config option `modifyExplosionResistances`: Allows changing of explosion resistances for individual blocks
-- \[Fabric only\] The config file will now be backed up if it contains syntax errors (NeoForge already handles this)
-- TNT minecarts will now be damaged and destroyed by explosions when `preventChainExplosions` is turned on, rather than be immune to explosion damage
-- Fixed desync issues with TNT and TNT minecarts when client and server have differing config options
+Initial release for Minecraft 1.20.1 with Fabric and Forge.
+
+Has the same features as 1.21.1-2.0.2 (excluding of course the options and tags relating to block triggering, which was only added in Minecraft 1.21).
