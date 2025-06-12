@@ -139,7 +139,7 @@ jar {
 
 task publishCurseForge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
     apiToken = findProperty('curseForgeApiKey')
-    def mainFile = upload(227449, jar)
+    def mainFile = upload(227449, reobfJar)
     mainFile.addModLoader('Forge')
     mainFile.releaseType = mod_release_type
     mainFile.changelog = file('../changelog.md')
@@ -150,7 +150,7 @@ modrinth {
     token = findProperty('modrinthApiToken')
     projectId = 'tntutils'
     versionType = mod_release_type
-    uploadFile = jar
+    uploadFile = reobfJar
     gameVersions = [minecraft_version]
     loaders = ['forge']
     changelog = file('../changelog.md').text
