@@ -5,9 +5,10 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.StringFormatterMessageFactory;
 
 import ljfa.tntutils.command.CommandExplosion;
-import ljfa.tntutils.proxy.CommonProxy;
+import ljfa.tntutils.handlers.EntityJoinHandler;
+import ljfa.tntutils.handlers.ExplosionHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -19,31 +20,28 @@ import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 public class TNTUtils {
     @Mod.Instance(Reference.MODID)
     public static TNTUtils instance;
-    
-    @SidedProxy(clientSide = Reference.CLIENT_PROXY_CLASS, serverSide = Reference.SERVER_PROXY_CLASS)
-    public static CommonProxy proxy;
-    
+
     public static final Logger logger = LogManager.getLogger("TNTUtils", StringFormatterMessageFactory.INSTANCE);
-    
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         Config.loadConfig(event.getSuggestedConfigurationFile());
-        proxy.preInit(event);
     }
-    
+
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
-        proxy.init(event);
+        MinecraftForge.EVENT_BUS.register(new ExplosionHandler());
+        if(Config.disableTNT || Config.disableTNTMinecart)
+            MinecraftForge.EVENT_BUS.register(new EntityJoinHandler());
     }
-    
+
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         Config.createBlacklistSet();
         Config.modifyResistances();
         Config.save();
-        proxy.postInit(event);
     }
-    
+
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
         if(Config.explosionCommand) {
