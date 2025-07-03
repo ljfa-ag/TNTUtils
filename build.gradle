@@ -65,6 +65,10 @@ minecraft {
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
         }
+
+        configureEach {
+            property 'fml.coreMods.load', 'ljfa.tntutils.asm.TntuPlugin'
+        }
     }
 }
 
