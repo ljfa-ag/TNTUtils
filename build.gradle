@@ -26,6 +26,7 @@ jar {
     manifest {
         attributes 'FMLCorePluginContainsFMLMod': 'true'
         attributes 'FMLAT': 'tntutils_at.cfg'
+        attributes 'FMLCorePlugin': 'ljfa.tntutils.asm.TntuPlugin'
     }
 }
 
@@ -44,11 +45,6 @@ minecraft {
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
     accessTransformer = file('src/main/resources/META-INF/tntutils_at.cfg')
-
-    //coreMod 'ljfa.tntutils.asm.TntuPlugin'
-    
-    //replaceIn "Reference.java"
-    //replace "@VERSION@", project.version
 
     runs {
         client {
