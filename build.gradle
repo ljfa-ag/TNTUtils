@@ -1,25 +1,26 @@
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:6.+'
     }
 }
 
-plugins {
-    id 'com.matthewprenger.cursegradle' version '1.0.9'
-}
+//plugins {
+//    id 'com.matthewprenger.cursegradle' version '1.0.9'
+//}
 
-apply plugin: 'net.minecraftforge.gradle.forge'
+apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
 
-version = "1.2.3"
+version = mod_version
 group= "ljfa.tntutils"
-archivesBaseName = "tnt_utilities-mc1.12"
+archivesBaseName = "tnt_utilities-mc${minecraft_version}"
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 jar {
     manifest {
@@ -28,67 +29,83 @@ jar {
     }
 }
 
-curseforge {
-    apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
-    project {
-        id = '227449'
-        changelog  = ''
-        releaseType = 'beta'
+//curseforge {
+//    apiKey = project.hasProperty('curseForgeApiKey') ? project.curseForgeApiKey : ''
+//    project {
+//        id = '227449'
+//        changelog  = ''
+//        releaseType = 'beta'
+//    }
+//}
+
+minecraft {
+    mappings channel: 'snapshot', version: '20180529-1.12'
+    
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+
+    accessTransformer = file('src/main/resources/META-INF/tntutils_at.cfg')
+
+    //coreMod 'ljfa.tntutils.asm.TntuPlugin'
+    
+    //replaceIn "Reference.java"
+    //replace "@VERSION@", project.version
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
+
+        server {
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+        }
     }
 }
 
-minecraft {
-    version = "1.12-14.21.1.2387"
-    runDir = "run"
-    
-    mappings = "snapshot_20170624"
-    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
-
-    coreMod 'ljfa.tntutils.asm.TntuPlugin'
-    
-    replaceIn "Reference.java"
-    replace "@VERSION@", project.version
-}
-
 dependencies {
-
+    minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 }
 
 processResources {
     // this will ensure that this task is redone when the versions change.
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
+    inputs.property "version", project.mod_version
+    inputs.property "mcversion", project.minecraft_version
 
     // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
-                
+    filesMatching(['mcmod.info']) {
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
-    }
-        
-    // copy everything else, thats not the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
+        expand 'version':project.mod_version, 'mcversion':project.minecraft_version
     }
 }
 
-task signJar(type: SignJar, dependsOn: reobfJar) {
-    // Skips if the keyStore property is missing.
-    onlyIf {
-        project.hasProperty('keyStore')
-    }
+jar.finalizedBy('reobfJar')
 
-    // findProperty allows us to reference the property without it existing.
-    // Using project.propName would cause the script to fail validation if
-    // the property did not exist.
-    keyStore = project.findProperty('keyStore')
-    alias = project.findProperty('keyStoreAlias')
-    storePass = project.findProperty('keyStorePass')
-    keyPass = project.findProperty('keyStoreKeyPass')
-    inputFile = jar.archivePath
-    outputFile = jar.archivePath
-}
-
-// Runs this task automatically when reobfJar is ran.
-reobfJar.finalizedBy signJar
+//task signJar(type: SignJar, dependsOn: reobfJar) {
+//    // Skips if the keyStore property is missing.
+//    onlyIf {
+//        project.hasProperty('keyStore')
+//    }
+//
+//    // findProperty allows us to reference the property without it existing.
+//    // Using project.propName would cause the script to fail validation if
+//    // the property did not exist.
+//    keyStore = project.findProperty('keyStore')
+//    alias = project.findProperty('keyStoreAlias')
+//    storePass = project.findProperty('keyStorePass')
+//    keyPass = project.findProperty('keyStoreKeyPass')
+//    inputFile = jar.archivePath
+//    outputFile = jar.archivePath
+//}
+////
+//// Runs this task automatically when reobfJar is ran.
+//reobfJar.finalizedBy signJar
