@@ -2,7 +2,6 @@ package ljfa.tntutils.asm;
 
 import com.google.common.eventbus.EventBus;
 
-import ljfa.tntutils.Reference;
 import net.minecraftforge.fml.common.DummyModContainer;
 import net.minecraftforge.fml.common.LoadController;
 import net.minecraftforge.fml.common.ModMetadata;
@@ -13,9 +12,8 @@ public class TntuCoremodContainer extends DummyModContainer {
         ModMetadata meta = getMetadata();
         meta.modId = "tnt_utilities_core";
         meta.name = "TNTUtils Core";
-        meta.version = Reference.VERSION;
         meta.authorList.add("ljfa");
-        meta.url = "https://minecraft.curseforge.com/projects/tntutils";
+        meta.url = "https://www.curseforge.com/minecraft/mc-mods/tntutils";
         meta.description = "The core mod belonging to TNTUtils";
         meta.parent = "tnt_utilities";
     }
