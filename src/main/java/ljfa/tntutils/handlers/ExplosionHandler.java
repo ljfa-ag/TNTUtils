@@ -4,6 +4,7 @@ import ljfa.tntutils.Config;
 import ljfa.tntutils.asm.HooksExplosion;
 import net.minecraft.block.BlockTNT;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecartTNT;
@@ -35,7 +36,7 @@ public class ExplosionHandler {
         else {
             if(Config.spareTileEntities || Config.blacklistActive) {
                 //Remove blacklisted blocks and tile entities (if configured) from the list
-                event.getAffectedBlocks().removeIf(pos -> shouldBePreserved(world.getBlockState(pos)));
+                event.getAffectedBlocks().removeIf(pos -> shouldSpareBlock(world.getBlockState(pos)));
             }
 
             if(Config.preventChainExpl) {
@@ -56,19 +57,22 @@ public class ExplosionHandler {
             event.getAffectedEntities().clear();
         else if(Config.disablePlayerDamage || Config.disableItemDamage || Config.disableNPCDamage || Config.preventChainExpl) {
             //Remove configured entities from the list
-            event.getAffectedEntities().removeIf(ent ->
-                   (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
-                || (Config.disablePlayerDamage && ent instanceof EntityPlayer)
-                || (Config.disableItemDamage && ent instanceof EntityItem)
-                || (Config.preventChainExpl && ent instanceof EntityMinecartTNT));
+            event.getAffectedEntities().removeIf(ent -> shouldSpareEntity(ent));
         }
     }
 
-    public static boolean shouldBePreserved(IBlockState state) {
+    private static boolean shouldSpareBlock(IBlockState state) {
         if(Config.spareTileEntities && state.getBlock().hasTileEntity(state))
             return true;
         Integer mask = Config.blackWhiteList.get(state.getBlock());
         boolean matches =  mask != null && (mask & (1 << state.getBlock().getMetaFromState(state))) != 0;
         return Config.listIsWhitelist ? !matches : matches;
+    }
+
+    private static boolean shouldSpareEntity(Entity ent) {
+        return (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
+            || (Config.disablePlayerDamage && ent instanceof EntityPlayer)
+            || (Config.disableItemDamage && ent instanceof EntityItem)
+            || (Config.preventChainExpl && ent instanceof EntityMinecartTNT);
     }
 }
