@@ -66,11 +66,13 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
     @Override
     public boolean shouldDamageEntity(Explosion explosion, Entity entity) {
+        if(entity instanceof ItemEntity ie)
+            return shouldDamageItemEntity(explosion, ie);
+
         if(
                 (disableEntityDamage
                 || (disablePlayerDamage && entity instanceof Player)
                 || (disableMobDamage && entity instanceof Mob)
-                || (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
                 || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
             && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
         )
@@ -78,9 +80,15 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
         return original.shouldDamageEntity(explosion, entity);
     }
 
-    private boolean shouldSpareItemEntity(ItemEntity entity) {
-        return (disableItemDamage || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
-                && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
+    private boolean shouldDamageItemEntity(Explosion explosion, ItemEntity entity) {
+        if(
+                (disableEntityDamage
+                || disableItemDamage
+                || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
+            && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST)
+        )
+            return false;
+        return original.shouldDamageEntity(explosion, entity);
     }
 
     @Override
