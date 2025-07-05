@@ -24,7 +24,5 @@
   "tntutils.configuration.disableEntityDamage": "Disable entity damage",
   "tntutils.configuration.disablePlayerDamage": "Disable player damage",
   "tntutils.configuration.disableItemDamage": "Disable item damage",
-  "tntutils.configuration.disableMobDamage": "Disable mob damage",
-  "tntutils.configuration.compatibility": "Compatibility",
-  "tntutils.configuration.alwaysAffectAE2Singularities": "Always affect AE2 Singularities"
+  "tntutils.configuration.disableMobDamage": "Disable mob damage"
 }
