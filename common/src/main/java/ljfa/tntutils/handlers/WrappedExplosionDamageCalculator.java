@@ -84,8 +84,10 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
         if(
                 (disableEntityDamage
                 || disableItemDamage
-                || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
+                || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST)
+                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
             && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST)
+            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST) //for modded ItemEntity types
         )
             return false;
         return original.shouldDamageEntity(explosion, entity);
