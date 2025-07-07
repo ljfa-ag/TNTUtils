@@ -3,6 +3,7 @@ package ljfa.tntutils.fabric;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -49,7 +50,7 @@ public class FiberTNTUtilsConfig {
                     .withComment(GENERAL_COMMENT)
 
                     .beginValue("addExplodeCommand", ConfigTypes.BOOLEAN, ADD_EXPLODE_COMMAND_DEFAULT)
-                    .withComment(ADD_EXPLODE_COMMAND_COMMENT)
+                    .withComment(ADD_EXPLODE_COMMAND_COMMENT + ". Requires a Minecraft restart to apply.")
                     .finishValue(addExplodeCommand::mirror)
 
                     .beginValue("disableExplosions", ConfigTypes.BOOLEAN, DISABLE_EXPLOSIONS_DEFAULT)
@@ -94,7 +95,9 @@ public class FiberTNTUtilsConfig {
                     .finishValue(spareBlockEntities::mirror)
 
                     .beginValue("modifyExplosionResistances", modifyExplosionResistances.getMirroredType(), Map.of())
-                    .withComment(MODIFY_EXPLOSION_RESISTANCES_COMMENT + "\nThis is an object of entries of the form \"mod_id:block_id\": value")
+                    .withComment(MODIFY_EXPLOSION_RESISTANCES_COMMENT
+                            + "\nThis is an object of entries of the form \"mod_id:block_id\": value"
+                            + "\nRequires a Minecraft restart to apply.")
                     .finishValue(modifyExplosionResistances::mirror)
 
                     .finishBranch()
@@ -205,7 +208,9 @@ public class FiberTNTUtilsConfig {
         try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
             FiberSerialization.deserialize(configTree, reader, serializer);
         }
-        catch (NoSuchFileException ignored) {}
+        catch (NoSuchFileException e) {
+            TNTUtils.logger.info("Creating new config file");
+        }
         catch (IOException | ValueDeserializationException e) {
             TNTUtils.logger.error("Error reading config file, will create a backup", e);
             var timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
@@ -222,6 +227,8 @@ public class FiberTNTUtilsConfig {
         //write the config file
         //TODO: Can we avoid writing the config from scratch if nothing has changed?
         try(var writer = new BufferedOutputStream(Files.newOutputStream(configFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING))) {
+            //manually prepend a comment since FiberSerialization doesn't write top-level comments
+            writer.write("// This configuration file can be reloaded in-game with the '/reload-tntutils-config' command.\n".getBytes(StandardCharsets.UTF_8));
             FiberSerialization.serialize(configTree, writer, serializer);
         }
         catch (IOException e) {
