@@ -1,5 +1,5 @@
-- Added the config option `disableCreeperBlockDamage`: Prevents Creepers from destroying blocks
-- Added the config option `modifyExplosionResistances`: Allows changing of explosion resistances for individual blocks
-- \[Fabric only\] The config file will now be backed up if it contains syntax errors (NeoForge already handles this)
-- TNT minecarts will now be damaged and destroyed by explosions when `preventChainExplosions` is turned on, rather than be immune to explosion damage
-- Fixed desync issues with TNT and TNT minecarts when client and server have differing config options
+- Fixed item whitelist not being applied when 'disableEntityDamage' is set to true
+  - In particular, AE2 Singularities can now be entangled when entity damage is disabled
+- \[Fabric only\] The config file can now be reloaded using the '/reload-tntutils-config' command ((Neo)Forge already reloads the config file when it is changed)
+- Primed TNT entities with a custom block state will now drop the corresponding block rather than TNT when 'disableTNT' is set to true
+- Changed the way the mod hooks into explosions. This has no impact on vanilla but might affect modded explosions.
