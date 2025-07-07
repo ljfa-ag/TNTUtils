@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "BlockBehaviourMixin",
+    "ExplosionMixin",
     "TntBlockMixin",
     "PrimedTntMixin",
     "MinecartTNTMixin"

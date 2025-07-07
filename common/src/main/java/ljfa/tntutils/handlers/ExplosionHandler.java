@@ -13,7 +13,7 @@ public class ExplosionHandler {
     }
 
     /**
-     * Called as or just before {@link Explosion#explode()} is called.
+     * Called at the end of the Explosion constructor.
      */
     public static void onExplosionStart(Explosion expl) {
         expl.damageCalculator = new WrappedExplosionDamageCalculator(expl.damageCalculator);
