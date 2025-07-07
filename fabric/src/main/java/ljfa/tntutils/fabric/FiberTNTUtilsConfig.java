@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -184,10 +185,10 @@ public class FiberTNTUtilsConfig {
 
     public static final Common COMMON = new Common();
 
-    public static void init() {
-        var configTree = COMMON.buildConfig();
+    private static final ConfigTree configTree = COMMON.buildConfig();
+    private static final Path configFile = FabricLoader.getInstance().getConfigDir().resolve("tntutils.json5");
 
-        var configFile = FabricLoader.getInstance().getConfigDir().resolve("tntutils.json5");
+    public static void init() {
         var serializer = new JanksonValueSerializer(false);
 
         //try reading the config file
@@ -215,6 +216,13 @@ public class FiberTNTUtilsConfig {
         }
         catch (IOException e) {
             TNTUtils.logger.error("Error writing config file", e);
+        }
+    }
+
+    public static void reload() throws Exception {
+        var serializer = new JanksonValueSerializer(false);
+        try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
+            FiberSerialization.deserialize(configTree, reader, serializer);
         }
     }
 }
