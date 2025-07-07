@@ -2,13 +2,19 @@ package ljfa.tntutils.fabric;
 
 import java.util.HashMap;
 
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.CommandDispatcher;
+
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.command.ExplodeCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -20,8 +26,11 @@ public class TNTUtilsFabricEntry implements ModInitializer {
 
         handleModifyExplosionResistances();
 
-        if(FiberTNTUtilsConfig.COMMON.addExplodeCommand())
-            CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> ExplodeCommand.register(dispatcher));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+            if(FiberTNTUtilsConfig.COMMON.addExplodeCommand())
+                ExplodeCommand.register(dispatcher);
+            registerConfigReloadCommand(dispatcher);
+        });
     }
 
     private void handleModifyExplosionResistances() {
@@ -53,5 +62,23 @@ public class TNTUtilsFabricEntry implements ModInitializer {
                 TNTUtils.logger.debug("Changed explosion resistance for " + holder.key().location());
             }
         });
+    }
+
+    private void registerConfigReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
+        dispatcher.register(Commands.literal("reload-tntutils-config")
+                .requires(css -> css.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .executes(ctx -> {
+                    try {
+                        FiberTNTUtilsConfig.reload();
+                        ctx.getSource().sendSuccess(() -> Component.literal("Successfully reloaded TNTUtils config"), true);
+                        return Command.SINGLE_SUCCESS;
+                    }
+                    catch(Exception e) {
+                        TNTUtils.logger.error("Error reloading TNTUtils config", e);
+                        ctx.getSource().sendFailure(Component.literal("Error reloading TNTUtils config:\n" + e));
+                        return 0;
+                    }
+                })
+        );
     }
 }
