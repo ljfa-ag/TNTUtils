@@ -17,7 +17,7 @@ public abstract class PrimedTntMixin extends Entity {
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void onTick(CallbackInfo ci) {
         if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
-            ExplosionHandler.disarmPrimedTnt(this);
+            ExplosionHandler.disarmPrimedTnt((PrimedTnt) (Object) this);
             ci.cancel();
         }
     }
