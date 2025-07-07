@@ -3,6 +3,7 @@ package ljfa.tntutils.neoforge;
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.command.ExplodeCommand;
 import ljfa.tntutils.handlers.ExplosionHandler;
+import ljfa.tntutils.mixin.BlockBehaviourAccessor;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -55,7 +56,7 @@ public class TNTUtilsNeoforgeEntry {
                 if(!(floatValue >= 0.0f)) //implicit check for NaN
                     throw new RuntimeException("The explosion resistance for \"" + key + "\" must be at least 0");
 
-                block.explosionResistance = floatValue;
+                ((BlockBehaviourAccessor) block).setExplosionResistance(floatValue);
             }
             catch(Exception e) {
                 TNTUtils.logger.error("Error reading the modifyExplosionResistances config value: " + e.getMessage());

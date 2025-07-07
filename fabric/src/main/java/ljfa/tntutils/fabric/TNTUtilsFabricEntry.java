@@ -7,6 +7,7 @@ import com.mojang.brigadier.CommandDispatcher;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.command.ExplodeCommand;
+import ljfa.tntutils.mixin.BlockBehaviourAccessor;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
@@ -58,7 +59,7 @@ public class TNTUtilsFabricEntry implements ModInitializer {
         RegistryEntryAddedCallback.allEntries(BuiltInRegistries.BLOCK, holder -> {
             Float value = resKeyMap.get(holder.key());
             if(value != null) {
-                holder.value().explosionResistance = value;
+                ((BlockBehaviourAccessor) holder.value()).setExplosionResistance(value);
                 TNTUtils.logger.debug("Changed explosion resistance for " + holder.key().location());
             }
         });

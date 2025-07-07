@@ -4,6 +4,7 @@
   "package": "ljfa.tntutils.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BlockBehaviourAccessor",
     "BlockBehaviourMixin",
     "ExplosionMixin",
     "TntBlockMixin",
