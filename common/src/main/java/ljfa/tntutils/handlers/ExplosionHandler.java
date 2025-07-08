@@ -15,12 +15,14 @@ public class ExplosionHandler {
     }
 
     public static boolean shouldDamageEntity(Entity entity) {
+        if(entity instanceof ItemEntity ie)
+            return shouldDamageItemEntity(ie);
+
         var cfg = TNTUtils.config();
         if(
                 (cfg.disableEntityDamage()
                 || (cfg.disablePlayerDamage() && entity instanceof Player)
                 || (cfg.disableMobDamage() && entity instanceof Mob)
-                || (entity instanceof ItemEntity ie && shouldSpareItemEntity(ie))
                 || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
             && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
         )
@@ -29,9 +31,19 @@ public class ExplosionHandler {
             return true;
     }
 
-    private static boolean shouldSpareItemEntity(ItemEntity entity) {
-        return (TNTUtils.config().disableItemDamage() || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST))
-                && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST);
+    private static boolean shouldDamageItemEntity(ItemEntity entity) {
+        var cfg = TNTUtils.config();
+        if(
+                (cfg.disableEntityDamage()
+                || cfg.disableItemDamage()
+                || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST)
+                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
+            && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST)
+            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST) //for modded ItemEntity types
+        )
+            return false;
+        else
+            return true;
     }
 
     public static void disarmPrimedTnt(Entity tnt) {
