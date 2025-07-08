@@ -95,6 +95,19 @@ processResources {
     ]
     inputs.properties replaceProperties
     expand replaceProperties
+
+    //Edit tntutils.mixins.json to avoid the "Reference map could not be read" warning for Fabric
+    filesMatching('tntutils.mixins.json') {
+        filter { line ->
+            //remove the comma and the refmap line
+            if(line.equals('  ],'))
+                '  ]'
+            else if(line.equals('  "refmap": "tntutils.refmap.json"'))
+                null
+            else
+                line
+        }
+    }
 }
 
 tasks.named('javadoc', Javadoc).configure {
