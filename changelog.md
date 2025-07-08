@@ -1,3 +1,5 @@
-Initial release for Minecraft 1.20.1 with Fabric and Forge.
-
-Has the same features as 1.21.1-2.0.2 (excluding of course the options and tags relating to block triggering, which was only added in Minecraft 1.21).
+- Fixed item whitelist not being applied when 'disableEntityDamage' is set to true
+  - In particular, AE2 Singularities can now be entangled when entity damage is disabled
+- \[Fabric only\] The config file can now be reloaded using the '/reload-tntutils-config' command ((Neo)Forge already reloads the config file when it is changed)
+- (Note: Primed TNT can't have custom block states in 1.20.1)
+- Changed the way the mod hooks into explosions. This has no impact on vanilla but might affect modded explosions.
