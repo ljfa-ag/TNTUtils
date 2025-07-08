@@ -2,27 +2,16 @@ package ljfa.tntutils.handlers;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsTags;
-import ljfa.tntutils.mixin.ExplosionAccessor;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldCancelExplosion() {
         return TNTUtils.config().disableExplosions();
-    }
-
-    /**
-     * Called as or just before {@link Explosion#explode()} is called.
-     */
-    public static void onExplosionStart(Explosion expl) {
-        var explA = (ExplosionAccessor) expl;
-        explA.setDamageCalculator(new WrappedExplosionDamageCalculator(explA.getDamageCalculator()));
-        explA.setRadius(explA.getRadius() * TNTUtils.config().sizeMultiplier());
     }
 
     public static boolean shouldDamageEntity(Entity entity) {

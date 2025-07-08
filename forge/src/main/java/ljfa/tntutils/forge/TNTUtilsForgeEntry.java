@@ -38,8 +38,6 @@ public class TNTUtilsForgeEntry {
     private void onExplosionStart(ExplosionEvent.Start e) {
         if(ExplosionHandler.shouldCancelExplosion())
             e.setCanceled(true);
-        else
-            ExplosionHandler.onExplosionStart(e.getExplosion());
     }
 
     private void modifyExplosionResistances() {

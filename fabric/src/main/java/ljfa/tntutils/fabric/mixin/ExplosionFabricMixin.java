@@ -19,8 +19,6 @@ public abstract class ExplosionFabricMixin {
     private void tntutils$onExplode(CallbackInfo ci) {
         if(ExplosionHandler.shouldCancelExplosion())
             ci.cancel();
-        else
-            ExplosionHandler.onExplosionStart((Explosion) (Object) this);
     }
 
     @Inject(method = "finalizeExplosion", at = @At("HEAD"), cancellable = true)
