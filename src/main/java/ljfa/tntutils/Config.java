@@ -21,7 +21,7 @@ public class Config {
     public static final String CAT_GENERAL = "general";
     public static final String CAT_BLOCKDMG = "block_damage";
     public static final String CAT_ENTDMG = "entity_damage";
-    
+
     public static boolean explosionCommand;
     public static float sizeMultiplier;
     public static float dropChanceModifier;
@@ -29,29 +29,30 @@ public class Config {
     public static boolean preventChainExpl;
     public static boolean disableTNT;
     public static boolean disableTNTMinecart;
-    
+
     public static boolean disableBlockDamage;
     public static boolean disableCreeperBlockDamage;
     public static Map<Block, Integer> blackWhiteList; //A map from block to a bitmask, where the set bits indicate the metadatas
     public static boolean listIsWhitelist;
     public static boolean blacklistActive;
     public static boolean spareTileEntities;
-    
+
     public static boolean disableEntityDamage;
     public static boolean disablePlayerDamage;
     public static boolean disableItemDamage;
     public static boolean disableNPCDamage;
-    
+    public static boolean alwaysAffectAE2Singularities;
+
     public static void loadConfig(File file) {
         if(conf == null)
             conf = new Configuration(file);
-        
+
         conf.load();
         loadValues();
-        
+
         MinecraftForge.EVENT_BUS.register(new ChangeHandler());
     }
-    
+
     public static void loadValues() {
         explosionCommand = conf.get(CAT_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
         sizeMultiplier = (float)conf.get(CAT_GENERAL, "sizeMultiplier", 1.0, "Multiplies the size of all explosions by this", 0.0, 50.0).getDouble();
@@ -73,14 +74,15 @@ public class Config {
         disablePlayerDamage = conf.get(CAT_ENTDMG, "disablePlayerDamage", false, "Disables explosion damage to players").getBoolean();
         disableItemDamage = conf.get(CAT_ENTDMG, "disableItemDamage", false, "Disables explosion damage to items laying on the ground").getBoolean();
         disableNPCDamage = conf.get(CAT_ENTDMG, "disableNPCDamage", false, "Disables explosion damage to animals and mobs").getBoolean();
+        alwaysAffectAE2Singularities = conf.get(CAT_ENTDMG, "alwaysAffectAE2Singularities", true, "Makes sure Applied Energistics 2 Singularities are always affected by explosions even when entity or item damage is disabled, so they can be entangled properly").getBoolean();
         //----------------
     }
-    
+
     public static void createBlacklistSet() {
         String[] blacklistArray = conf.get(CAT_BLOCKDMG, "destructionBlackOrWhitelist", new String[0], "A list of blocks (optionally with metadata) that will either never or only be destroyed by explosions\n"
                 + "Whether this list is a blacklist or whitelist gets determined by the \"destructionListIsWhitelist\" option below\n"
                 + "Syntax: modid:block or modid:block/meta").getStringList();
-        
+
         blackWhiteList = new IdentityHashMap<Block, Integer>();
         for(String str: blacklistArray) {
             String blockname;
@@ -97,7 +99,7 @@ public class Config {
                 }
                 if(meta < 0 || meta >= 16)
                     throw new InvalidConfigValueException("destructionBlackOrWhitelist: Metadata out of range: " + metaStr);
-                
+
                 blockname = str.substring(0, ind);
                 metamask = 1 << meta;
             }
@@ -106,11 +108,11 @@ public class Config {
                 blockname = str;
                 metamask = 0xFFFF;
             }
-            
+
             Block block = Block.REGISTRY.getObject(new ResourceLocation(blockname));
             if(block == Blocks.AIR || block == null)
                 throw new InvalidConfigValueException("destructionBlackOrWhitelist: Invalid block name: " + blockname);
-            
+
             if(!blackWhiteList.containsKey(block))
                 blackWhiteList.put(block, metamask);
             else
@@ -122,22 +124,22 @@ public class Config {
         if(listIsWhitelist && !blacklistActive) //Empty whitelist effectively means no block damage
             disableBlockDamage = true;
     }
-    
+
     public static void modifyResistances() {
         String[] entries = conf.get(CAT_BLOCKDMG, "blockResistances", new String[0], "Change the explosion resistance of individual blocks.\n"
                 + "Syntax: modid:block=value").setRequiresMcRestart(true).getStringList();
-        
+
         for(String str: entries) {
             int ind = str.indexOf('=');
             if(ind == -1)
                 throw new InvalidConfigValueException("blockResistances: Syntax error: " + str);
             String blockName = str.substring(0, ind);
             String valueStr = str.substring(ind+1);
-            
+
             Block block = Block.REGISTRY.getObject(new ResourceLocation(blockName));
             if(block == Blocks.AIR || block == null)
                 throw new InvalidConfigValueException("blockResistances: Invalid block name: " + blockName);
-            
+
             try {
                 float resist = Float.parseFloat(valueStr);
                 block.setResistance(resist);
@@ -147,12 +149,12 @@ public class Config {
             }
         }
     }
-    
+
     public static void save() {
         if(conf.hasChanged())
             conf.save();
     }
-    
+
     /** Reloads the config values upon change */
     public static class ChangeHandler {
         @SubscribeEvent

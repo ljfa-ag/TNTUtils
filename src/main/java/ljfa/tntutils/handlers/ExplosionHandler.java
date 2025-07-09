@@ -10,12 +10,17 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecartTNT;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry.ItemStackHolder;
 
 public class ExplosionHandler {
+    @ItemStackHolder(value = "appliedenergistics2:material", meta = 47)
+    public static final ItemStack AE2_SINGULARITY = ItemStack.EMPTY; //must be public
+
     @SubscribeEvent
     public void onExplosionStart(ExplosionEvent.Start event) {
         if(Config.disableExplosions)
@@ -32,7 +37,7 @@ public class ExplosionHandler {
 
         //Block damage
         if(Config.disableBlockDamage || (Config.disableCreeperBlockDamage && event.getExplosion().exploder instanceof EntityCreeper))
-            event.getAffectedBlocks().clear();
+            event.getAffectedBlocks().clear(); //fast path, we can just remove everything
         else {
             if(Config.spareTileEntities || Config.blacklistActive) {
                 //Remove blacklisted blocks and tile entities (if configured) from the list
@@ -53,9 +58,9 @@ public class ExplosionHandler {
         }
 
         //Entity damage
-        if(Config.disableEntityDamage)
-            event.getAffectedEntities().clear();
-        else if(Config.disablePlayerDamage || Config.disableItemDamage || Config.disableNPCDamage || Config.preventChainExpl) {
+        if(Config.disableEntityDamage && (AE2_SINGULARITY.isEmpty() || !Config.alwaysAffectAE2Singularities))
+            event.getAffectedEntities().clear(); //fast path, we can just remove everything
+        else if(Config.disableEntityDamage || Config.disablePlayerDamage || Config.disableItemDamage || Config.disableNPCDamage || Config.preventChainExpl) {
             //Remove configured entities from the list
             event.getAffectedEntities().removeIf(ent -> shouldSpareEntity(ent));
         }
@@ -70,9 +75,16 @@ public class ExplosionHandler {
     }
 
     private static boolean shouldSpareEntity(Entity ent) {
-        return (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
+        if((Config.disableEntityDamage || Config.disableItemDamage) && ent instanceof EntityItem) {
+            if(Config.alwaysAffectAE2Singularities)
+                return !((EntityItem) ent).getItem().isItemEqual(AE2_SINGULARITY);
+            else
+                return true;
+        }
+
+        return Config.disableEntityDamage
+            || (Config.disableNPCDamage && ent instanceof EntityLivingBase && !(ent instanceof EntityPlayer))
             || (Config.disablePlayerDamage && ent instanceof EntityPlayer)
-            || (Config.disableItemDamage && ent instanceof EntityItem)
             || (Config.preventChainExpl && ent instanceof EntityMinecartTNT);
     }
 }
