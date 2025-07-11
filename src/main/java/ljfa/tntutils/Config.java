@@ -54,7 +54,7 @@ public class Config {
     }
 
     public static void loadValues() {
-        explosionCommand = conf.get(CAT_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresMcRestart(true).getBoolean();
+        explosionCommand = conf.get(CAT_GENERAL, "addExplosionCommand", true, "Adds the \"/explosion\" command").setRequiresWorldRestart(true).getBoolean();
         sizeMultiplier = (float)conf.get(CAT_GENERAL, "sizeMultiplier", 1.0, "Multiplies the size of all explosions by this", 0.0, 50.0).getDouble();
         dropChanceModifier = (float)conf.get(CAT_GENERAL, "dropChanceIncrease", 0.0, "Modifies the chance that explosions will drop destroyed blocks as items\n"
                 + "-1 = never drop anything, 0 = Vanilla behavior, 1 = always drop items.\n"
