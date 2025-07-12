@@ -45,7 +45,7 @@ public class TNTUtilsNeoforgeEntry {
 
     private void modifyExplosionResistances() {
         TNTUtils.logger.debug("Modifying explosion resistances");
-        for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().valueMap().entrySet()) {
+        for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().entrySet()) {
             try {
                 var key = entry.getKey();
                 var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))

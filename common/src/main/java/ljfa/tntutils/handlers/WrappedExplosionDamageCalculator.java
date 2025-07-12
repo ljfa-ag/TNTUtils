@@ -99,7 +99,7 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
     }
 
     @Override
-    public float getEntityDamageAmount(Explosion explosion, Entity entity) {
-        return original.getEntityDamageAmount(explosion, entity);
+    public float getEntityDamageAmount(Explosion explosion, Entity entity, float seenPercent) {
+        return original.getEntityDamageAmount(explosion, entity, seenPercent);
     }
 }
