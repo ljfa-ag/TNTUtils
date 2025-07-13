@@ -1,10 +1,14 @@
 package ljfa.tntutils.command;
 
+import java.util.concurrent.CompletableFuture;
+
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.suggestion.Suggestions;
+import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -28,6 +32,7 @@ public class ExplodeCommand {
                                 DEFAULT_FIRE)
                         )
                         .then(Commands.argument("strength", FloatArgumentType.floatArg(0.0f))
+                                .suggests(ExplodeCommand::suggestStrength)
                                 .executes(ctx -> explode(
                                         ctx.getSource(),
                                         Vec3Argument.getVec3(ctx, "pos"),
@@ -63,5 +68,12 @@ public class ExplodeCommand {
         var fire = BoolArgumentType.getBool(ctx, "fire");
         css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
         return Command.SINGLE_SUCCESS;
+    }
+
+    private static CompletableFuture<Suggestions> suggestStrength(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
+        if(builder.getRemaining().isEmpty())
+            return builder.suggest((int) DEFAULT_STRENGTH).buildFuture();
+        else
+            return Suggestions.empty();
     }
 }
