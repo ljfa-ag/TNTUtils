@@ -4,7 +4,7 @@
   "package": "ljfa.tntutils.fabric.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ExplosionFabricMixin"
+    "ServerLevelFabricMixin"
   ]
 }
 
