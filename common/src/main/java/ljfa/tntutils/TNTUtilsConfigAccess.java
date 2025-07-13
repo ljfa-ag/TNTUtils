@@ -33,7 +33,10 @@ public interface TNTUtilsConfigAccess {
     static final float SIZE_MULTIPLIER_DEFAULT = 1.0f;
     static final String PREVENT_CHAIN_EXPLOSIONS_COMMENT = "Prevents explosions from triggering TNT (blocks and minecarts), thus preventing chain explosions";
     static final boolean PREVENT_CHAIN_EXPLOSIONS_DEFAULT = false;
-    static final String DISABLE_TNT_COMMENT = "Disables TNT (block and minecart) explosions";
+    static final String DISABLE_TNT_COMMENT = """
+            Disables TNT explosions. Ignited TNT blocks and minecarts will drop as items.
+            Note that this option behaves differently from the game rule "tntExplodes": The game rule will make them not
+            react to ignition at all.""";
     static final boolean DISABLE_TNT_DEFAULT = false;
 
     static final String BLOCK_DAMAGE_COMMENT = "Block damage options";
