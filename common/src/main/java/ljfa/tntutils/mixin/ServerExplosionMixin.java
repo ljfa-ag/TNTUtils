@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.handlers.WrappedExplosionDamageCalculator;
-import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.ExplosionDamageCalculator;
+import net.minecraft.world.level.ServerExplosion;
 
-@Mixin(Explosion.class)
-public abstract class ExplosionMixin {
+@Mixin(ServerExplosion.class)
+public abstract class ServerExplosionMixin {
     @Shadow
     @Mutable
     private ExplosionDamageCalculator damageCalculator;
@@ -22,8 +22,7 @@ public abstract class ExplosionMixin {
     @Mutable
     private float radius;
 
-    //the bottom-most constructor
-    @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/particles/ParticleOptions;Lnet/minecraft/core/Holder;)V",
+    @Inject(method = "<init>",
             at = @At("RETURN"),
             require = 1)
     private void onConstruct(CallbackInfo ci) {

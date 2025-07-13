@@ -6,7 +6,7 @@
   "mixins": [
     "BlockBehaviourAccessor",
     "BlockBehaviourMixin",
-    "ExplosionMixin",
+    "ServerExplosionMixin",
     "TntBlockMixin",
     "PrimedTntMixin",
     "MinecartTNTMixin"
