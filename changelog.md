@@ -1,2 +1,1 @@
-Initial release for Minecraft 1.21.7. Since explosions received a significant refactor in Minecraft, things might not be stable yet or could function a bit differently from before.
-- Added suggestion for the default explosion strength (4) to the '/explode' command
+Updated to Minecraft 1.21.9.
