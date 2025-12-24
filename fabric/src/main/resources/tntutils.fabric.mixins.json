@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "ServerLevelFabricMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }
-
