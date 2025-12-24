@@ -16,8 +16,8 @@ import net.minecraft.commands.Commands;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 public class TNTUtilsFabricEntry implements ModInitializer {
@@ -48,7 +48,7 @@ public class TNTUtilsFabricEntry implements ModInitializer {
         var resKeyMap = new HashMap<ResourceKey<Block>, Float>(stringMap.size());
         for(var entry : stringMap.entrySet()) {
             try {
-                var resKey = ResourceKey.create(Registries.BLOCK, ResourceLocation.parse(entry.getKey()));
+                var resKey = ResourceKey.create(Registries.BLOCK, Identifier.parse(entry.getKey()));
                 resKeyMap.put(resKey, entry.getValue());
             }
             catch(Exception e) {
@@ -60,14 +60,14 @@ public class TNTUtilsFabricEntry implements ModInitializer {
             Float value = resKeyMap.get(holder.key());
             if(value != null) {
                 ((BlockBehaviourAccessor) holder.value()).setExplosionResistance(value);
-                TNTUtils.logger.debug("Changed explosion resistance for " + holder.key().location());
+                TNTUtils.logger.debug("Changed explosion resistance for " + holder.key().identifier());
             }
         });
     }
 
     private void registerConfigReloadCommand(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("reload-tntutils-config")
-                .requires(css -> css.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .executes(ctx -> {
                     try {
                         FiberTNTUtilsConfig.reload();

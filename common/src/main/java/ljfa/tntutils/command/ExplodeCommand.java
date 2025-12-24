@@ -23,7 +23,7 @@ public class ExplodeCommand {
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("explode")
-                .requires(css -> css.hasPermission(Commands.LEVEL_GAMEMASTERS))
+                .requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
                 .then(Commands.argument("pos", Vec3Argument.vec3())
                         .executes(ctx -> explode(
                                 ctx.getSource(),

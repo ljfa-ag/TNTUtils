@@ -5,7 +5,7 @@ import ljfa.tntutils.command.ExplodeCommand;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import ljfa.tntutils.mixin.BlockBehaviourAccessor;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -48,7 +48,7 @@ public class TNTUtilsNeoforgeEntry {
         for(var entry : NeoforgeTNTUtilsConfig.COMMON.modifyExplosionResistances.get().entrySet()) {
             try {
                 var key = entry.getKey();
-                var block = BuiltInRegistries.BLOCK.getOptional(ResourceLocation.parse(key))
+                var block = BuiltInRegistries.BLOCK.getOptional(Identifier.parse(key))
                         .orElseThrow(() -> new RuntimeException("Unknown block ID: \"" + key + "\""));
                 if(!(entry.getValue() instanceof Number value))
                     throw new RuntimeException("The explosion resistance for \"" + key + "\" must be a number");

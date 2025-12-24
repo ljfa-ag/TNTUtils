@@ -3,7 +3,7 @@ package ljfa.tntutils;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -54,6 +54,6 @@ public class TNTUtilsTags {
     public static final TagKey<Item> ITEM_EXPLOSION_WHITELIST = create(Registries.ITEM, "explosion_whitelist");
 
     private static <T> TagKey<T> create(ResourceKey<? extends Registry<T>> registryKey, String name) {
-        return TagKey.create(registryKey, ResourceLocation.fromNamespaceAndPath(TNTUtils.MOD_ID, name));
+        return TagKey.create(registryKey, Identifier.fromNamespaceAndPath(TNTUtils.MOD_ID, name));
     }
 }
