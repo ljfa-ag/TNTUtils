@@ -42,6 +42,7 @@ public class TNTUtilsTags {
     public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
     /**
      * Entities tagged with this will not be able to create explosions.
+     * This will apply both to direct and indirect source entities.
      */
     public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
 

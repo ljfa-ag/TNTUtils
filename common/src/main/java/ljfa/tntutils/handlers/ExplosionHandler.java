@@ -9,13 +9,17 @@ import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldCancelExplosion(@Nullable Entity directSource) {
         if(TNTUtils.config().disableExplosions())
             return true;
-        if(directSource != null)
-            return directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST);
+        if(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+            return true;
+        var indirectSource = Explosion.getIndirectSourceEntity(directSource);
+        if(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+            return true;
         return false;
     }
 
