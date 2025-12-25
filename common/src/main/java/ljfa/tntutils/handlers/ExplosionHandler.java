@@ -1,14 +1,22 @@
 package ljfa.tntutils.handlers;
 
+import org.jspecify.annotations.Nullable;
+
 import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.TNTUtilsTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class ExplosionHandler {
-    public static boolean shouldCancelExplosion() {
-        return TNTUtils.config().disableExplosions();
+    public static boolean shouldCancelExplosion(@Nullable Entity directSource) {
+        if(TNTUtils.config().disableExplosions())
+            return true;
+        if(directSource != null)
+            return directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST);
+        return false;
     }
 
     public static void disarmPrimedTnt(PrimedTnt tnt) {

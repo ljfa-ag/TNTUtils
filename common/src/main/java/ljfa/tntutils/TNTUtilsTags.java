@@ -2,8 +2,8 @@ package ljfa.tntutils;
 
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -40,6 +40,10 @@ public class TNTUtilsTags {
      * The whitelist takes precedence over the blacklist.
      */
     public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
+    /**
+     * Entities tagged with this will not be able to create explosions.
+     */
+    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
 
     //Item tags
     //TODO: The Nether Star is hardcoded to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.
