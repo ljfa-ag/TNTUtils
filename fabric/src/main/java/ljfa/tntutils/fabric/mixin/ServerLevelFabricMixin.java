@@ -36,7 +36,7 @@ public abstract class ServerLevelFabricMixin {
             WeightedList<ExplosionParticleInfo> blockParticles,
             Holder<SoundEvent> explosionSound,
             CallbackInfo ci) {
-        if(ExplosionHandler.shouldCancelExplosion(source))
+        if(!ExplosionHandler.shouldAllowExplosion(source))
             ci.cancel();
     }
 }

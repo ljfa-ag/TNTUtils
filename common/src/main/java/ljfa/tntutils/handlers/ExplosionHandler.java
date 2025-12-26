@@ -12,15 +12,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
-    public static boolean shouldCancelExplosion(@Nullable Entity directSource) {
+    public static boolean shouldAllowExplosion(@Nullable Entity directSource) {
         if(TNTUtils.config().disableExplosions())
-            return true;
+            return false;
         if(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            return true;
+            return false;
         var indirectSource = Explosion.getIndirectSourceEntity(directSource);
         if(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            return true;
-        return false;
+            return false;
+        return true;
     }
 
     public static void disarmPrimedTnt(PrimedTnt tnt) {
