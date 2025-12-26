@@ -22,9 +22,7 @@ public abstract class ServerExplosionMixin {
     @Mutable
     private float radius;
 
-    @Inject(method = "<init>",
-            at = @At("RETURN"),
-            require = 1)
+    @Inject(method = "<init>", at = @At("RETURN"))
     private void onConstruct(CallbackInfo ci) {
         damageCalculator = new WrappedExplosionDamageCalculator(damageCalculator);
         radius *= TNTUtils.config().sizeMultiplier();
