@@ -13,12 +13,14 @@ import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldAllowExplosion(@Nullable Entity directSource) {
-        if(TNTUtils.config().disableExplosions())
-            return false;
-        if(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            return false;
         var indirectSource = Explosion.getIndirectSourceEntity(directSource);
-        if(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+        if(
+                (TNTUtils.config().disableExplosions()
+                || directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST)
+                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+            && !(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
+            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
+        )
             return false;
         return true;
     }

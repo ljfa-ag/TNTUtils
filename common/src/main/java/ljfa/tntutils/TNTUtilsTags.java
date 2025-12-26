@@ -41,10 +41,15 @@ public class TNTUtilsTags {
      */
     public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
     /**
-     * Entities tagged with this will not be able to create explosions.
+     * Entities tagged with this will not be able to create explosions (unless whitelisted).
      * This will apply both to direct and indirect source entities.
      */
     public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
+    /**
+     * Entities tagged with this will always be able to create explosions, even when the "disableExplosions" config option is true.
+     * This will apply both to direct and indirect source entities. The whitelist takes precedence over the blacklist.
+     */
+    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_source_whitelist");
 
     //Item tags
     //TODO: The Nether Star is hardcoded to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.

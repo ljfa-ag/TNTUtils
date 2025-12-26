@@ -6,6 +6,7 @@
   "tag.entity_type.tntutils.explosion_blacklist": "Explosion blacklist",
   "tag.entity_type.tntutils.explosion_whitelist": "Explosion whitelist",
   "tag.entity_type.tntutils.explosion_source_blacklist": "Explosion source blacklist",
+  "tag.entity_type.tntutils.explosion_source_whitelist": "Explosion source whitelist",
   "tag.item.tntutils.explosion_blacklist": "Explosion blacklist",
   "tag.item.tntutils.explosion_whitelist": "Explosion whitelist",
   "tntutils.configuration.general": "General",
