@@ -4,6 +4,7 @@ import org.jspecify.annotations.Nullable;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsTags;
+import ljfa.tntutils.command.ExplodeCommand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
@@ -13,7 +14,10 @@ import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldAllowExplosion(@Nullable Entity directSource) {
-        if(directSource == null)
+        if(ExplodeCommand.isCurrentlyRunning())
+            return true;
+
+        if(directSource == null) // shortcut the following tests
             return !TNTUtils.config().disableExplosions();
 
         var indirectSource = Explosion.getIndirectSourceEntity(directSource); // may still be null even when directSource isn't
