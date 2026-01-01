@@ -51,6 +51,12 @@ public class TNTUtilsTags {
      */
     public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_source_whitelist");
 
+    //Entity tags (which apply to individual entities and can be managed with the /tag command)
+    //These generally take precedence over the analogous entity type tags
+    //Note: Colons are not allowed in the argument of the /tag add command, hence we use a dot instead
+    public static final String ENTITY_EXPLOSION_SOURCE_BLACKLIST = TNTUtils.MOD_ID + ".explosion_source_blacklist";
+    public static final String ENTITY_EXPLOSION_SOURCE_WHITELIST = TNTUtils.MOD_ID + ".explosion_source_whitelist";
+
     //Item tags
     /**
      * Items tagged with this will not be damaged by explosions in ItemEntity form (unless whitelisted).

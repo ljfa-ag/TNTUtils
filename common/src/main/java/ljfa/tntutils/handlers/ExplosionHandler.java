@@ -13,13 +13,22 @@ import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldAllowExplosion(@Nullable Entity directSource) {
-        var indirectSource = Explosion.getIndirectSourceEntity(directSource);
-        if(
+        if(directSource == null)
+            return !TNTUtils.config().disableExplosions();
+
+        var indirectSource = Explosion.getIndirectSourceEntity(directSource); // may still be null even when directSource isn't
+        boolean disallowForType =
                 (TNTUtils.config().disableExplosions()
-                || directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST)
+                || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST)
                 || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST))
-            && !(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST))
-            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST))
+            && !directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST)
+            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST));
+        if(
+                (disallowForType
+                || directSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST)
+                || indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+            && !directSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST)
+            && !(indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
         )
             return false;
         return true;
