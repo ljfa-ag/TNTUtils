@@ -62,8 +62,12 @@ public class ExplodeCommand {
 
     private static int explode(CommandSourceStack css, Vec3 pos, float strength, boolean fire) {
         isCurrentlyRunning = true;
-        css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, DEFAULT_INTERACTION);
-        isCurrentlyRunning = false;
+        try {
+            css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, DEFAULT_INTERACTION);
+        }
+        finally {
+            isCurrentlyRunning = false;
+        }
         return Command.SINGLE_SUCCESS;
     }
 
@@ -73,8 +77,12 @@ public class ExplodeCommand {
         var strength = FloatArgumentType.getFloat(ctx, "strength");
         var fire = BoolArgumentType.getBool(ctx, "fire");
         isCurrentlyRunning = true;
-        css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
-        isCurrentlyRunning = false;
+        try {
+            css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
+        }
+        finally {
+            isCurrentlyRunning = false;
+        }
         return Command.SINGLE_SUCCESS;
     }
 
