@@ -16,10 +16,10 @@ public class ExplosionHandler {
         var indirectSource = Explosion.getIndirectSourceEntity(directSource);
         if(
                 (TNTUtils.config().disableExplosions()
-                || directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST)
-                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            && !(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
-            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
+                || directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST)
+                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST))
+            && !(directSource != null && directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST))
+            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST))
         )
             return false;
         return true;

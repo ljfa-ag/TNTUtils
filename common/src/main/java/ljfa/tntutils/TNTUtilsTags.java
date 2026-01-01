@@ -32,27 +32,26 @@ public class TNTUtilsTags {
 
     //Entity type tags
     /**
-     * Entities tagged with this will not be damaged by explosions (unless whitelisted).
+     * Entity types tagged with this will not be damaged by explosions (unless whitelisted).
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_blacklist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_blacklist");
     /**
-     * Entities tagged with this will always be damaged by explosions, even when one of the entity damage config options is turned on.
+     * Entity types tagged with this will always be damaged by explosions, even when one of the entity damage config options is turned on.
      * The whitelist takes precedence over the blacklist.
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
     /**
-     * Entities tagged with this will not be able to create explosions (unless whitelisted).
+     * Entity types tagged with this will not be able to create explosions (unless whitelisted).
      * This will apply both to direct and indirect source entities.
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
     /**
-     * Entities tagged with this will always be able to create explosions, even when the "disableExplosions" config option is true.
+     * Entity types tagged with this will always be able to create explosions, even when the "disableExplosions" config option is true.
      * This will apply both to direct and indirect source entities. The whitelist takes precedence over the blacklist.
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_SOURCE_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_source_whitelist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_source_whitelist");
 
     //Item tags
-    //TODO: The Nether Star is hardcoded to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.
     /**
      * Items tagged with this will not be damaged by explosions in ItemEntity form (unless whitelisted).
      */
