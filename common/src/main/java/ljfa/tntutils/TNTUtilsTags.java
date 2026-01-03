@@ -44,18 +44,18 @@ public class TNTUtilsTags {
      * Entity types tagged with this will not be able to create explosions (unless whitelisted).
      * This will apply both to direct and indirect source entities.
      */
-    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_source_blacklist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_DENY_EXPLOSIONS = create(Registries.ENTITY_TYPE, "deny_explosions");
     /**
      * Entity types tagged with this will always be able to create explosions, even when the "disableExplosions" config option is true.
      * This will apply both to direct and indirect source entities. The whitelist takes precedence over the blacklist.
      */
-    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_source_whitelist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_ALLOW_EXPLOSIONS = create(Registries.ENTITY_TYPE, "allow_explosions");
 
     //Entity tags (which apply to individual entities and can be managed with the /tag command)
     //These generally take precedence over the analogous entity type tags
     //Note: Colons are not allowed in the argument of the /tag add command, hence we use a dot instead
-    public static final String ENTITY_EXPLOSION_SOURCE_BLACKLIST = TNTUtils.MOD_ID + ".explosion_source_blacklist";
-    public static final String ENTITY_EXPLOSION_SOURCE_WHITELIST = TNTUtils.MOD_ID + ".explosion_source_whitelist";
+    public static final String ENTITY_DENY_EXPLOSIONS = TNTUtils.MOD_ID + ".deny_explosions";
+    public static final String ENTITY_ALLOW_EXPLOSIONS = TNTUtils.MOD_ID + ".allow_explosions";
 
     //Item tags
     /**

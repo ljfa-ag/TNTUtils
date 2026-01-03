@@ -27,11 +27,10 @@ public interface TNTUtilsConfigAccess {
     static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
     static final String DISABLE_EXPLOSIONS_COMMENT = """
             Disables all effects from explosions.
-            Explosions from specific entity types can be disabled by tagging them with #tntutils:explosion_source_blacklist,
-            or enabled with #tntutils:explosion_source_whitelist.
+            Explosions from specific entity types can be disabled by tagging them with #tntutils:deny_explosions, or
+            enabled with #tntutils:allow_explosions.
             Explosions from individual entities (as opposed to entity types) can be disabled or enabled by tagging them
-            (using the /tag command) with "tntutils.explosion_source_blacklist" or "tntutils.explosion_source_whitelist",
-            respectively.""";
+            (using the /tag command) with "tntutils.deny_explosions" or "tntutils.allow_explosions", respectively.""";
     static final boolean DISABLE_EXPLOSIONS_DEFAULT = false;
     static final String SIZE_MULTIPLIER_COMMENT = "Multiplies the size of all explosions by this value";
     static final float SIZE_MULTIPLIER_MIN = 0.0f;

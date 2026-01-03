@@ -23,16 +23,16 @@ public class ExplosionHandler {
         var indirectSource = Explosion.getIndirectSourceEntity(directSource); // may still be null even when directSource isn't
         boolean disallowForType =
                 (TNTUtils.config().disableExplosions()
-                || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST)
-                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST))
-            && !directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST)
-            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST));
+                || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS)
+                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
+            && !directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS)
+            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS));
         if(
                 (disallowForType
-                || directSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST)
-                || indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            && !directSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST)
-            && !(indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST))
+                || directSource.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS)
+                || indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
+            && !directSource.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
+            && !(indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS))
         )
             return false;
         return true;
@@ -43,11 +43,11 @@ public class ExplosionHandler {
             return !TNTUtils.config().disableTNT();
 
         boolean disallowForType =
-                (TNTUtils.config().disableTNT() || owner.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST))
-            && !owner.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST);
+                (TNTUtils.config().disableTNT() || owner.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
+            && !owner.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS);
         if(
-                (disallowForType || owner.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
-            && !owner.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST)
+                (disallowForType || owner.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
+            && !owner.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
         )
             return false;
         return true;
