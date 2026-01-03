@@ -38,6 +38,21 @@ public class ExplosionHandler {
         return true;
     }
 
+    public static boolean shouldAllowTnt(@Nullable Entity owner) {
+        if(owner == null) // shortcut the following tests
+            return !TNTUtils.config().disableTNT();
+
+        boolean disallowForType =
+                (TNTUtils.config().disableTNT() || owner.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_BLACKLIST))
+            && !owner.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_SOURCE_WHITELIST);
+        if(
+                (disallowForType || owner.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_BLACKLIST))
+            && !owner.getTags().contains(TNTUtilsTags.ENTITY_EXPLOSION_SOURCE_WHITELIST)
+        )
+            return false;
+        return true;
+    }
+
     public static void disarmPrimedTnt(PrimedTnt tnt) {
         tnt.discard();
         var item = tnt.getBlockState().getBlock().asItem();
