@@ -28,6 +28,8 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
     private final boolean disablePlayerDamage       = TNTUtils.config().disablePlayerDamage();
     private final boolean disableMobDamage          = TNTUtils.config().disableMobDamage();
     private final boolean disableItemDamage         = TNTUtils.config().disableItemDamage();
+    private final float entityDamageMultiplier      = TNTUtils.config().entityDamageMultiplier();
+    private final float knockbackMultiplier         = TNTUtils.config().knockbackMultiplier();
 
     public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
         this.original = original;
@@ -95,11 +97,17 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
     @Override
     public float getKnockbackMultiplier(Entity entity) {
-        return original.getKnockbackMultiplier(entity);
+        if(knockbackMultiplier == 0.0f)
+            return 0.0f;
+        else
+            return original.getKnockbackMultiplier(entity) * knockbackMultiplier;
     }
 
     @Override
     public float getEntityDamageAmount(Explosion explosion, Entity entity, float seenPercent) {
-        return original.getEntityDamageAmount(explosion, entity, seenPercent);
+        if(entityDamageMultiplier == 0.0f)
+            return 0.0f;
+        else
+            return original.getEntityDamageAmount(explosion, entity, seenPercent) * entityDamageMultiplier;
     }
 }

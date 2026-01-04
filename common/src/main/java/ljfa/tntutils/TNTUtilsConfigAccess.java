@@ -21,6 +21,8 @@ public interface TNTUtilsConfigAccess {
     boolean disablePlayerDamage();
     boolean disableItemDamage();
     boolean disableMobDamage();
+    float entityDamageMultiplier();
+    float knockbackMultiplier();
 
     static final String GENERAL_COMMENT = "General options";
     static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
@@ -81,4 +83,11 @@ public interface TNTUtilsConfigAccess {
     static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
     static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entity types tagged with #tntutils:explosion_whitelist.";
     static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
+    static final String ENTITY_DAMAGE_MULTIPLIER_COMMENT = "Multiplies the damage dealt to entities by this value.";
+    static final float ENTITY_DAMAGE_MULTIPLIER_MIN = 0.0f;
+    static final float ENTITY_DAMAGE_MULTIPLIER_DEFAULT = 1.0f;
+    static final String KNOCKBACK_MULTIPLIER_COMMENT = "Multiplies the knockback distance against entities by this value.";
+    static final float KNOCKBACK_MULTIPLIER_MIN = -20.0f;
+    static final float KNOCKBACK_MULTIPLIER_MAX = 20.0f;
+    static final float KNOCKBACK_MULTIPLIER_DEFAULT = 1.0f;
 }
