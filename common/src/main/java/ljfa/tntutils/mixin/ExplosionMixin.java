@@ -42,7 +42,7 @@ public class ExplosionMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurt(Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     private boolean redirectHurtEntity(Entity entity, DamageSource source, float amount) {
         if(ExplosionHandler.shouldDamageEntity(entity))
-            return entity.hurt(source, amount);
+            return entity.hurt(source, amount * TNTUtils.config().entityDamageMultiplier());
         else
             return false;
     }

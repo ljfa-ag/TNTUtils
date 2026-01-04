@@ -26,5 +26,6 @@
   "tntutils.configuration.disableEntityDamage": "Disable entity damage",
   "tntutils.configuration.disablePlayerDamage": "Disable player damage",
   "tntutils.configuration.disableItemDamage": "Disable item damage",
-  "tntutils.configuration.disableMobDamage": "Disable mob damage"
+  "tntutils.configuration.disableMobDamage": "Disable mob damage",
+  "tntutils.configuration.entityDamageMultiplier": "Entity damage multiplier"
 }

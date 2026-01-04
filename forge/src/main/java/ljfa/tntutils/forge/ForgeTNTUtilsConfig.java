@@ -29,6 +29,7 @@ public class ForgeTNTUtilsConfig {
         public final BooleanValue disablePlayerDamage;
         public final BooleanValue disableItemDamage;
         public final BooleanValue disableMobDamage;
+        public final DoubleValue entityDamageMultiplier;
 
         public Common(ForgeConfigSpec.Builder builder) {
             //General
@@ -94,6 +95,9 @@ public class ForgeTNTUtilsConfig {
             disableMobDamage = builder
                     .comment(DISABLE_MOB_DAMAGE_COMMENT)
                     .define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
+            entityDamageMultiplier = builder
+                    .comment(ENTITY_DAMAGE_MULTIPLIER_COMMENT)
+                    .defineInRange("entityDamageMultiplier", ENTITY_DAMAGE_MULTIPLIER_DEFAULT, ENTITY_DAMAGE_MULTIPLIER_MIN, Double.POSITIVE_INFINITY);
         }
 
         @Override
@@ -159,6 +163,11 @@ public class ForgeTNTUtilsConfig {
         @Override
         public boolean disableMobDamage() {
             return disableMobDamage.get();
+        }
+
+        @Override
+        public float entityDamageMultiplier() {
+            return entityDamageMultiplier.get().floatValue();
         }
     }
 
