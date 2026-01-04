@@ -10,6 +10,11 @@
     "TntBlockMixin",
     "PrimedTntMixin",
     "MinecartTNTMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }
-
