@@ -24,9 +24,9 @@ neoForge {
 }
 
 dependencies {
-    compileOnly group: 'org.spongepowered', name: 'mixin', version: project.mixin_version
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: project.mixinextras_version
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: project.mixinextras_version
+    compileOnly "org.spongepowered:mixin:${project.mixin_version}"
+    compileOnly "io.github.llamalad7:mixinextras-common:${project.mixinextras_version}"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:${project.mixinextras_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {
