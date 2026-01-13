@@ -13,14 +13,15 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
-    public static boolean shouldAllowExplosion(@Nullable Entity directSource) {
+    public static boolean shouldAllowExplosion(Explosion explosion) {
         if(ExplodeCommand.isCurrentlyRunning())
             return true;
 
+        @Nullable var directSource = explosion.getDirectSourceEntity();
         if(directSource == null) // shortcut the following tests
             return !TNTUtils.config().disableExplosions();
 
-        var indirectSource = Explosion.getIndirectSourceEntity(directSource); // may still be null even when directSource isn't
+        @Nullable var indirectSource = explosion.getIndirectSourceEntity(); // may still be null even when directSource isn't
         boolean disallowForType =
                 (TNTUtils.config().disableExplosions()
                 || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS)

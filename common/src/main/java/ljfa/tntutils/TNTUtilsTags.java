@@ -58,6 +58,7 @@ public class TNTUtilsTags {
     public static final String ENTITY_ALLOW_EXPLOSIONS = TNTUtils.MOD_ID + ".allow_explosions";
 
     //Item tags
+    //TODO: The Nether Star is hardcoded (until 1.21.1) to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.
     /**
      * Items tagged with this will not be damaged by explosions in ItemEntity form (unless whitelisted).
      */
