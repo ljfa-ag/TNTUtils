@@ -1,7 +1,5 @@
 package ljfa.tntutils.handlers;
 
-import javax.annotation.Nullable;
-
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsTags;
 import ljfa.tntutils.command.ExplodeCommand;
@@ -17,11 +15,11 @@ public class ExplosionHandler {
         if(ExplodeCommand.isCurrentlyRunning())
             return true;
 
-        @Nullable var directSource = explosion.getDirectSourceEntity();
+        var directSource = explosion.getDirectSourceEntity();
         if(directSource == null) // shortcut the following tests
             return !TNTUtils.config().disableExplosions();
 
-        @Nullable var indirectSource = explosion.getIndirectSourceEntity(); // may still be null even when directSource isn't
+        var indirectSource = explosion.getIndirectSourceEntity(); // may still be null even when directSource isn't
         boolean disallowForType =
                 (TNTUtils.config().disableExplosions()
                 || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS)
@@ -39,7 +37,7 @@ public class ExplosionHandler {
         return true;
     }
 
-    public static boolean shouldAllowTnt(@Nullable Entity owner) {
+    public static boolean shouldAllowTnt(Entity owner) {
         if(owner == null) // shortcut the following tests
             return !TNTUtils.config().disableTNT();
 
