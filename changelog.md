@@ -6,3 +6,4 @@
   - *Note: While it is possible to tag a player with tntutils.deny_explosions, this will not completely prevent them from causing explosions, as, for example, they can still ignite TNT with a redstone signal.*
 - Added the config options `entityDamageMultiplier` and `knockbackMultiplier`, which can be used to change the amount of damage and knockback applied to entities, repsectively.
 - The `/explode` command will now bypass the `disableExplosions` config option.
+- Added suggestion for the default explosion strength (4) to the '/explode' command.
