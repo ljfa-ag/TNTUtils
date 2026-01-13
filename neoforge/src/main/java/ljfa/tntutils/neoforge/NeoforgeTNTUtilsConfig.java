@@ -30,6 +30,8 @@ public class NeoforgeTNTUtilsConfig {
         public final BooleanValue disablePlayerDamage;
         public final BooleanValue disableItemDamage;
         public final BooleanValue disableMobDamage;
+        public final DoubleValue entityDamageMultiplier;
+        public final DoubleValue knockbackMultiplier;
 
         public Common(ModConfigSpec.Builder builder) {
             //General
@@ -100,6 +102,12 @@ public class NeoforgeTNTUtilsConfig {
             disableMobDamage = builder
                     .comment(DISABLE_MOB_DAMAGE_COMMENT)
                     .define("disableMobDamage", DISABLE_MOB_DAMAGE_DEFAULT);
+            entityDamageMultiplier = builder
+                    .comment(ENTITY_DAMAGE_MULTIPLIER_COMMENT)
+                    .defineInRange("entityDamageMultiplier", ENTITY_DAMAGE_MULTIPLIER_DEFAULT, ENTITY_DAMAGE_MULTIPLIER_MIN, Double.POSITIVE_INFINITY);
+            knockbackMultiplier = builder
+                    .comment(KNOCKBACK_MULTIPLIER_COMMENT)
+                    .defineInRange("knockbackMultiplier", KNOCKBACK_MULTIPLIER_DEFAULT, KNOCKBACK_MULTIPLIER_MIN, KNOCKBACK_MULTIPLIER_MAX);
         }
 
         @Override
@@ -170,6 +178,16 @@ public class NeoforgeTNTUtilsConfig {
         @Override
         public boolean disableMobDamage() {
             return disableMobDamage.get();
+        }
+
+        @Override
+        public float entityDamageMultiplier() {
+            return entityDamageMultiplier.get().floatValue();
+        }
+
+        @Override
+        public float knockbackMultiplier() {
+            return knockbackMultiplier.get().floatValue();
         }
     }
 

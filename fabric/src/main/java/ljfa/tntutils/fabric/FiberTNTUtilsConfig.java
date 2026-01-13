@@ -42,6 +42,8 @@ public class FiberTNTUtilsConfig {
         public final PropertyMirror<Boolean> disablePlayerDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
         public final PropertyMirror<Boolean> disableItemDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
         public final PropertyMirror<Boolean> disableMobDamage = PropertyMirror.create(ConfigTypes.BOOLEAN);
+        public final PropertyMirror<Float> entityDamageMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
+        public final PropertyMirror<Float> knockbackMultiplier = PropertyMirror.create(ConfigTypes.FLOAT);
 
         public ConfigTree buildConfig() {
             return ConfigTree.builder()
@@ -121,6 +123,14 @@ public class FiberTNTUtilsConfig {
                     .withComment(DISABLE_MOB_DAMAGE_COMMENT)
                     .finishValue(disableMobDamage::mirror)
 
+                    .beginValue("entityDamageMultiplier", ConfigTypes.FLOAT.withMinimum(ENTITY_DAMAGE_MULTIPLIER_MIN), ENTITY_DAMAGE_MULTIPLIER_DEFAULT)
+                    .withComment(ENTITY_DAMAGE_MULTIPLIER_COMMENT)
+                    .finishValue(entityDamageMultiplier::mirror)
+
+                    .beginValue("knockbackMultiplier", ConfigTypes.FLOAT.withMinimum(KNOCKBACK_MULTIPLIER_MIN).withMaximum(KNOCKBACK_MULTIPLIER_MAX), KNOCKBACK_MULTIPLIER_DEFAULT)
+                    .withComment(KNOCKBACK_MULTIPLIER_COMMENT)
+                    .finishValue(knockbackMultiplier::mirror)
+
                     .finishBranch()
                     .build();
         }
@@ -193,6 +203,16 @@ public class FiberTNTUtilsConfig {
         @Override
         public boolean disableMobDamage() {
             return disableMobDamage.getValue();
+        }
+
+        @Override
+        public float entityDamageMultiplier() {
+            return entityDamageMultiplier.getValue();
+        }
+
+        @Override
+        public float knockbackMultiplier() {
+            return knockbackMultiplier.getValue();
         }
     }
 

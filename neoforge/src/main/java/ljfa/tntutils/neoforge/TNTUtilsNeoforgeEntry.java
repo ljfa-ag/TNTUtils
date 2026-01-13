@@ -39,7 +39,7 @@ public class TNTUtilsNeoforgeEntry {
     }
 
     private void onExplosionStart(ExplosionEvent.Start e) {
-        if(ExplosionHandler.shouldCancelExplosion())
+        if(!ExplosionHandler.shouldAllowExplosion(e.getExplosion().getDirectSourceEntity()))
             e.setCanceled(true);
     }
 

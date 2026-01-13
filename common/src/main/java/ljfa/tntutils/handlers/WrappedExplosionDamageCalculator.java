@@ -28,6 +28,8 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
     private final boolean disablePlayerDamage       = TNTUtils.config().disablePlayerDamage();
     private final boolean disableMobDamage          = TNTUtils.config().disableMobDamage();
     private final boolean disableItemDamage         = TNTUtils.config().disableItemDamage();
+    private final float entityDamageMultiplier      = TNTUtils.config().entityDamageMultiplier();
+    private final float knockbackMultiplier         = TNTUtils.config().knockbackMultiplier();
 
     public WrappedExplosionDamageCalculator(ExplosionDamageCalculator original) {
         this.original = original;
@@ -73,8 +75,8 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
                 (disableEntityDamage
                 || (disablePlayerDamage && entity instanceof Player)
                 || (disableMobDamage && entity instanceof Mob)
-                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST))
-            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST)
+                || entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST))
+            && !entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST)
         )
             return false;
         return original.shouldDamageEntity(explosion, entity);
@@ -85,9 +87,9 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
                 (disableEntityDamage
                 || disableItemDamage
                 || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST)
-                || entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
+                || entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
             && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST)
-            && !entity.getType().is(TNTUtilsTags.ENTITY_EXPLOSION_WHITELIST) //for modded ItemEntity types
+            && !entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST) //for modded ItemEntity types
         )
             return false;
         return original.shouldDamageEntity(explosion, entity);
@@ -95,11 +97,17 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
 
     @Override
     public float getKnockbackMultiplier(Entity entity) {
-        return original.getKnockbackMultiplier(entity);
+        if(knockbackMultiplier == 0.0f)
+            return 0.0f;
+        else
+            return original.getKnockbackMultiplier(entity) * knockbackMultiplier;
     }
 
     @Override
     public float getEntityDamageAmount(Explosion explosion, Entity entity) {
-        return original.getEntityDamageAmount(explosion, entity);
+        if(entityDamageMultiplier == 0.0f)
+            return 0.0f;
+        else
+            return original.getEntityDamageAmount(explosion, entity) * entityDamageMultiplier;
     }
 }

@@ -21,11 +21,18 @@ public interface TNTUtilsConfigAccess {
     boolean disablePlayerDamage();
     boolean disableItemDamage();
     boolean disableMobDamage();
+    float entityDamageMultiplier();
+    float knockbackMultiplier();
 
     static final String GENERAL_COMMENT = "General options";
     static final String ADD_EXPLODE_COMMAND_COMMENT = "Adds the '/explode' command";
     static final boolean ADD_EXPLODE_COMMAND_DEFAULT = true;
-    static final String DISABLE_EXPLOSIONS_COMMENT = "Disables all effects from explosions";
+    static final String DISABLE_EXPLOSIONS_COMMENT = """
+            Disables all effects from explosions.
+            Explosions from specific entity types can be disabled by tagging them with #tntutils:deny_explosions, or
+            enabled with #tntutils:allow_explosions.
+            Explosions from individual entities (as opposed to entity types) can be disabled or enabled by tagging them
+            (using the /tag command) with "tntutils.deny_explosions" or "tntutils.allow_explosions", respectively.""";
     static final boolean DISABLE_EXPLOSIONS_DEFAULT = false;
     static final String SIZE_MULTIPLIER_COMMENT = "Multiplies the size of all explosions by this value";
     static final float SIZE_MULTIPLIER_MIN = 0.0f;
@@ -62,15 +69,22 @@ public interface TNTUtilsConfigAccess {
     static final String MODIFY_EXPLOSION_RESISTANCES_COMMENT = "Changes the explosion resistance of individual blocks.";
 
     static final String ENTITY_DAMAGE_COMMENT = "Entity damage options";
-    static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.). Will not affect entities\n"
-            + "tagged with #tntutils:explosion_whitelist.\n"
-            + "Individual entities can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
+    static final String DISABLE_ENTITY_DAMAGE_COMMENT = "Disables explosion damage to all entities (also includes minecarts, paintings, etc.). Will not affect\n"
+            + "entity types tagged with #tntutils:explosion_whitelist.\n"
+            + "Individual entity types can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
     static final boolean DISABLE_ENTITY_DAMAGE_DEFAULT = false;
     static final String DISABLE_PLAYER_DAMAGE_COMMENT = "Disables explosion damage to players";
     static final boolean DISABLE_PLAYER_DAMAGE_DEFAULT = false;
     static final String DISABLE_ITEM_DAMAGE_COMMENT = "Disables explosion damage to items laying on the ground. Will not affect items tagged with #tntutils:explosion_whitelist.\n"
             + "Individual items can be exempted from explosion damage by tagging them with #tntutils:explosion_blacklist.";
     static final boolean DISABLE_ITEM_DAMAGE_DEFAULT = false;
-    static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entities tagged with #tntutils:explosion_whitelist.";
+    static final String DISABLE_MOB_DAMAGE_COMMENT = "Disables explosion damage to mobs and animals. Will not affect entity types tagged with #tntutils:explosion_whitelist.";
     static final boolean DISABLE_MOB_DAMAGE_DEFAULT = false;
+    static final String ENTITY_DAMAGE_MULTIPLIER_COMMENT = "Multiplies the damage dealt to entities by this value.";
+    static final float ENTITY_DAMAGE_MULTIPLIER_MIN = 0.0f;
+    static final float ENTITY_DAMAGE_MULTIPLIER_DEFAULT = 1.0f;
+    static final String KNOCKBACK_MULTIPLIER_COMMENT = "Multiplies the knockback distance against entities by this value.";
+    static final float KNOCKBACK_MULTIPLIER_MIN = -20.0f;
+    static final float KNOCKBACK_MULTIPLIER_MAX = 20.0f;
+    static final float KNOCKBACK_MULTIPLIER_DEFAULT = 1.0f;
 }

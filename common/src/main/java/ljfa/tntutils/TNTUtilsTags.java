@@ -32,17 +32,32 @@ public class TNTUtilsTags {
 
     //Entity type tags
     /**
-     * Entities tagged with this will not be damaged by explosions (unless whitelisted).
+     * Entity types tagged with this will not be damaged by explosions (unless whitelisted).
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_blacklist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_BLACKLIST = create(Registries.ENTITY_TYPE, "explosion_blacklist");
     /**
-     * Entities tagged with this will always be damaged by explosions, even when one of the entity damage config options is turned on.
+     * Entity types tagged with this will always be damaged by explosions, even when one of the entity damage config options is turned on.
      * The whitelist takes precedence over the blacklist.
      */
-    public static final TagKey<EntityType<?>> ENTITY_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_EXPLOSION_WHITELIST = create(Registries.ENTITY_TYPE, "explosion_whitelist");
+    /**
+     * Entity types tagged with this will not be able to create explosions (unless whitelisted).
+     * This will apply both to direct and indirect source entities.
+     */
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_DENY_EXPLOSIONS = create(Registries.ENTITY_TYPE, "deny_explosions");
+    /**
+     * Entity types tagged with this will always be able to create explosions, even when the "disableExplosions" config option is true.
+     * This will apply both to direct and indirect source entities. The whitelist takes precedence over the blacklist.
+     */
+    public static final TagKey<EntityType<?>> ENTITY_TYPE_ALLOW_EXPLOSIONS = create(Registries.ENTITY_TYPE, "allow_explosions");
+
+    //Entity tags (which apply to individual entities and can be managed with the /tag command)
+    //These generally take precedence over the analogous entity type tags
+    //Note: Colons are not allowed in the argument of the /tag add command, hence we use a dot instead
+    public static final String ENTITY_DENY_EXPLOSIONS = TNTUtils.MOD_ID + ".deny_explosions";
+    public static final String ENTITY_ALLOW_EXPLOSIONS = TNTUtils.MOD_ID + ".allow_explosions";
 
     //Item tags
-    //TODO: The Nether Star is hardcoded to not be damaged by explosions in ItemEntity#hurt(). This should maybe work with the tags too.
     /**
      * Items tagged with this will not be damaged by explosions in ItemEntity form (unless whitelisted).
      */

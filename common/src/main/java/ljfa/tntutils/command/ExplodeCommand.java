@@ -21,6 +21,9 @@ public class ExplodeCommand {
     private static final boolean DEFAULT_FIRE = false;
     private static final ExplosionInteraction DEFAULT_INTERACTION = ExplosionInteraction.BLOCK;
 
+    // Used for bypassing the disableExplosions config option and blacklists
+    private static boolean isCurrentlyRunning = false;
+
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("explode")
                 .requires(css -> css.hasPermission(Commands.LEVEL_GAMEMASTERS))
@@ -58,7 +61,13 @@ public class ExplodeCommand {
     }
 
     private static int explode(CommandSourceStack css, Vec3 pos, float strength, boolean fire) {
-        css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, DEFAULT_INTERACTION);
+        isCurrentlyRunning = true;
+        try {
+            css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, DEFAULT_INTERACTION);
+        }
+        finally {
+            isCurrentlyRunning = false;
+        }
         return Command.SINGLE_SUCCESS;
     }
 
@@ -67,8 +76,18 @@ public class ExplodeCommand {
         var pos = Vec3Argument.getVec3(ctx, "pos");
         var strength = FloatArgumentType.getFloat(ctx, "strength");
         var fire = BoolArgumentType.getBool(ctx, "fire");
-        css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
+        isCurrentlyRunning = true;
+        try {
+            css.getLevel().explode(css.getEntity(), pos.x, pos.y, pos.z, strength, fire, interaction);
+        }
+        finally {
+            isCurrentlyRunning = false;
+        }
         return Command.SINGLE_SUCCESS;
+    }
+
+    public static boolean isCurrentlyRunning() {
+        return isCurrentlyRunning;
     }
 
     private static CompletableFuture<Suggestions> suggestStrength(CommandContext<CommandSourceStack> ctx, SuggestionsBuilder builder) {
