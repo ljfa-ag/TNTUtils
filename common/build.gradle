@@ -26,7 +26,7 @@ legacyForge {
 }
 
 dependencies {
-    compileOnly group: 'org.spongepowered', name: 'mixin', version: project.mixin_version
+    compileOnly "org.spongepowered:mixin:${project.mixin_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {
