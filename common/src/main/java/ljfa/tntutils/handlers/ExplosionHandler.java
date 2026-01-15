@@ -2,6 +2,7 @@ package ljfa.tntutils.handlers;
 
 import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.TNTUtilsTags;
+import ljfa.tntutils.command.ExplodeCommand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -12,8 +13,8 @@ import net.minecraft.world.level.Explosion;
 
 public class ExplosionHandler {
     public static boolean shouldAllowExplosion(Explosion explosion) {
-        /*if(ExplodeCommand.isCurrentlyRunning())
-            return true;*/
+        if(ExplodeCommand.isCurrentlyRunning())
+            return true;
 
         var directSource = explosion.getDirectSourceEntity();
         if(directSource == null) // shortcut the following tests
