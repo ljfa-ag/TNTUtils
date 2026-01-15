@@ -5,7 +5,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import ljfa.tntutils.TNTUtils;
 import ljfa.tntutils.handlers.ExplosionHandler;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,8 +15,11 @@ import net.minecraft.world.level.Level;
 public abstract class PrimedTntMixin extends Entity {
     @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     private void onTick(CallbackInfo ci) {
-        if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
-            ExplosionHandler.disarmPrimedTnt(this);
+        var self = (PrimedTnt) (Object) this;
+        // Only check on the first tick rather than every tick. We can't use firstTick since it is never set to false in PrimedTnt,
+        // so we use tickCount instead. tickCount is incremented before tick is called, hence the first tick has tickCount == 1.
+        if(!level().isClientSide() && tickCount == 1 && !ExplosionHandler.shouldAllowTnt(self.getOwner())) {
+            ExplosionHandler.disarmPrimedTnt(self);
             ci.cancel();
         }
     }

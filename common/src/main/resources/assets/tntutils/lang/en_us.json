@@ -5,6 +5,8 @@
   "tag.block.tntutils.trigger_whitelist": "Explosion trigger whitelist",
   "tag.entity_type.tntutils.explosion_blacklist": "Explosion blacklist",
   "tag.entity_type.tntutils.explosion_whitelist": "Explosion whitelist",
+  "tag.entity_type.tntutils.deny_explosions": "Deny explosions",
+  "tag.entity_type.tntutils.allow_explosions": "Allow explosions",
   "tag.item.tntutils.explosion_blacklist": "Explosion blacklist",
   "tag.item.tntutils.explosion_whitelist": "Explosion whitelist",
   "tntutils.configuration.general": "General",

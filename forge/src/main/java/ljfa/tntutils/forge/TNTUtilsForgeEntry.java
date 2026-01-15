@@ -36,7 +36,7 @@ public class TNTUtilsForgeEntry {
     }
 
     private void onExplosionStart(ExplosionEvent.Start e) {
-        if(ExplosionHandler.shouldCancelExplosion())
+        if(!ExplosionHandler.shouldAllowExplosion(e.getExplosion()))
             e.setCanceled(true);
     }
 

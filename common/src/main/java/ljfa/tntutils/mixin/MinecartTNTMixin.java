@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import ljfa.tntutils.TNTUtils;
+import ljfa.tntutils.handlers.ExplosionHandler;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -20,7 +21,7 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
             at = @At("HEAD"),
             cancellable = true)
     private void onPrimeFuse(CallbackInfo ci) {
-        if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
+        if(!this.level().isClientSide() && !ExplosionHandler.shouldAllowTnt(null)) {
             super.destroy(damageSources().generic());
             ci.cancel();
         }
@@ -31,7 +32,7 @@ public abstract class MinecartTNTMixin extends AbstractMinecart {
             at = @At("HEAD"),
             cancellable = true)
     private void onExplode(CallbackInfo ci) {
-        if(TNTUtils.config().disableTNT() && !this.level().isClientSide()) {
+        if(!this.level().isClientSide() && !ExplosionHandler.shouldAllowTnt(null)) {
             super.destroy(damageSources().generic());
             ci.cancel();
         }
