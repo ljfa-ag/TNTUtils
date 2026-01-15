@@ -32,8 +32,7 @@ public class ExplosionMixin {
 
     //the bottom-most constructor
     @Inject(method = "<init>(Lnet/minecraft/world/level/Level;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/damagesource/DamageSource;Lnet/minecraft/world/level/ExplosionDamageCalculator;DDDFZLnet/minecraft/world/level/Explosion$BlockInteraction;)V",
-            at = @At("RETURN"),
-            require = 1)
+            at = @At("RETURN"))
     private void onConstruct(CallbackInfo ci) {
         damageCalculator = new WrappedExplosionDamageCalculator(damageCalculator);
         radius *= TNTUtils.config().sizeMultiplier();

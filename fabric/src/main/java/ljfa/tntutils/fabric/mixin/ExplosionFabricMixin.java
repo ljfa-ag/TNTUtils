@@ -15,7 +15,7 @@ public abstract class ExplosionFabricMixin {
     @Shadow
     private Level level;
 
-    @Inject(method = "explode", at = @At("HEAD"), cancellable = true, require = 1)
+    @Inject(method = "explode", at = @At("HEAD"), cancellable = true)
     private void tntutils$onExplode(CallbackInfo ci) {
         if(ExplosionHandler.shouldCancelExplosion())
             ci.cancel();
