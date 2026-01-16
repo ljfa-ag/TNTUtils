@@ -15,6 +15,6 @@
   },
   "overwrites": {
     "requireAnnotations": true
-  },
-  "refmap": "tntutils.refmap.json"
+  }
+  ,"refmap": "tntutils.refmap.json"
 }
