@@ -1,5 +1,3 @@
-modLoader="javafml"
-loaderVersion="${neo_loader_version_range}"
 license="${mod_license}"
 issueTrackerURL="https://github.com/ljfa-ag/TNTUtils/issues"
 
