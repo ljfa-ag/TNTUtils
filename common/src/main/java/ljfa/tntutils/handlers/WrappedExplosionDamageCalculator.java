@@ -75,8 +75,8 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
                 (disableEntityDamage
                 || (disablePlayerDamage && entity instanceof Player)
                 || (disableMobDamage && entity instanceof Mob)
-                || entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST))
-            && !entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST)
+                || entity.is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST))
+            && !entity.is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST)
         )
             return false;
         return original.shouldDamageEntity(explosion, entity);
@@ -87,9 +87,9 @@ public class WrappedExplosionDamageCalculator extends ExplosionDamageCalculator 
                 (disableEntityDamage
                 || disableItemDamage
                 || entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_BLACKLIST)
-                || entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
+                || entity.is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_BLACKLIST)) //for modded ItemEntity types
             && !entity.getItem().is(TNTUtilsTags.ITEM_EXPLOSION_WHITELIST)
-            && !entity.getType().is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST) //for modded ItemEntity types
+            && !entity.is(TNTUtilsTags.ENTITY_TYPE_EXPLOSION_WHITELIST) //for modded ItemEntity types
         )
             return false;
         return original.shouldDamageEntity(explosion, entity);

@@ -23,16 +23,16 @@ public class ExplosionHandler {
         var indirectSource = Explosion.getIndirectSourceEntity(directSource); // may still be null even when directSource isn't
         boolean disallowForType =
                 (TNTUtils.config().disableExplosions()
-                || directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS)
-                || indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
-            && !directSource.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS)
-            && !(indirectSource != null && indirectSource.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS));
+                || directSource.is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS)
+                || indirectSource != null && indirectSource.is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
+            && !directSource.is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS)
+            && !(indirectSource != null && indirectSource.is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS));
         if(
                 (disallowForType
-                || directSource.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS)
-                || indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
-            && !directSource.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
-            && !(indirectSource != null && indirectSource.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS))
+                || directSource.entityTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS)
+                || indirectSource != null && indirectSource.entityTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
+            && !directSource.entityTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
+            && !(indirectSource != null && indirectSource.entityTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS))
         )
             return false;
         return true;
@@ -43,11 +43,11 @@ public class ExplosionHandler {
             return !TNTUtils.config().disableTNT();
 
         boolean disallowForType =
-                (TNTUtils.config().disableTNT() || owner.getType().is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
-            && !owner.getType().is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS);
+                (TNTUtils.config().disableTNT() || owner.is(TNTUtilsTags.ENTITY_TYPE_DENY_EXPLOSIONS))
+            && !owner.is(TNTUtilsTags.ENTITY_TYPE_ALLOW_EXPLOSIONS);
         if(
-                (disallowForType || owner.getTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
-            && !owner.getTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
+                (disallowForType || owner.entityTags().contains(TNTUtilsTags.ENTITY_DENY_EXPLOSIONS))
+            && !owner.entityTags().contains(TNTUtilsTags.ENTITY_ALLOW_EXPLOSIONS)
         )
             return false;
         return true;

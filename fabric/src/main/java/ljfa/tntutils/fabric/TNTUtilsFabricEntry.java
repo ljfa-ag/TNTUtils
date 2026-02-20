@@ -27,7 +27,7 @@ public class TNTUtilsFabricEntry implements ModInitializer {
 
         handleModifyExplosionResistances();
 
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
+        CommandRegistrationCallback.EVENT.register((dispatcher, _, _) -> {
             if(FiberTNTUtilsConfig.COMMON.addExplodeCommand())
                 ExplodeCommand.register(dispatcher);
             registerConfigReloadCommand(dispatcher);
