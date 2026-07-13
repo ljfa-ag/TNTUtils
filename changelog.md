@@ -1,1 +1,1 @@
-First update for Minecraft 26.1 snapshots. Minecraft and the mod loaders are still unstable, so use at your own risk. Please report any issues that you come across to our [issue tracker](https://github.com/ljfa-ag/TNTUtils/issues).
+Updated to Minecraft 26.2.
