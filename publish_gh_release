@@ -1,0 +1,61 @@
+#!/bin/bash
+# Creates a new Github release with the current version and changelog
+GITHUB_REPO=ljfa-ag/TNTUtils
+GITHUB_TOKEN=$(cat ../../ljfa_github_token)
+PRERELEASE=false
+LATEST=false
+TARGET_BRANCH=mc1.21.11
+
+if [ "$1" = "-f" ]; then
+    FORCE=1
+fi
+
+BRANCH=$(git symbolic-ref --short HEAD)
+if [ $? -ne 0 ] || [ "$BRANCH" != "$TARGET_BRANCH" ]; then
+    echo "Incorrect branch, should be $TARGET_BRANCH" >&2
+    exit 1
+fi
+
+VERSION=$(sed -nr 's/mod_version=(.*)/\1/p' gradle.properties)
+if [ $? -ne 0 ] || [ -z "$VERSION" ]; then
+    echo "Version number could not be determined" >&2
+    exit 1
+fi
+if git tag | grep -q "$VERSION"; then
+    echo "Tag '$VERSION' already exists" >&2
+    exit 1
+fi
+
+# Check for uncommitted changes
+if [ ! $FORCE ] && [ -n "$(git status --porcelain)" ]; then
+    echo "There are uncommitted changes in the working directory:" >&2
+    git status --short >&2
+    echo "Use the '-f' option to ignore this." >&2
+    exit 1
+fi
+
+# Check for unpushed commits
+git fetch
+if [ ! $FORCE ] && [ "$(git rev-parse HEAD)" != "$(git rev-parse @{upstream})" ]; then
+    echo "There are unpushed or unpulled changes in the repository:" >&2
+    echo >&2
+    git status >&2
+    echo "Use the '-f' option to ignore this." >&2
+    exit 1
+fi
+
+echo "Publishing Github release '$VERSION' on branch '$TARGET_BRANCH'"
+
+export PRERELEASE TARGET_BRANCH VERSION LATEST GITHUB_REPO GITHUB_TOKEN
+curl -L \
+  --variable '%PRERELEASE' --variable '%TARGET_BRANCH' --variable '%VERSION' --variable '%LATEST' \
+  --variable '%GITHUB_REPO' --variable '%GITHUB_TOKEN' \
+  --variable '%CHANGELOG@changelog.md' \
+  -X POST \
+  -H 'Accept: application/vnd.github+json' \
+  --expand-header 'Authorization: Bearer {{GITHUB_TOKEN:trim}}' \
+  -H 'X-GitHub-Api-Version: 2026-03-10' \
+  --expand-url 'https://api.github.com/repos/{{GITHUB_REPO}}/releases' \
+  --expand-data '{"tag_name":"{{VERSION:json}}","target_commitish":"{{TARGET_BRANCH:json}}","name":"{{VERSION:json}}","body":"{{CHANGELOG:json}}","draft":false,"prerelease":{{PRERELEASE}},"generate_release_notes":false,"make_latest":"{{LATEST}}"}'
+
+git fetch --tags
