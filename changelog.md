@@ -1,8 +1,1 @@
-- Added the entity type tags `#tntutils:deny_explosions` and `#tntutils:allow_explosions`, which can be used to disallow or allow entity types to create explosions, respectively.
-  - *For example, tagging minecraft:ghast with deny_explosions (in a datapack) allows you to block explosions from Ghast fireballs.*
-- Individual entities (as opposed to entity types) can also be tagged with `tntutils.deny_explosions` and `tntutils.allow_explosions` to (dis)allow them to create explosions.
-  - *The entity tags are not to be confused with entity type tags. They can be applied to an entity with the `/tag` command. Notice the dot instead of a colon, since the argument to `/tag add` cannot contain colons.*
-  - *For example, to make a Creeper that explodes even when explosions are disabled in the config, you can use the command `/tag @n[type=creeper] add tntutils.allow_explosions`.*
-  - *Note: While it is possible to tag a player with tntutils.deny_explosions, this will not completely prevent them from causing explosions, as, for example, they can still ignite TNT with a redstone signal.*
-- Added the config options `entityDamageMultiplier` and `knockbackMultiplier`, which can be used to change the amount of damage and knockback applied to entities, repsectively.
-- The `/explode` command will now bypass the `disableExplosions` config option.
+- \[Fabric only\] Fixed an issue where decimal numbers in the config file are truncated to integers when Jankson is installed (either directly or included in another mod)
