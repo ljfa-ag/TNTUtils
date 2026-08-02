@@ -1,10 +1,10 @@
 plugins {
     // Latest ModDevGradle versions: https://projects.neoforged.net/neoforged/moddevgradle
-    id 'net.neoforged.moddev' version '2.0.141' apply false
+    id 'net.neoforged.moddev' version '2.0.143' apply false
     // Latest Loom versions: https://fabricmc.net/develop/
     id 'net.fabricmc.fabric-loom' version '1.17-SNAPSHOT' apply false
     
-    id 'net.darkhax.curseforgegradle' version '1.1.+' apply false
+    id 'net.darkhax.curseforgegradle' version '1.3.+' apply false
     id 'com.modrinth.minotaur' version '2.+' apply false
 }
 
