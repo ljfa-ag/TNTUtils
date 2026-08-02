@@ -1,1 +1,1 @@
-Updated to Minecraft 26.2.
+- \[Fabric only\] Fixed an issue where decimal numbers in the config file are truncated to integers when Jankson is installed (either directly or included in another mod)
