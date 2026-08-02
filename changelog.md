@@ -1,1 +1,2 @@
-First update for Minecraft 26.1 snapshots. Minecraft and the mod loaders are still unstable, so use at your own risk. Please report any issues that you come across to our [issue tracker](https://github.com/ljfa-ag/TNTUtils/issues).
+- \[Fabric only\] Fixed an issue where decimal numbers in the config file are truncated to integers when Jankson is installed (either directly or included in another mod)
+- Now requires Minecraft 26.1.2
