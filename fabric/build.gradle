@@ -42,13 +42,13 @@ loom {
     runs {
         client {
             client()
-            ideConfigGenerated(true)
-            runDir('runs/client')
+            generateRunConfig = true
+            runDirectory = 'runs/client'
         }
         server {
             server()
-            ideConfigGenerated(true)
-            runDir('runs/server')
+            generateRunConfig = true
+            runDirectory = 'runs/server'
         }
     }
     
