@@ -5,7 +5,7 @@ plugins {
     id 'com.modrinth.minotaur'
 }
 
-version = "${minecraft_version}-${mod_version}"
+version = mod_version
 group = mod_group_id
 
 base {
@@ -42,13 +42,13 @@ loom {
     runs {
         client {
             client()
-            ideConfigGenerated(true)
-            runDir('runs/client')
+            generateRunConfig = true
+            runDirectory = 'runs/client'
         }
         server {
             server()
-            ideConfigGenerated(true)
-            runDir('runs/server')
+            generateRunConfig = true
+            runDirectory = 'runs/server'
         }
     }
     
