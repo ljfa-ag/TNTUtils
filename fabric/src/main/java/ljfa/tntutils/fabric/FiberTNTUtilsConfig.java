@@ -3,6 +3,7 @@ package ljfa.tntutils.fabric;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -12,7 +13,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
+import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonPrimitive;
 import io.github.fablabsmc.fablabs.api.fiber.v1.exception.ValueDeserializationException;
+import io.github.fablabsmc.fablabs.api.fiber.v1.schema.type.DecimalSerializableType;
 import io.github.fablabsmc.fablabs.api.fiber.v1.schema.type.derived.ConfigTypes;
 import io.github.fablabsmc.fablabs.api.fiber.v1.serialization.FiberSerialization;
 import io.github.fablabsmc.fablabs.api.fiber.v1.serialization.JanksonValueSerializer;
@@ -222,7 +226,7 @@ public class FiberTNTUtilsConfig {
     private static final Path configFile = FabricLoader.getInstance().getConfigDir().resolve("tntutils.json5");
 
     public static void init() {
-        var serializer = new JanksonValueSerializer(false);
+        var serializer = new FixedJanksonValueSerializer(false);
 
         //try reading the config file
         try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
@@ -245,7 +249,7 @@ public class FiberTNTUtilsConfig {
         }
 
         //write the config file
-        //TODO: Can we avoid writing the config from scratch if nothing has changed?
+        //TODO: Can we avoid writing the config from scratch if nothing has changed? We should introduce a version number for the config and only write if the config needs to be migrated.
         try(var writer = new BufferedOutputStream(Files.newOutputStream(configFile, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING))) {
             //manually prepend a comment since FiberSerialization doesn't write top-level comments
             writer.write("// This configuration file can be reloaded in-game with the '/reload-tntutils-config' command.\n".getBytes(StandardCharsets.UTF_8));
@@ -257,9 +261,25 @@ public class FiberTNTUtilsConfig {
     }
 
     public static void reload() throws Exception {
-        var serializer = new JanksonValueSerializer(false);
+        var serializer = new FixedJanksonValueSerializer(false);
         try(var reader = new BufferedInputStream(Files.newInputStream(configFile))) {
             FiberSerialization.deserialize(configTree, reader, serializer);
+        }
+    }
+
+    /* HACK: This works around an issue in Jankson 1.2.1+ where BigDecimals are silently truncated to longs on serialization.
+     * Note that Fiber includes Jankson 1.2.0, so this problem only surfaces when another mod includes a newer version of Jankson,
+     * see https://github.com/ljfa-ag/TNTUtils/issues/12.
+     */
+    private static class FixedJanksonValueSerializer extends JanksonValueSerializer {
+        public FixedJanksonValueSerializer(boolean minify) {
+            super(minify);
+        }
+
+        @Override
+        public JsonElement serializeNumber(BigDecimal value, DecimalSerializableType type) {
+            // We only use float values, no integers, so we can serialize everything as decimal numbers.
+            return new JsonPrimitive(value.doubleValue());
         }
     }
 }
